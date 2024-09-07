@@ -3,18 +3,20 @@
 @tailwind utilities;
 
 :root {
-  --background-rgb: 214, 219, 220;
-  --foreground-rgb: 0, 0, 0;
+  --background: 255, 255, 255;
+  --foreground: 0, 0, 0;
+  --algorandBlue: 45, 45, 241;
+  --algorandTeal: 23, 202, 198;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-rgb: 0, 0, 0;
-    --foreground-rgb: 255, 255, 255;
+    --background: 0, 0, 0; /* Algorand dark background is 0, 19, 36; */
+    --foreground: 255, 255, 255;
   }
 }
 
 body {
-  background: rgb(var(--background-rgb));
-  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background));
+  color: rgb(var(--foreground));
 }
