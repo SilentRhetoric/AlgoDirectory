@@ -21,7 +21,7 @@ import { Listing } from "~/types/listing-types"
 const algorand = AlgorandClient.testNet()
 
 const typedClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
-  appId: 722603330n,
+  appId: BigInt(722603330),
 })
 
 function boxNamesToListings(boxNames: BoxName[]): Listing[] {
