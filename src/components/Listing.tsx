@@ -18,15 +18,15 @@ type ListingCardProps = { listing: Listing }
 export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardProps) => {
   return (
     <A href={`/listing/${props.listing.name}`}>
-      <div class="flex flex-row items-baseline gap-4 font-thin">
+      <div class="flex flex-row items-baseline justify-start gap-4 font-thin">
         <p class="text-xl uppercase">{props.listing.name}</p>
-        <div class="flex flex-row items-center gap-1">
+        <div class="flex flex-row items-baseline gap-1">
           <p>Vouched</p>
           <svg
             viewBox="0 0 240 240"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
-            class="fill-primary h-4 w-4"
+            class="h-4 w-4"
           >
             <g
               id="Page-1"
@@ -38,6 +38,7 @@ export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardP
                 id="algorand_logo_mark_black"
                 transform="translate(0.82, 0.64)"
                 fill-rule="nonzero"
+                fill="currentColor"
               >
                 <polygon
                   id="Path"

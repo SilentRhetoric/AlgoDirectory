@@ -12,7 +12,7 @@ export default function App() {
       root={(props) => (
         <MetaProvider>
           <Header />
-          <div class="mb-auto flex min-h-[calc(100vh-248px)] flex-col items-center justify-start p-4 md:min-h-[calc(100vh-168px)]">
+          <div class="mb-auto flex min-h-[calc(100vh-248px)] flex-col justify-start p-4 md:min-h-[calc(100vh-168px)]">
             <Suspense>{props.children}</Suspense>
           </div>
           <Footer />

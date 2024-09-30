@@ -21,13 +21,16 @@ async function fetchNFDInfo(name: string) {
       if (text === null) {
         return { error: "Not found" }
       }
-      return JSON.parse(text)
+      const nfdInfo = JSON.parse(text)
+      console.debug("nfdInfo", nfdInfo)
+      return nfdInfo
     } catch (e) {
       console.error(`Received from API: ${text}`)
       console.error(e)
       return { error: e }
     }
   } catch (error) {
+    console.error(error)
     return { error }
   }
 }
