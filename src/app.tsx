@@ -11,11 +11,13 @@ export default function App() {
     <Router
       root={(props) => (
         <MetaProvider>
-          <Header />
-          <div class="mb-auto flex min-h-[calc(100vh-248px)] flex-col justify-start p-4 md:min-h-[calc(100vh-168px)]">
-            <Suspense>{props.children}</Suspense>
+          <div class="mx-auto flex max-w-screen-lg flex-col justify-center font-thin">
+            <Header />
+            <div class="md:min-h-[calc(100vh-128px)]">
+              <Suspense fallback={<div>Loading...</div>}>{props.children}</Suspense>
+            </div>
+            <Footer />
           </div>
-          <Footer />
         </MetaProvider>
       )}
     >

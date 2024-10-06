@@ -18,12 +18,7 @@ export default createHandler(() => (
           {assets}
         </head>
         <body>
-          <div
-            id="app"
-            class="flex min-h-screen flex-col"
-          >
-            {children}
-          </div>
+          <div id="app">{children}</div>
           {scripts}
         </body>
       </html>

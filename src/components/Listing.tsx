@@ -1,5 +1,5 @@
 import { Component } from "solid-js"
-import { Listing } from "~/types/listing-types"
+import { Listing } from "~/types/types"
 
 import { formatDistanceToNow } from "date-fns"
 import { microAlgo } from "@algorandfoundation/algokit-utils"
@@ -18,7 +18,7 @@ type ListingCardProps = { listing: Listing }
 export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardProps) => {
   return (
     <A href={`/listing/${props.listing.name}`}>
-      <div class="flex flex-row items-baseline justify-start gap-4 font-thin">
+      <div class="flex flex-row items-baseline justify-start gap-4">
         <p class="text-xl uppercase">{props.listing.name}</p>
         <div class="flex flex-row items-baseline gap-1">
           <p>Vouched</p>

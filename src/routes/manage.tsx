@@ -26,9 +26,9 @@ export default function Manage() {
       <SiteTitle>Manage</SiteTitle>
       <ErrorBoundary fallback={(err, reset) => <div onClick={reset}>Error: {err.toString()}</div>}>
         <WalletProvider manager={walletManager}>
-          <main class="mx-auto p-4 text-center text-gray-700">
-            <h1 class="max-6-xs my-16 text-6xl font-thin uppercase text-sky-700">Manage Page</h1>
-          </main>
+          <div class="text-gray-700 p-4 text-center">
+            <h1 class="max-6-xs text-sky-700 my-16 text-6xl uppercase">Manage Page</h1>
+          </div>
         </WalletProvider>
       </ErrorBoundary>
     </main>

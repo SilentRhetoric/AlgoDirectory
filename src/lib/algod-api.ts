@@ -13,7 +13,7 @@ import { AlgorandClient } from "@algorandfoundation/algokit-utils"
 import { AlgoDirectoryClient } from "./AlgoDirectoryClient"
 import { BoxName } from "@algorandfoundation/algokit-utils/types/app"
 import { ABIType } from "algosdk"
-import { Listing } from "~/types/listing-types"
+import { Listing } from "~/types/types"
 
 // TODO: Use netlify.toml to set something so that this will query the
 // mainnet API when deployed on Netlify and otherwise default to testnet

@@ -2,7 +2,7 @@ import nodely from "../assets/nodely.png"
 
 export default function Footer() {
   return (
-    <footer class="flex w-full flex-row justify-around p-4 pt-16 font-thin uppercase md:justify-center md:gap-4">
+    <footer class="flex h-16 w-full flex-row justify-around p-4 uppercase md:justify-center md:gap-4">
       <a
         href="https://x.com/algodirectory"
         target="_blank"

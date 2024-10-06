@@ -4,7 +4,7 @@ that is a segment of directory.algo and get its properties.
 */
 
 import { cache } from "@solidjs/router"
-import { NfdRecord } from "~/lib/nfd-swagger-codegen"
+import { NfdRecordResponseFull } from "~/lib/nfd-swagger-codegen"
 
 // TODO: Use netlify.toml to set something so that this will query the
 // mainnet API when deployed on Netlify and otherwise default to testnet
@@ -22,7 +22,7 @@ async function fetchNFDInfo(name: string) {
         return { error: "Not found" }
       }
       const nfdInfo = JSON.parse(text)
-      console.debug("nfdInfo", nfdInfo)
+      console.debug("nfdInfo:", nfdInfo)
       return nfdInfo
     } catch (e) {
       console.error(`Received from API: ${text}`)
@@ -35,7 +35,7 @@ async function fetchNFDInfo(name: string) {
   }
 }
 
-export const getNFDInfo = cache(async (name: string): Promise<NfdRecord> => {
+export const getNFDInfo = cache(async (name: string): Promise<NfdRecordResponseFull> => {
   "use server"
   return fetchNFDInfo(name)
 }, "getNfd")
