@@ -1,4 +1,5 @@
 import { createAsync, RouteDefinition, RouteSectionProps } from "@solidjs/router"
+import SiteTitle from "~/components/SiteTitle"
 import { getNFDInfo } from "~/lib/nfd-api"
 
 export const route = {
@@ -8,9 +9,12 @@ export const route = {
 } satisfies RouteDefinition
 
 export default function ListingDetails(props: RouteSectionProps) {
-  const nfdInfo = createAsync(() => getNFDInfo(props.params.name))
+  // Defering stream here so that the page doesn't navigate until the data loads
+  // This prevents the site title from rendering incorrectly at first
+  const nfdInfo = createAsync(() => getNFDInfo(props.params.name), { deferStream: true })
   return (
     <main class="flex flex-col gap-2 p-4">
+      <SiteTitle>{nfdInfo()?.name.split(".")[0]}</SiteTitle>
       <div class="border-black flex aspect-[3/1] w-full flex-row items-center justify-center rounded-sm border-[1px]">
         {nfdInfo()?.properties?.userDefined?.banner ? (
           <img
@@ -63,3 +67,5 @@ export default function ListingDetails(props: RouteSectionProps) {
     </main>
   )
 }
+
+// TODO: If the list of listings is stored in state, next/prev buttons can be added to navigate between listings

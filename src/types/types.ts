@@ -51,21 +51,36 @@ export class ListingPreview {
   }
 }
 
-// export class ListingDetails {
-//   constructor(nfd: NfdRecordResponseFull) {}
+export class ListingDetails {
+  private _address: string
+  private _avatar: string
+  private _banner: string
+  private _bio: string
+  private _discord: string
+  private _email: string
+  private _github: string
+  private _linkedin: string
+  private _name: string
+  private _nfdName: string
+  private _owner: string // not for display but for management
+  private _telegram: string
+  private _twitter: string
+  private _website: string
 
-//   address: string
-//   avatar: string
-//   banner: string
-//   bio: string
-//   discord: string
-//   email: string
-//   github: string
-//   linkedin: string
-//   name: string
-//   nfdName: string
-//   // owner: string // not for display but for management
-//   telegram: string
-//   twitter: string
-//   website: string
-// }
+  constructor(nfd: NfdRecordResponseFull) {
+    this._address = nfd?.properties?.userDefined?.address ?? ""
+    this._avatar = nfd?.properties?.userDefined?.avatar ?? ""
+    this._banner = nfd?.properties?.userDefined?.banner ?? ""
+    this._bio = nfd?.properties?.userDefined?.bio ?? ""
+    this._discord = nfd?.properties?.userDefined?.discord ?? ""
+    this._email = nfd?.properties?.userDefined?.email ?? ""
+    this._github = nfd?.properties?.userDefined?.github ?? ""
+    this._linkedin = nfd?.properties?.userDefined?.linkedin ?? ""
+    this._name = nfd?.properties?.userDefined?.name ?? ""
+    this._nfdName = nfd?.name.split(".")[0] ?? ""
+    this._owner = nfd?.owner ?? ""
+    this._telegram = nfd?.properties?.userDefined?.telegram ?? ""
+    this._twitter = nfd?.properties?.userDefined?.twitter ?? ""
+    this._website = nfd?.properties?.userDefined?.website ?? ""
+  }
+}

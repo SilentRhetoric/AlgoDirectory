@@ -3,10 +3,10 @@ module.exports = {
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     colors: {
-      algorandBlue: "rgb(var(--algorandBlue))",
-      algorandTeal: "rgb(var(--algorandTeal))",
+      primary: "rgb(var(--primary))",
+      secondary: "rgb(var(--secondary))",
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 }
