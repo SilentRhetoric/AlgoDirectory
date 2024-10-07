@@ -18,6 +18,7 @@ export default createHandler(() => (
           {assets}
         </head>
         <body>
+          <script>global = globalThis</script>
           <div id="app">{children}</div>
           {scripts}
         </body>

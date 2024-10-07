@@ -2,9 +2,9 @@ import SiteTitle from "~/components/SiteTitle"
 
 export default function About() {
   return (
-    <main class="prose mx-auto p-4">
+    <main class="mx-auto flex flex-col gap-2 p-4">
       <SiteTitle>About</SiteTitle>
-      <h1 class="font-thin uppercase sm:text-5xl">About AlgoDirectory</h1>
+      <h1 class="font-thin uppercase">About AlgoDirectory</h1>
       <h2 class="font-thin">Overview</h2>
       <p>
         AlgoDirectory is like a traditional directory, but the data lives on the Algorand blockchain
@@ -50,7 +50,7 @@ export default function About() {
       <p>AlgoDirectory improves upon previous Algorand directories in three key ways:</p>
       <ol>
         <li>
-          <p class="font-thin">Decentralized, Permissionless, Permanent</p>
+          <h3 class="font-thin">Decentralized, Permissionless, Permanent</h3>
           <p>
             AlgoDirectory leverages Algorand’s powerful on-chain capabilties to provide a directory
             that applies the values we love about Algorand to the Directory itself. It is
@@ -59,7 +59,7 @@ export default function About() {
           </p>
         </li>
         <li>
-          <p class="font-thin">Designed for Quality and Freshness</p>
+          <h3 class="font-thin">Designed for Quality and Freshness</h3>
           <p>
             A central challenge with directories is keeping their information up to date so it is
             useful to people. AlgoDirectory uses a novel Vouching Protocol to automate the process
@@ -73,7 +73,7 @@ export default function About() {
           </p>
         </li>
         <li>
-          <p class="font-thin">Sustainable for the Long Term</p>
+          <h3 class="font-thin">Sustainable for the Long Term</h3>
           <p>
             Another key objective of AlgoDirectory is to be sustainable so that it outlasts the
             efforts of its creators and any centralized website hosting. Algorand has had several

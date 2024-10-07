@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@algorandfoundation/algokit-utils':
-        specifier: ^7.0.0-beta.6
-        version: 7.0.0-beta.6(algosdk@2.9.0)
+        specifier: ^7.0.0-beta.10
+        version: 7.0.0-beta.10(algosdk@2.9.0)
       '@blockshake/defly-connect':
         specifier: ^1.1.6
         version: 1.1.6(algosdk@2.9.0)
@@ -63,9 +63,6 @@ importers:
       '@eslint/js':
         specifier: ^9.11.1
         version: 9.11.1
-      '@tailwindcss/typography':
-        specifier: ^0.5.15
-        version: 0.5.15(tailwindcss@3.4.13)
       eslint:
         specifier: ^9.11.1
         version: 9.11.1(jiti@2.0.0)
@@ -84,8 +81,8 @@ importers:
 
 packages:
 
-  '@algorandfoundation/algokit-utils@7.0.0-beta.6':
-    resolution: {integrity: sha512-PeAecyhLbvB1tfCAtcRAMTjCH/bgqDIGLKGt4T2xUFdetg+67nmTaB3+rzDVc/Emq4d/Z0I2d3pohel3Hkco3A==}
+  '@algorandfoundation/algokit-utils@7.0.0-beta.10':
+    resolution: {integrity: sha512-KpdPeCxaH3Nwm07oEfRJdWPg5tcFoUrKzSPswRrYfDwQHC8HL/TUY33u/ov6dGaRiL06sRobn6b9ZLMTsEeZlA==}
     engines: {node: '>=18.0'}
     peerDependencies:
       algosdk: ^2.7.0
@@ -946,11 +943,6 @@ packages:
 
   '@stablelib/x25519@1.0.3':
     resolution: {integrity: sha512-KnTbKmUhPhHavzobclVJQG5kuivH+qDLpe84iRqX3CLrKp881cF160JvXJ+hjn1aMyCwYOKeIZefIH/P5cJoRw==}
-
-  '@tailwindcss/typography@0.5.15':
-    resolution: {integrity: sha512-AqhlCXl+8grUz8uqExv5OTtgpjuVIwFTSXTrh8y9/pw6q2ek7fJ+Y8ZEVw7EB2DCcuCOtEjf9w3+J3rzts01uA==}
-    peerDependencies:
-      tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20'
 
   '@tanstack/solid-store@0.5.5':
     resolution: {integrity: sha512-31UD/UQ7uNG/HRJ5KV12QsAoehmx8LB3oGITaJ2LjeMBY95DLB5elRqWTGj6EwwLKLOWFEGQIz6ksEYM9OIwMw==}
@@ -2395,9 +2387,6 @@ packages:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
 
-  lodash.castarray@4.4.0:
-    resolution: {integrity: sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==}
-
   lodash.defaults@4.2.0:
     resolution: {integrity: sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==}
 
@@ -2406,9 +2395,6 @@ packages:
 
   lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
-
-  lodash.isplainobject@4.0.6:
-    resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -2788,10 +2774,6 @@ packages:
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
-
-  postcss-selector-parser@6.0.10:
-    resolution: {integrity: sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==}
-    engines: {node: '>=4'}
 
   postcss-selector-parser@6.1.2:
     resolution: {integrity: sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==}
@@ -3714,7 +3696,7 @@ packages:
 
 snapshots:
 
-  '@algorandfoundation/algokit-utils@7.0.0-beta.6(algosdk@2.9.0)':
+  '@algorandfoundation/algokit-utils@7.0.0-beta.10(algosdk@2.9.0)':
     dependencies:
       algosdk: 2.9.0
       buffer: 6.0.3
@@ -4503,14 +4485,6 @@ snapshots:
       '@stablelib/keyagreement': 1.0.1
       '@stablelib/random': 1.0.2
       '@stablelib/wipe': 1.0.1
-
-  '@tailwindcss/typography@0.5.15(tailwindcss@3.4.13)':
-    dependencies:
-      lodash.castarray: 4.4.0
-      lodash.isplainobject: 4.0.6
-      lodash.merge: 4.6.2
-      postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.13
 
   '@tanstack/solid-store@0.5.5(solid-js@1.9.1)':
     dependencies:
@@ -6275,15 +6249,11 @@ snapshots:
     dependencies:
       p-locate: 5.0.0
 
-  lodash.castarray@4.4.0: {}
-
   lodash.defaults@4.2.0: {}
 
   lodash.isarguments@3.1.0: {}
 
   lodash.isequal@4.5.0: {}
-
-  lodash.isplainobject@4.0.6: {}
 
   lodash.merge@4.6.2: {}
 
@@ -6706,11 +6676,6 @@ snapshots:
     dependencies:
       postcss: 8.4.47
       postcss-selector-parser: 6.1.2
-
-  postcss-selector-parser@6.0.10:
-    dependencies:
-      cssesc: 3.0.0
-      util-deprecate: 1.0.2
 
   postcss-selector-parser@6.1.2:
     dependencies:
