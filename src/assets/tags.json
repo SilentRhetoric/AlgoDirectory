@@ -1,0 +1,106 @@
+{
+    "1": {
+        "short": "Marketplace",
+        "long": "Places web3 users can buy, sell, and trade digital assets."
+    },
+    "2": {
+        "short": "Wallets",
+        "long": "Decentralized application to store, send, and receive digital coins and assets."
+    },
+    "3": {
+        "short": "NFTs",
+        "long": "Non-Fungible Tokens"
+    },
+    "4": {
+        "short": "DAOs",
+        "long": "Decentralized Autonomous Organizations"
+    },
+    "5": {
+        "short": "dApps",
+        "long": "Decentralized Applications"
+    },
+    "6": {
+        "short": "Smart Contracts",
+        "long": ""
+    },
+    "7": {
+        "short": "Decentralized Lending",
+        "long": ""
+    },
+    "8": {
+        "short": "Interoperability",
+        "long": ""
+    },
+    "9": {
+        "short": "Bridges",
+        "long": ""
+    },
+    "10": {
+        "short": "Decentralized Storage",
+        "long": ""
+    },
+    "11": {
+        "short": "DEX",
+        "long": "Decentralized Exchange"
+    },
+    "12": {
+        "short": "Yield Farming",
+        "long": ""
+    },
+    "13": {
+        "short": "Staking",
+        "long": ""
+    },
+    "14": {
+        "short": "Governance Tokens",
+        "long": ""
+    },
+    "15": {
+        "short": "Metaverse",
+        "long": ""
+    },
+    "16": {
+        "short": "Gaming",
+        "long": ""
+    },
+    "17": {
+        "short": "Oracles",
+        "long": ""
+    },
+    "18": {
+        "short": "ZK Proofs",
+        "long": "Zero-Knowledge Proofs"
+    },
+    "19": {
+        "short": "Liquid Staking",
+        "long": ""
+    },
+    "20": {
+        "short": "DSM",
+        "long": "ecentralized Social Media"
+    },
+    "21": {
+        "short": "Tokenized Assets",
+        "long": ""
+    },
+    "22": {
+        "short": "Realestate",
+        "long": ""
+    },
+    "23": {
+        "short": "Decentralized Insurance",
+        "long": ""
+    },
+    "24": {
+        "short": "Cross-Chain Technology",
+        "long": ""
+    },
+    "25": {
+        "short": "Decentralized Identity",
+        "long": ""
+    },
+    "26": {
+        "short": "DePIN",
+        "long": "Decentralized Physical Infrastructure Network "
+    }
+  }

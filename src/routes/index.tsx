@@ -1,8 +1,8 @@
 import { createAsync } from "@solidjs/router"
 import { For } from "solid-js"
-import { ListingCard } from "~/components/Listing"
-import SiteTitle from "~/components/SiteTitle"
-import { getListings } from "~/lib/algod-api"
+import { ListingCard } from "@/components/Listing"
+import SiteTitle from "@/components/SiteTitle"
+import { getListings } from "@/lib/algod-api"
 
 export default function Home() {
   const listings = createAsync(() => getListings())

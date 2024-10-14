@@ -1,5 +1,7 @@
-import { Component } from "solid-js"
-import { Listing } from "~/types/types"
+import { Component, createSignal, For } from "solid-js"
+import { Listing } from "@/types/types"
+import { Badge } from "@/components/ui/badge";
+import tagMap from "@/assets/tags.json"; // Adjust the path as necessary
 
 import { formatDistanceToNow } from "date-fns"
 import { microAlgo } from "@algorandfoundation/algokit-utils"
@@ -16,6 +18,16 @@ function formatTimestamp(timestamp: bigint) {
 type ListingCardProps = { listing: Listing }
 
 export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardProps) => {
+  // filter and convert to strings the tags to remove all 0's that represent empty tags
+  const [rawTags] = createSignal(Array.from(props.listing.tags)
+    .filter(value => value !== 0)
+    .map(value => value.toString())
+  );
+  const [tagList] = createSignal(tagMap);
+  const [tags] = createSignal(rawTags()
+    .map(rawTags => tagList()[rawTags as keyof typeof tagList] as { short: string, long: string }));
+  // const tags = rawTags().map(rawTags => tagList()[rawTags as keyof typeof tagList]);
+  console.log(tags());
   return (
     <A href={`/listing/${props.listing.name}`}>
       <div class="flex flex-row items-baseline justify-start gap-4">
@@ -50,7 +62,15 @@ export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardP
           <p>{microAlgo(props.listing.vouchAmount).algo}</p>
         </div>
         <p>Listed {formatTimestamp(props.listing.timestamp)}</p>
-        {/* <p>Tags: {props.listing.tags}</p> */}
+      </div>
+      <div>
+        <p class="flex flex-row">
+          <For each={tags()}>
+            {(tag) => (
+                <Badge class="mr-2" variant="secondary">{tag.short}</Badge>
+            )}
+          </For>
+        </p>
       </div>
     </A>
   )

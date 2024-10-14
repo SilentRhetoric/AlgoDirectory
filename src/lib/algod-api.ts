@@ -13,7 +13,7 @@ import { AlgorandClient } from "@algorandfoundation/algokit-utils"
 import { AlgoDirectoryClient } from "./AlgoDirectoryClient"
 import { BoxName } from "@algorandfoundation/algokit-utils/types/app"
 import { ABIType } from "algosdk"
-import { Listing } from "~/types/types"
+import { Listing } from "@/types/types"
 
 // TODO: Use netlify.toml to set something so that this will query the
 // mainnet API when deployed on Netlify and otherwise default to testnet
@@ -21,7 +21,7 @@ import { Listing } from "~/types/types"
 const algorand = AlgorandClient.testNet()
 
 const typedClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
-  appId: BigInt(722603330),
+  appId: BigInt(723090110), // Silent: appId 722603330 - Tako: appId 723090110
 })
 
 function boxNamesToListings(boxNames: BoxName[]): Listing[] {
