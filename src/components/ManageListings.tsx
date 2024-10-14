@@ -16,7 +16,7 @@ export default function ManageListings() {
 
   const algorand = AlgorandClient.testNet()
   const typedAppClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
-    appId: 576232821n,
+    appId: 576232821n, // TODO: This is the directory.algo NFD, not the directory app
     defaultSender: activeAddress()!, // TODO: Handle null case from use-wallet
   })
 
@@ -77,7 +77,7 @@ export default function ManageListings() {
                 <p>{segment.name}</p>
                 <div class="grow"></div>
                 <input>Vouch amount</input>
-                <button>List it</button>
+                <button onClick={createNewListing}>List it</button>
                 <p>{JSON.stringify(segment)}</p>
               </div>
             )}
@@ -87,8 +87,7 @@ export default function ManageListings() {
     </div>
   )
 }
-// Get list of owned segments
-// For each one
-// Get listing data from store
+// For each owned segment
+// Get listing data from box by name, where name is the nfdAppID
 // If no listing, amount field and create listing button
 // If listing exists, refresh and abandon buttons
