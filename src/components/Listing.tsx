@@ -23,14 +23,18 @@ export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardP
     .filter(value => value !== 0)
     .map(value => value.toString())
   );
+
+  // import the tags from the tags.json file
   const [tagList] = createSignal(tagMap);
+
+  // map the tags to the short and long titles
   const [tags] = createSignal(rawTags()
     .map(rawTags => tagList()[rawTags as keyof typeof tagList] as { short: string, long: string }));
-  // const tags = rawTags().map(rawTags => tagList()[rawTags as keyof typeof tagList]);
   console.log(tags());
+
   return (
     <A href={`/listing/${props.listing.name}`}>
-      <div class="flex flex-row items-baseline justify-start gap-4">
+      <div class="flex flex-row items-baseline justify-start gap-4 space-y-5">
         <p class="text-xl uppercase">{props.listing.name}</p>
         <div class="flex flex-row items-baseline gap-1">
           <p>Vouched</p>
