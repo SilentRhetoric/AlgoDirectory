@@ -17,20 +17,22 @@ function formatTimestamp(timestamp: bigint) {
 
 type ListingCardProps = { listing: Listing }
 
+const NUM_TAGS_ALLOWED = 5
+
 export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardProps) => {
   // filter and convert to strings the tags to remove all 0's that represent empty tags
   const [rawTags] = createSignal(Array.from(props.listing.tags)
-    .filter(value => value !== 0)
-    .map(value => value.toString())
+    .filter(value => value !== 0) // remove empty tags
+    .map(value => value.toString()) // convert to string for master tag list
+    .slice(0, NUM_TAGS_ALLOWED) // limit the number of tags to the first 5
   );
 
-  // import the tags from the tags.json file
+  // import the master tags list from the tags.json file and create a signal
   const [tagList] = createSignal(tagMap);
 
   // map the tags to the short and long titles
   const [tags] = createSignal(rawTags()
     .map(rawTags => tagList()[rawTags as keyof typeof tagList] as { short: string, long: string }));
-  console.log(tags());
 
   return (
     <A href={`/listing/${props.listing.name}`}>
