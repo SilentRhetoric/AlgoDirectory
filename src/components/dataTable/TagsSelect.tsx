@@ -1,4 +1,4 @@
-import { createSignal, For, Show } from 'solid-js';
+import { createMemo, For, Show } from 'solid-js';
 import { type Table } from '@tanstack/solid-table';
 import {
   Select,
@@ -17,7 +17,7 @@ type Props<TData> = {
 };
 
 const TagsSelect = <TData,>(props: Props<TData>) => {
-  const [taglist] = createSignal(generateTagsList());
+  const taglist = createMemo(() => generateTagsList());
   const filteredStatusList = () =>
     taglist().map((e) => ({
       title: e,
