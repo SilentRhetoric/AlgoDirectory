@@ -9,7 +9,7 @@ const walletManager = new WalletManager({
     WalletId.EXODUS,
     {
       id: WalletId.WALLETCONNECT,
-      options: { projectId: "d9cef016ef56cf53a72d549e5898f348" },
+      options: { projectId: "81b8486634fd8d59e84d3972b59d05b3" },
     },
     {
       id: WalletId.LUTE,

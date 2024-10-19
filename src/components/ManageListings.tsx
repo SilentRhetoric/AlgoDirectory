@@ -1,13 +1,13 @@
 import { AlgorandClient } from "@algorandfoundation/algokit-utils"
 import { useWallet } from "@txnlab/use-wallet-solid"
-import { createResource, For, Show } from "solid-js"
+import { createResource, For, Show, Suspense } from "solid-js"
 import { AlgoDirectoryClient } from "~/lib/AlgoDirectoryClient"
 import { getOwnedSegments } from "~/lib/nfd-api"
 import { ellipseString } from "~/lib/utilities"
+import { ManageListingOptions } from "./ManageListingOptions"
 
 export default function ManageListings() {
-  const { activeAddress, transactionSigner, activeWallet, activeNetwork, algodClient, wallets } =
-    useWallet()
+  const { activeAddress, activeWallet, transactionSigner, wallets } = useWallet()
 
   const [ownedSegments] = createResource(async () => {
     const response = await getOwnedSegments(activeAddress()!)
@@ -16,26 +16,9 @@ export default function ManageListings() {
 
   const algorand = AlgorandClient.testNet()
   const typedAppClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
-    appId: 576232821n, // TODO: This is the directory.algo NFD, not the directory app
+    appId: 722603330n,
     defaultSender: activeAddress()!, // TODO: Handle null case from use-wallet
   })
-
-  async function createNewListing() {
-    const payTxn = algorand.createTransaction.payment({
-      sender: activeAddress()!, // TODO: Handle null case from use-wallet
-      receiver: typedAppClient.appAddress,
-      amount: (72200).microAlgo(), // Each listing 72_200 uA
-    })
-    const createResult = await typedAppClient.send.createListing({
-      args: {
-        collateralPayment: payTxn,
-        nfdAppId: 673442367,
-        listingTags: new Uint8Array(13),
-      },
-      signer: transactionSigner,
-    })
-    console.debug(createResult)
-  }
 
   return (
     <div>
@@ -59,30 +42,35 @@ export default function ManageListings() {
           </div>
         }
       >
-        <div class="flex flex-col gap-4">
-          <div class="flex flex-row">
-            <p>Connected Address: {ellipseString(activeAddress())}</p>
-            <div class="grow"></div>
-            <button
-              onClick={() => activeWallet()!.disconnect()}
-              aria-label="Disconnect"
-              class="uppercase"
-            >
-              Disconnect
-            </button>
+        <Suspense fallback={<div>Loading your segments...</div>}>
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-row">
+              <p>Connected Address: {ellipseString(activeAddress())}</p>
+              <div class="grow"></div>
+              <button
+                onClick={() => activeWallet()!.disconnect()}
+                aria-label="Disconnect"
+                class="uppercase"
+              >
+                Disconnect
+              </button>
+            </div>
+            <For each={ownedSegments()?.nfds}>
+              {(segment) => (
+                <div class="flex flex-row gap-2 rounded-sm border-[1px] p-4">
+                  <p>{segment.name}</p>
+                  <ManageListingOptions
+                    segment={segment}
+                    algorand={algorand}
+                    typedAppClient={typedAppClient}
+                    sender={activeAddress()!}
+                    transactionSigner={transactionSigner}
+                  />
+                </div>
+              )}
+            </For>
           </div>
-          <For each={ownedSegments()?.nfds}>
-            {(segment) => (
-              <div class="flex flex-row gap-2 rounded-sm border-[1px] p-4">
-                <p>{segment.name}</p>
-                <div class="grow"></div>
-                <input>Vouch amount</input>
-                <button onClick={createNewListing}>List it</button>
-                <p>{JSON.stringify(segment)}</p>
-              </div>
-            )}
-          </For>
-        </div>
+        </Suspense>
       </Show>
     </div>
   )

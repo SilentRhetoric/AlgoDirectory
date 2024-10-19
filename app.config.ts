@@ -4,7 +4,7 @@ export default defineConfig({
   ssr: true,
   server: {
     prerender: {
-      routes: ["/about"], // TODO: Experiment with prerendering "/"
+      routes: ["/about"],
     },
   },
   vite: {

@@ -62,7 +62,7 @@ async function fetchOwnedSegments(address: string) {
       return { error: e }
     }
   } catch (error) {
-    console.error(error)
+    console.error(`Other error: ${error}`)
     return { error }
   }
 }
