@@ -12,7 +12,7 @@ import { cache } from "@solidjs/router"
 import { AlgorandClient } from "@algorandfoundation/algokit-utils"
 import { AlgoDirectoryClient } from "./AlgoDirectoryClient"
 import { BoxName } from "@algorandfoundation/algokit-utils/types/app"
-import { ABIType } from "algosdk"
+import { ABIType, encodeUint64 } from "algosdk"
 import { Listing } from "~/types/types"
 
 // TODO: Use netlify.toml to set something so that this will query the
@@ -24,10 +24,10 @@ const typedClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
   appId: BigInt(722603330),
 })
 
-function boxNamesToListings(boxNames: BoxName[]): Listing[] {
-  const listingKeyCodecString = "(uint64,uint64,uint64,byte[13],string)"
-  const listingKeyCodec = ABIType.from(listingKeyCodecString)
+const listingKeyCodecString = "(uint64,uint64,uint64,byte[13],string)"
+const listingKeyCodec = ABIType.from(listingKeyCodecString)
 
+function boxNamesToListings(boxNames: BoxName[]): Listing[] {
   // There are two boxes per listing in the Directory smart contract:
   // 1. Key=AppID, Value=Listing struct
   // 2. Key=Listing struct, Value=Address of the listing owner
@@ -65,3 +65,19 @@ export const getListings = cache(async (): Promise<Listing[]> => {
   "use server"
   return fetchListings()
 }, "getListings")
+
+// For client-side fetching of individual listings
+export async function fetchListing(appID: number): Promise<Listing | null> {
+  try {
+    const boxNameBytes = encodeUint64(appID)
+    const box = await typedClient.appClient.getBoxValue(boxNameBytes)
+    const decoded = listingKeyCodec.decode(box)
+    const [timestamp, vouchAmount, nfdAppID, tags, name] = Object.values(decoded)
+    const listing: Listing = { timestamp, vouchAmount, nfdAppID, tags, name }
+    console.debug("listing:", listing)
+    return listing
+  } catch (error) {
+    console.error("Error fetching box", error)
+    return null
+  }
+}

@@ -9,12 +9,30 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --secondary: 0, 0, 0;
     --primary: 255, 255, 255;
+    --secondary: 0, 0, 0;
   }
 }
 
-body {
+body,
+input,
+button {
   background: rgb(var(--secondary));
   color: rgb(var(--primary));
+}
+
+@layer base {
+  h1 {
+    @apply pt-4 text-3xl uppercase;
+  }
+  h2 {
+    @apply pt-4 text-xl uppercase;
+  }
+  h3 {
+    @apply pt-4 text-lg uppercase;
+  }
+  input,
+  button {
+    @apply uppercase;
+  }
 }
