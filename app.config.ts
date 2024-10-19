@@ -6,6 +6,7 @@ export default defineConfig({
     prerender: {
       routes: ["/about"],
     },
+    esbuild: { options: { target: "esnext" } },
   },
   vite: {
     optimizeDeps: {
@@ -16,22 +17,6 @@ export default defineConfig({
         "@walletconnect/sign-client",
         "algosdk",
       ],
-      // esbuildOptions: {  // Was trying to address Vinxi server build failure
-      //   target: "es2020",
-      //   // Node.js global to browser globalThis
-      //   define: {
-      //     global: "globalThis",
-      //   },
-      //   supported: {
-      //     bigint: true,
-      //   },
-      // },
-    },
-    build: {
-      // target: ["es2020"], // Was trying to address Vinxi server build failure
-      commonjsOptions: {
-        transformMixedEsModules: true,
-      },
     },
     // esbuild: { drop: ["console"] },
   },
