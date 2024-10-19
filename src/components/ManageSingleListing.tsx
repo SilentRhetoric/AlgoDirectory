@@ -6,7 +6,7 @@ import { fetchListing } from "~/lib/algod-api"
 import { AlgoDirectoryClient } from "~/lib/AlgoDirectoryClient"
 import { NfdRecord } from "~/lib/nfd-swagger-codegen"
 
-type ManageListingOptionsProps = {
+type ManageSingleListingProps = {
   segment: NfdRecord
   algorand: AlgorandClient
   typedAppClient: AlgoDirectoryClient
@@ -14,13 +14,13 @@ type ManageListingOptionsProps = {
   transactionSigner: TransactionSigner
 }
 
-export const ManageListingOptions: Component<{
+export const ManageSingleListing: Component<{
   segment: NfdRecord
   algorand: AlgorandClient
   typedAppClient: AlgoDirectoryClient
   sender: string
   transactionSigner: TransactionSigner
-}> = (props: ManageListingOptionsProps) => {
+}> = (props: ManageSingleListingProps) => {
   const [vouchAmount, setVouchAmount] = createSignal(0.0722) // Each listing requires min 72_200uA
   createComputed(() => {
     console.debug("vouchAmount: ", vouchAmount())

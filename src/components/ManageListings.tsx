@@ -4,7 +4,7 @@ import { createResource, For, Show, Suspense } from "solid-js"
 import { AlgoDirectoryClient } from "~/lib/AlgoDirectoryClient"
 import { getOwnedSegments } from "~/lib/nfd-api"
 import { ellipseString } from "~/lib/utilities"
-import { ManageListingOptions } from "./ManageListingOptions"
+import { ManageSingleListing } from "./ManageSingleListing"
 
 export default function ManageListings() {
   const { activeAddress, activeWallet, transactionSigner, wallets } = useWallet()
@@ -59,7 +59,7 @@ export default function ManageListings() {
               {(segment) => (
                 <div class="flex flex-row gap-2 rounded-sm border-[1px] p-4">
                   <p>{segment.name}</p>
-                  <ManageListingOptions
+                  <ManageSingleListing
                     segment={segment}
                     algorand={algorand}
                     typedAppClient={typedAppClient}
