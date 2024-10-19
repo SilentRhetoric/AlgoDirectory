@@ -10,6 +10,14 @@ export type Listing = {
   name: string // NFD names are up to 27 characters
 } // 64 bytes total
 
+export type DisplayedListing = {
+  nfdAppID: bigint
+  name: string
+  amount: string
+  timestamp: string
+  tags: string[]
+}
+
 export class ListingPreview {
   private _timestamp: bigint
   private _vouchAmount: bigint

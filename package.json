@@ -16,6 +16,7 @@
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.14.7",
     "@solidjs/start": "^1.0.8",
+    "@tanstack/solid-table": "^8.20.5",
     "@txnlab/use-wallet-solid": "^3.7.0",
     "@walletconnect/modal": "^2.6.2",
     "@walletconnect/sign-client": "^2.16.2",
