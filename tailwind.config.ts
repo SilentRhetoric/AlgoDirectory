@@ -2,7 +2,10 @@
 module.exports = {
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
-    colors: { algorandTeal: "rgb(var(--algorandTeal))" },
+    colors: {
+      primary: "rgb(var(--primary))",
+      secondary: "rgb(var(--secondary))",
+    },
     extend: {},
   },
   plugins: [],

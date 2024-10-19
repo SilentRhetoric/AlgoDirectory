@@ -1,10 +1,23 @@
+import { createAsyncStore } from "@solidjs/router"
+import { For } from "solid-js"
+import { ListingCard } from "~/components/ListingCard"
 import SiteTitle from "~/components/SiteTitle"
+import { getListings } from "~/lib/algod-api"
 
 export default function Home() {
+  const listings = createAsyncStore(() => getListings(), {
+    initialValue: [],
+    reconcile: { merge: true },
+  })
+
   return (
-    <main class="text-gray-700 mx-auto p-4 text-center">
+    <main class="flex flex-col gap-2 p-4">
       <SiteTitle>Home</SiteTitle>
-      <h1 class="max-6-xs text-sky-700 my-16 text-6xl font-thin uppercase">Listings Page</h1>
+      <For each={listings()}>
+        {(listing) => {
+          return <ListingCard listing={listing} />
+        }}
+      </For>
     </main>
   )
 }

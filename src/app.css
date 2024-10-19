@@ -3,20 +3,36 @@
 @tailwind utilities;
 
 :root {
-  --background: 255, 255, 255;
-  --foreground: 0, 0, 0;
-  --algorandBlue: 45, 45, 241;
-  --algorandTeal: 23, 202, 198;
+  --primary: 0, 0, 0;
+  --secondary: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: 0, 0, 0; /* Algorand dark background is 0, 19, 36; */
-    --foreground: 255, 255, 255;
+    --primary: 255, 255, 255;
+    --secondary: 0, 0, 0;
   }
 }
 
-body {
-  background: rgb(var(--background));
-  color: rgb(var(--foreground));
+body,
+input,
+button {
+  background: rgb(var(--secondary));
+  color: rgb(var(--primary));
+}
+
+@layer base {
+  h1 {
+    @apply pt-4 text-3xl uppercase;
+  }
+  h2 {
+    @apply pt-4 text-xl uppercase;
+  }
+  h3 {
+    @apply pt-4 text-lg uppercase;
+  }
+  input,
+  button {
+    @apply uppercase;
+  }
 }
