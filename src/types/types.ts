@@ -1,6 +1,6 @@
 import { microAlgo } from "@algorandfoundation/algokit-utils"
 import { formatDistanceToNow } from "date-fns"
-import { NfdRecordResponseFull } from "~/lib/nfd-swagger-codegen"
+import { NfdRecordResponseFull } from "@/lib/nfd-swagger-codegen"
 
 export type Listing = {
   timestamp: bigint // 8 bytes
@@ -9,6 +9,14 @@ export type Listing = {
   tags: Uint8Array // 13 bytes, each representing one of 255 possible tags
   name: string // NFD names are up to 27 characters
 } // 64 bytes total
+
+export type DisplayedListing = {
+  nfdAppID: bigint
+  name: string
+  amount: string
+  timestamp: string
+  tags: string[]
+}
 
 export class ListingPreview {
   private _timestamp: bigint

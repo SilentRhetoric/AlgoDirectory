@@ -1,5 +1,7 @@
-import { Component } from "solid-js"
-import { Listing } from "~/types/types"
+import { Component, createSignal, For } from "solid-js"
+import { Listing } from "@/types/types"
+import { Badge } from "@/components/ui/badge";
+import tagMap from "@/assets/tags.json"; // Adjust the path as necessary
 
 import { formatDistanceToNow } from "date-fns"
 import { microAlgo } from "@algorandfoundation/algokit-utils"
@@ -15,10 +17,26 @@ function formatTimestamp(timestamp: bigint) {
 
 type ListingCardProps = { listing: Listing }
 
+const NUM_TAGS_ALLOWED = 5
+
 export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardProps) => {
+  // filter and convert to strings the tags to remove all 0's that represent empty tags
+  const [rawTags] = createSignal(Array.from(props.listing.tags)
+    .filter(value => value !== 0) // remove empty tags
+    .map(value => value.toString()) // convert to string for master tag list
+    .slice(0, NUM_TAGS_ALLOWED) // limit the number of tags to the first 5
+  );
+
+  // import the master tags list from the tags.json file and create a signal
+  const [tagList] = createSignal(tagMap);
+
+  // map the tags to the short and long titles
+  const [tags] = createSignal(rawTags()
+    .map(rawTags => tagList()[rawTags as keyof typeof tagList] as { short: string, long: string }));
+
   return (
     <A href={`/listing/${props.listing.name}`}>
-      <div class="flex flex-row items-baseline justify-start gap-4">
+      <div class="flex flex-row items-baseline justify-start gap-4 space-y-5">
         <p class="text-xl uppercase">{props.listing.name}</p>
         <div class="flex flex-row items-baseline gap-1">
           <p>Vouched</p>
@@ -50,7 +68,15 @@ export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardP
           <p>{microAlgo(props.listing.vouchAmount).algo}</p>
         </div>
         <p>Listed {formatTimestamp(props.listing.timestamp)}</p>
-        {/* <p>Tags: {props.listing.tags}</p> */}
+      </div>
+      <div>
+        <p class="flex flex-row">
+          <For each={tags()}>
+            {(tag) => (
+                <Badge class="mr-2" variant="secondary">{tag.short}</Badge>
+            )}
+          </For>
+        </p>
       </div>
     </A>
   )
