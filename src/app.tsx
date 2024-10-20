@@ -14,7 +14,7 @@ export default function App() {
         <MetaProvider>
           <div class="mx-auto flex max-w-screen-xl flex-col justify-center font-thin">
             <Header />
-            <div class="md:min-h-[calc(100vh-128px)]">
+            <div class="min-h-[calc(100vh-128px)]">
               <Suspense fallback={<div>Loading...</div>}>
                 <ColorModeScript />
                 <ColorModeProvider>{props.children}</ColorModeProvider>

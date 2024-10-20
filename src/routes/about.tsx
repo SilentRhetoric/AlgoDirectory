@@ -1,4 +1,4 @@
-import SiteTitle from "~/components/SiteTitle"
+import SiteTitle from "@/components/SiteTitle"
 
 export default function About() {
   return (

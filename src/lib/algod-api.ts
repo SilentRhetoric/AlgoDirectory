@@ -21,7 +21,7 @@ import { Listing } from "@/types/types"
 const algorand = AlgorandClient.testNet()
 
 const typedClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
-  appId: BigInt(723090110), // Silent: appId 722603330 - Tako: appId 723090110
+  appId: BigInt(722603330), // Silent: appId 722603330 - Tako: appId 723090110
 })
 
 const listingKeyCodecString = "(uint64,uint64,uint64,byte[13],string)"

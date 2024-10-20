@@ -2,9 +2,9 @@ import { AlgorandClient } from "@algorandfoundation/algokit-utils"
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import { TransactionSigner } from "algosdk"
 import { Component, createComputed, createResource, createSignal, Show, Suspense } from "solid-js"
-import { fetchListing } from "~/lib/algod-api"
-import { AlgoDirectoryClient } from "~/lib/AlgoDirectoryClient"
-import { NfdRecord } from "~/lib/nfd-swagger-codegen"
+import { fetchListing } from "@/lib/algod-api"
+import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
+import { NfdRecord } from "@/lib/nfd-swagger-codegen"
 
 type ManageSingleListingProps = {
   segment: NfdRecord

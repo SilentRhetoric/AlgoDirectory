@@ -1,9 +1,9 @@
 import { AlgorandClient } from "@algorandfoundation/algokit-utils"
 import { useWallet } from "@txnlab/use-wallet-solid"
 import { createResource, For, Show, Suspense } from "solid-js"
-import { AlgoDirectoryClient } from "~/lib/AlgoDirectoryClient"
-import { getOwnedSegments } from "~/lib/nfd-api"
-import { ellipseString } from "~/lib/utilities"
+import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
+import { getOwnedSegments } from "@/lib/nfd-api"
+import { ellipseString } from "@/lib/utilities"
 import { ManageSingleListing } from "./ManageSingleListing"
 
 export default function ManageListings() {

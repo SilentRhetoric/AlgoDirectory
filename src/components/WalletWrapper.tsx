@@ -1,6 +1,6 @@
 import { NetworkId, WalletId, WalletManager, WalletProvider } from "@txnlab/use-wallet-solid"
 import { ErrorBoundary } from "solid-js"
-import ManageListings from "~/components/ManageListings"
+import ManageListings from "@/components/ManageListings"
 
 const walletManager = new WalletManager({
   wallets: [

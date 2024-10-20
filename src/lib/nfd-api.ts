@@ -4,7 +4,7 @@ that is a segment of directory.algo and get its properties.
 */
 
 import { cache } from "@solidjs/router"
-import { NfdRecordResponseFull, NfdV2SearchRecords } from "~/lib/nfd-swagger-codegen"
+import { NfdRecordResponseFull, NfdV2SearchRecords } from "@/lib/nfd-swagger-codegen"
 
 // TODO: Use netlify.toml to set something so that this will query the
 // mainnet API when deployed on Netlify and otherwise default to testnet
