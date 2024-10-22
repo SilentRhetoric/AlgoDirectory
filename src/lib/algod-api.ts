@@ -21,7 +21,7 @@ import { Listing } from "@/types/types"
 const algorand = AlgorandClient.testNet()
 
 const typedClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
-  appId: BigInt(722603330), // Silent: appId 722603330 - Tako: appId 723090110
+  appId: BigInt(723090110), // Silent: appId 722603330 - Tako: appId 723090110
 })
 
 const listingKeyCodecString = "(uint64,uint64,uint64,byte[13],string)"
@@ -63,21 +63,26 @@ async function fetchListings(): Promise<Listing[]> {
 
 export const getListings = cache(async (): Promise<Listing[]> => {
   "use server"
-  return fetchListings()
+  try {
+    return fetchListings()
+  } catch (error: any) {
+    console.error("Error fetching listings: ", error)
+    return []
+  }
+  
 }, "getListings")
 
 // For client-side fetching of individual listings
-export async function fetchListing(appID: number): Promise<Listing | null> {
+export async function fetchListing(appID: number): Promise<Listing> {
   try {
     const boxNameBytes = encodeUint64(appID)
     const box = await typedClient.appClient.getBoxValue(boxNameBytes)
     const decoded = listingKeyCodec.decode(box)
     const [timestamp, vouchAmount, nfdAppID, tags, name] = Object.values(decoded)
     const listing: Listing = { timestamp, vouchAmount, nfdAppID, tags, name }
-    console.debug("listing:", listing)
     return listing
-  } catch (error) {
-    console.error("Error fetching box", error)
-    return null
+  } catch (error: any) {
+    // console.error("Error fetching box: ", error.message)
+    throw new Error(error.message)
   }
 }
