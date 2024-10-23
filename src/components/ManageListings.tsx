@@ -6,6 +6,7 @@ import { getOwnedSegments } from "@/lib/nfd-api"
 import { ellipseString } from "@/lib/utilities"
 import { ManageSingleListing } from "./ManageSingleListing"
 import { Button } from "@/components/ui/button"
+import LoadingIcon from "@/components/icons/LoadingIcon"
 
 export default function ManageListings() {
   const { activeAddress, activeWallet, transactionSigner, wallets } = useWallet()
@@ -57,7 +58,12 @@ export default function ManageListings() {
           </div>
         }
       >
-        <Suspense fallback={<div>Loading your directory.algo segments...</div>}>
+        <Suspense fallback={
+          <div class="mx-auto flex items-center justify-center min-h-screen">
+            <span class="animate-spin"><LoadingIcon /></span>
+          </div>
+          }
+        >
           <div class="flex flex-col gap-4">
             <div class="flex flex-row">
               <p>Connected Address: {ellipseString(activeAddress())}</p>
@@ -70,7 +76,7 @@ export default function ManageListings() {
                 Disconnect
               </Button>
             </div>
-            <div class="md:gap- grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+            <div class="md:gap-3 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
               <For each={ownedSegments()?.nfds}>
                 {(segment) => (
                   <ManageSingleListing

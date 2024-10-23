@@ -10,25 +10,15 @@ import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
-import {
-	NumberField,
-	NumberFieldDecrementTrigger,
-	NumberFieldGroup,
-	NumberFieldIncrementTrigger,
-	NumberFieldInput,
-} from "@/components/ui/number-field"
-import { Separator } from "@/components/ui/separator";
 import { Badge } from "./ui/badge"
 import MultiSelectTags from "./MultiSelectTags"
 import { generateTagsList } from "@/lib/tag-generator"
 import AlgorandLogo from "./icons/AlgorandLogo"
 import LoadingIcon from "./icons/LoadingIcon"
-import { set } from "date-fns"
 
 type ManageSingleListingProps = {
   segment: NfdRecord
@@ -167,7 +157,13 @@ export const ManageSingleListing: Component<{
   }
 
   return (
-    <Suspense fallback={<div>Checking for listing</div>}>
+    <Suspense fallback={
+      // Using h-96 to emulate the cards height
+      <div class="flex items-center justify-center h-96 w-full">
+        <span class="animate-spin"><LoadingIcon /></span>
+      </div>
+      }
+    >
       <Show
         when={listing.latest}
         fallback={
