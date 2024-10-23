@@ -12,16 +12,11 @@ export default function About() {
         listing owners.
       </p>
       <p>
-        This directory aims to be best first stop new users in Algorand ecosystem, a valuable
-        reference guide for existing Algorand enthusiasts, and the premier place for projects to be
-        listed and discovered.
-      </p>
-      <p>
         To create a listing in AlgoDirectory, first{" "}
         <a
           href="https://app.nf.domains/name/directory.algo?view=segments"
           target="_blank"
-          class="font-thin"
+          class="font-thin text-blue-500"
         >
           mint a segment
         </a>{" "}
@@ -47,7 +42,12 @@ export default function About() {
         to give back to the community for many moons.
       </p>
       <h2 class="font-thin">Guiding Principles</h2>
-      <p>AlgoDirectory improves upon previous Algorand directories in three key ways:</p>
+      <p>
+        This directory aims to be best first stop new users in Algorand ecosystem, a valuable
+        reference guide for existing Algorand enthusiasts, and the premier place for projects to be
+        listed and discovered. To achieve that goal, AlgoDirectory improves upon previous Algorand
+        directories in three key ways:
+      </p>
       <ol>
         <li>
           <h3 class="font-thin">Decentralized, Permissionless, Permanent</h3>

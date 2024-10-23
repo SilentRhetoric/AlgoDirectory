@@ -23,17 +23,30 @@ export default function ManageListings() {
 
   return (
     <div>
+      <h1 class="flex flex-row items-center py-4 font-thin uppercase sm:justify-start">
+        <span>
+          Your{" "}
+          <a
+            href="https://app.testnet.nf.domains/name/directory.algo?view=segments"
+            target="_blank"
+            class="text-blue-500"
+          >
+            directory.algo
+          </a>{" "}
+          segments
+        </span>
+      </h1>
       <Show
         when={activeAddress()}
         fallback={
           <div class="flex flex-col items-center gap-2">
             <h2 class="text-center text-2xl">Connect Your Wallet</h2>
-            <div class="flex flex-col sm:gap-1 gap-2">
+            <div class="flex flex-col gap-2 sm:gap-1">
               <For each={wallets}>
                 {(wallet) => (
                   <Button
                     variant="outline"
-                    class="rounded-sm border-[1px] p-2 w-48 h-12 text-lg"
+                    class="h-12 w-48 rounded-sm border-[1px] p-2 text-lg"
                     onClick={() => wallet.connect()}
                   >
                     {wallet.name}
@@ -44,7 +57,7 @@ export default function ManageListings() {
           </div>
         }
       >
-        <Suspense fallback={<div>Loading your segments...</div>}>
+        <Suspense fallback={<div>Loading your directory.algo segments...</div>}>
           <div class="flex flex-col gap-4">
             <div class="flex flex-row">
               <p>Connected Address: {ellipseString(activeAddress())}</p>
@@ -57,10 +70,9 @@ export default function ManageListings() {
                 Disconnect
               </Button>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-3 md:gap- lg:grid-cols-3">
+            <div class="md:gap- grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
               <For each={ownedSegments()?.nfds}>
                 {(segment) => (
-                    // <p>{segment.name}</p>
                   <ManageSingleListing
                     segment={segment}
                     algorand={algorand}
@@ -70,7 +82,6 @@ export default function ManageListings() {
                   />
                 )}
               </For>
-                        
             </div>
           </div>
         </Suspense>
@@ -78,7 +89,3 @@ export default function ManageListings() {
     </div>
   )
 }
-// For each owned segment
-// Get listing data from box by name, where name is the nfdAppID
-// If no listing, amount field and create listing button
-// If listing exists, refresh and abandon buttons

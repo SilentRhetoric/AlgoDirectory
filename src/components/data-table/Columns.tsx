@@ -43,20 +43,22 @@ export const columns: ColumnDef<DisplayedListing>[] = [
     ),
   },
   {
-    accessorKey: "timestamp",
-    header: (props) => (
-      <SortingColumnHeader
-        column={props.column}
-        title="Updated"
-      />
-    ),
+    accessorKey: "tags",
+    header: "Tags",
+    filterFn: findTagsFilter,
     cell: (props) => (
-      <A
-        href={`/listing/${props.row.original.name}`}
-        class="flex space-x-4"
-      >
-        <span class="ml-4">{props.row.original.timestamp}</span>
-      </A>
+      <div class="flex space-x-4">
+        <span class="truncate font-thin">
+          {props.row.original.tags.map((tag) => (
+            <Badge
+              variant="secondary"
+              class="mr-1"
+            >
+              {tag}
+            </Badge>
+          ))}
+        </span>
+      </div>
     ),
   },
   {
@@ -106,24 +108,23 @@ export const columns: ColumnDef<DisplayedListing>[] = [
     ),
   },
   {
-    accessorKey: "tags",
-    header: "Tags",
-    filterFn: findTagsFilter,
+    accessorKey: "timestamp",
+    header: (props) => (
+      <SortingColumnHeader
+        column={props.column}
+        title="Updated"
+      />
+    ),
     cell: (props) => (
-      <div class="flex space-x-4">
-        <span class="truncate font-thin">
-          {props.row.original.tags.map((tag) => (
-            <Badge
-              variant="secondary"
-              class="mr-1"
-            >
-              {tag}
-            </Badge>
-          ))}
-        </span>
-      </div>
+      <A
+        href={`/listing/${props.row.original.name}`}
+        class="flex space-x-4"
+      >
+        <span class="ml-4">{props.row.original.timestamp}</span>
+      </A>
     ),
   },
+
   // {
   //   id: "actions",
   //   cell: () => (
