@@ -23,7 +23,7 @@ export default function WalletWrapper() {
   return (
     <ErrorBoundary fallback={(err, reset) => <div onClick={reset}>Error: {err.toString()}</div>}>
       <WalletProvider manager={walletManager}>
-        <h1 class="py-4 font-thin uppercase">Manage Your Listings</h1>
+        <h1 class="py-4 font-thin uppercase flex flex-row sm:justify-start justify-center items-center">Manage Your Listings</h1>
         <ManageListings />
       </WalletProvider>
     </ErrorBoundary>

@@ -1,21 +1,12 @@
-import { columns } from "@/components/dataTable/Columns"
-import { DataTable } from "@/components/dataTable/DataTables"
+import { columns } from "@/components/data-table/Columns"
+import { DataTable } from "@/components/data-table/DataTables"
 import { createAsyncStore } from "@solidjs/router"
 
 import { getListings } from "@/lib/algod-api"
-import { formatDistanceToNow } from "date-fns"
 import tagMap from "@/assets/tags.json" // Adjust the path as necessary
 import { Suspense } from "solid-js"
-
-const NUM_TAGS_ALLOWED = 5
-
-function formatTimestamp(timestamp: bigint) {
-  // Convert the Unix timestamp to milliseconds
-  const date = new Date(Number(timestamp) * 1000)
-
-  // Use formatDistanceToNow to get the relative time
-  return formatDistanceToNow(date, { addSuffix: true })
-}
+import { formatTimestamp } from "@/lib/utilities"
+import { NUM_TAGS_ALLOWED } from "@/lib/const";
 
 const Home = () => {
   const listings = createAsyncStore(async () => {
@@ -23,7 +14,7 @@ const Home = () => {
     const rawListings = await getListings()
 
     // We need to convert the raw listings to a format that can be displayed
-    const c_listings = rawListings?.map((listing) => ({
+    const c_listings = rawListings?.map((listing: { nfdAppID: any; name: any; vouchAmount: any; timestamp: bigint; tags: Iterable<unknown> | ArrayLike<unknown> }) => ({
       nfdAppID: listing.nfdAppID,
       name: listing.name,
       amount: (Number(listing.vouchAmount) * 1e-6).toFixed(4),

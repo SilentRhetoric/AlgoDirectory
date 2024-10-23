@@ -1,4 +1,3 @@
-import { microAlgo } from "@algorandfoundation/algokit-utils"
 import { formatDistanceToNow } from "date-fns"
 import { NfdRecordResponseFull } from "@/lib/nfd-swagger-codegen"
 

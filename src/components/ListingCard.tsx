@@ -6,6 +6,7 @@ import tagMap from "@/assets/tags.json"; // Adjust the path as necessary
 import { formatDistanceToNow } from "date-fns"
 import { microAlgo } from "@algorandfoundation/algokit-utils"
 import { A } from "@solidjs/router"
+import { NUM_TAGS_ALLOWED } from "@/lib/const";
 
 function formatTimestamp(timestamp: bigint) {
   // Convert the Unix timestamp to milliseconds
@@ -16,8 +17,6 @@ function formatTimestamp(timestamp: bigint) {
 }
 
 type ListingCardProps = { listing: Listing }
-
-const NUM_TAGS_ALLOWED = 5
 
 export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardProps) => {
   // filter and convert to strings the tags to remove all 0's that represent empty tags

@@ -5,6 +5,7 @@ import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
 import { getOwnedSegments } from "@/lib/nfd-api"
 import { ellipseString } from "@/lib/utilities"
 import { ManageSingleListing } from "./ManageSingleListing"
+import { Button } from "@/components/ui/button"
 
 export default function ManageListings() {
   const { activeAddress, activeWallet, transactionSigner, wallets } = useWallet()
@@ -16,7 +17,7 @@ export default function ManageListings() {
 
   const algorand = AlgorandClient.testNet()
   const typedAppClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
-    appId: 722603330n,
+    appId: 723090110n, // Silent: appId 722603330 - Tako: appId 723090110
     defaultSender: activeAddress()!, // TODO: Handle null case from use-wallet
   })
 
@@ -27,15 +28,16 @@ export default function ManageListings() {
         fallback={
           <div class="flex flex-col items-center gap-2">
             <h2 class="text-center text-2xl">Connect Your Wallet</h2>
-            <div class="flex flex-col gap-1">
+            <div class="flex flex-col sm:gap-1 gap-2">
               <For each={wallets}>
                 {(wallet) => (
-                  <button
-                    class="rounded-sm border-[1px] p-2"
+                  <Button
+                    variant="outline"
+                    class="rounded-sm border-[1px] p-2 w-48 h-12 text-lg"
                     onClick={() => wallet.connect()}
                   >
                     {wallet.name}
-                  </button>
+                  </Button>
                 )}
               </For>
             </div>
@@ -47,18 +49,18 @@ export default function ManageListings() {
             <div class="flex flex-row">
               <p>Connected Address: {ellipseString(activeAddress())}</p>
               <div class="grow"></div>
-              <button
+              <Button
                 onClick={() => activeWallet()!.disconnect()}
                 aria-label="Disconnect"
                 class="uppercase"
               >
                 Disconnect
-              </button>
+              </Button>
             </div>
-            <For each={ownedSegments()?.nfds}>
-              {(segment) => (
-                <div class="flex flex-row gap-2 rounded-sm border-[1px] p-4">
-                  <p>{segment.name}</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-3 md:gap- lg:grid-cols-3">
+              <For each={ownedSegments()?.nfds}>
+                {(segment) => (
+                    // <p>{segment.name}</p>
                   <ManageSingleListing
                     segment={segment}
                     algorand={algorand}
@@ -66,9 +68,10 @@ export default function ManageListings() {
                     sender={activeAddress()!}
                     transactionSigner={transactionSigner}
                   />
-                </div>
-              )}
-            </For>
+                )}
+              </For>
+                        
+            </div>
           </div>
         </Suspense>
       </Show>
