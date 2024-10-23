@@ -2,7 +2,7 @@ import { A } from "@solidjs/router"
 
 export default function Header() {
   return (
-    <nav class="sticky top-0 z-50 flex flex-row items-center gap-4 bg-secondary p-4 uppercase">
+    <nav class="bg-background sticky top-0 z-50 flex flex-row items-center gap-4 p-4 uppercase">
       <A href="/">
         <svg
           viewBox="0 0 86 48"

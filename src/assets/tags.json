@@ -1,0 +1,106 @@
+{
+  "1": {
+    "short": "Marketplace",
+    "long": "Marketplace"
+  },
+  "2": {
+    "short": "Wallet",
+    "long": "Wallet"
+  },
+  "3": {
+    "short": "NFTs",
+    "long": "Non-Fungible Token"
+  },
+  "4": {
+    "short": "DAO",
+    "long": "Decentralized Autonomous Organization"
+  },
+  "5": {
+    "short": "dApp",
+    "long": "Decentralized Application"
+  },
+  "6": {
+    "short": "Smart Contract",
+    "long": "Smart Contract"
+  },
+  "7": {
+    "short": "dLending",
+    "long": "Decentralized Lending"
+  },
+  "8": {
+    "short": "Interop",
+    "long": "Interoperability"
+  },
+  "9": {
+    "short": "Bridge",
+    "long": "Bridge"
+  },
+  "10": {
+    "short": "dStorage",
+    "long": "Decentralized Storage"
+  },
+  "11": {
+    "short": "DEX",
+    "long": "Decentralized Exchange"
+  },
+  "12": {
+    "short": "Yield Farming",
+    "long": "Yield Farming"
+  },
+  "13": {
+    "short": "Staking",
+    "long": "Staking"
+  },
+  "14": {
+    "short": "Governance Token",
+    "long": "Governance Token"
+  },
+  "15": {
+    "short": "Metaverse",
+    "long": "Metaverse"
+  },
+  "16": {
+    "short": "Gaming",
+    "long": "Gaming"
+  },
+  "17": {
+    "short": "Oracle",
+    "long": "Oracle"
+  },
+  "18": {
+    "short": "ZK",
+    "long": "Zero-Knowledge Proof"
+  },
+  "19": {
+    "short": "LST",
+    "long": "Liquid Staking"
+  },
+  "20": {
+    "short": "DSM",
+    "long": "Decentralized Social Media"
+  },
+  "21": {
+    "short": "Tokenized Asset",
+    "long": "Tokenized Asset"
+  },
+  "22": {
+    "short": "Real Estate",
+    "long": "Real Estate"
+  },
+  "23": {
+    "short": "dInsurance",
+    "long": "Decentralized Insurance"
+  },
+  "24": {
+    "short": "Cross-Chain",
+    "long": "Cross-Chain Technology"
+  },
+  "25": {
+    "short": "DID",
+    "long": "Decentralized Identity"
+  },
+  "26": {
+    "short": "DePIN",
+    "long": "Decentralized Physical Infrastructure Network "
+  }
+}

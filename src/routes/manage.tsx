@@ -1,4 +1,4 @@
-import SiteTitle from "~/components/SiteTitle"
+import SiteTitle from "@/components/SiteTitle"
 import { clientOnly } from "@solidjs/start"
 
 // To isolate the wallet state from the server, it is contained in a component

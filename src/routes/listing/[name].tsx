@@ -1,6 +1,6 @@
 import { createAsync, RouteDefinition, RouteSectionProps } from "@solidjs/router"
-import SiteTitle from "~/components/SiteTitle"
-import { getNFDInfo } from "~/lib/nfd-api"
+import SiteTitle from "@/components/SiteTitle"
+import { getNFDInfo } from "@/lib/nfd-api"
 
 export const route = {
   preload({ params }) {
