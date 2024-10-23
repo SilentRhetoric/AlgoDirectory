@@ -58,12 +58,7 @@ export default function ManageListings() {
           </div>
         }
       >
-        <Suspense fallback={
-          <div class="mx-auto flex items-center justify-center min-h-screen">
-            <span class="animate-spin"><LoadingIcon /></span>
-          </div>
-          }
-        >
+        <Suspense fallback={<div class="flex justify-center items-center min-h-screen">Loading...</div>}>
           <div class="flex flex-col gap-4">
             <div class="flex flex-row">
               <p>Connected Address: {ellipseString(activeAddress())}</p>
