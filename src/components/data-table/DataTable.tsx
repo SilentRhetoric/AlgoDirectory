@@ -53,6 +53,12 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
       get columnVisibility() {
         return columnVisibility()
       },
+      get pagination() {
+        return {
+          pageSize: 10_000,
+          pageIndex: 0,
+        }
+      }
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
