@@ -26,6 +26,8 @@ import SearchInputField from "./SearchInputField"
 import ColumnViewDropDown from "./ColumnViewDropDown"
 import TagsSelect from "./TagsSelect"
 import TagsComboBox from "./TagsComboBox"
+import { useNavigate } from "@solidjs/router"
+import { Listing } from "@/types/types"
 
 type Props<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
@@ -33,6 +35,7 @@ type Props<TData, TValue> = {
 }
 
 export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
+  const navigate = useNavigate();
   const [local] = splitProps(props, ["columns", "data"])
   const [sorting, setSorting] = createSignal<SortingState>([])
   const [columnFilters, setColumnFilters] = createSignal<ColumnFiltersState>([])
@@ -116,7 +119,11 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
             >
               <For each={table.getRowModel().rows}>
                 {(row) => (
-                  <TableRow data-state={row.getIsSelected() && "selected"}>
+                  <TableRow
+                    onClick={() => navigate(`/listing/${(row.original as Listing)?.name}`)}
+                    data-state={row.getIsSelected() && "selected"}
+                    class="cursor-pointer"
+                  >
                     <For each={row.getVisibleCells()}>
                       {(cell) => (
                         <TableCell>
