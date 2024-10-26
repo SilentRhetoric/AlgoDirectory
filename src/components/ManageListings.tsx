@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 export default function ManageListings() {
   const { activeAddress, activeWallet, transactionSigner, wallets } = useWallet()
 
-  const [ownedSegments] = createResource(async () => {
+  const [ownedSegments] = createResource(activeAddress, async () => {
     const response = await getOwnedSegments(activeAddress()!)
     return response
   })
