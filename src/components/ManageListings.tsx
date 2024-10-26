@@ -1,12 +1,9 @@
-import { AlgorandClient } from "@algorandfoundation/algokit-utils"
 import { useWallet } from "@txnlab/use-wallet-solid"
 import { createResource, For, Show, Suspense } from "solid-js"
-import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
 import { getOwnedSegments } from "@/lib/nfd-api"
 import { ellipseString } from "@/lib/utilities"
 import { ManageSingleListing } from "./ManageSingleListing"
 import { Button } from "@/components/ui/button"
-import LoadingIcon from "@/components/icons/LoadingIcon"
 
 export default function ManageListings() {
   const { activeAddress, activeWallet, transactionSigner, wallets } = useWallet()
@@ -14,12 +11,6 @@ export default function ManageListings() {
   const [ownedSegments] = createResource(async () => {
     const response = await getOwnedSegments(activeAddress()!)
     return response
-  })
-
-  const algorand = AlgorandClient.testNet()
-  const typedAppClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
-    appId: 723090110n, // Silent: appId 722603330 - Tako: appId 723090110
-    defaultSender: activeAddress()!, // TODO: Handle null case from use-wallet
   })
 
   return (
@@ -58,9 +49,11 @@ export default function ManageListings() {
           </div>
         }
       >
-        <Suspense fallback={<div class="flex justify-center items-center min-h-screen">Loading...</div>}>
+        <Suspense
+          fallback={<div class="flex min-h-screen items-center justify-center">Loading...</div>}
+        >
           <div class="flex flex-col gap-4">
-            <div class="flex flex-row">
+            <div class="flex flex-row items-center">
               <p>Connected Address: {ellipseString(activeAddress())}</p>
               <div class="grow"></div>
               <Button
@@ -71,13 +64,11 @@ export default function ManageListings() {
                 Disconnect
               </Button>
             </div>
-            <div class="md:gap-3 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 md:gap-3 lg:grid-cols-3">
               <For each={ownedSegments()?.nfds}>
                 {(segment) => (
                   <ManageSingleListing
                     segment={segment}
-                    algorand={algorand}
-                    typedAppClient={typedAppClient}
                     sender={activeAddress()!}
                     transactionSigner={transactionSigner}
                   />

@@ -1,29 +1,20 @@
-import { AlgorandClient, microAlgo } from "@algorandfoundation/algokit-utils"
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import { TransactionSigner } from "algosdk"
-import { Component, createComputed, createMemo, createResource, createSignal, Show, Suspense } from "solid-js"
-import { fetchListing } from "@/lib/algod-api"
-import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
+import { Component, createMemo, createResource, createSignal, Show, Suspense } from "solid-js"
+import { algorand, APP_ID, fetchListing } from "@/lib/algod-api"
 import { NfdRecord } from "@/lib/nfd-swagger-codegen"
 import { formatTimestamp } from "@/lib/utilities"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "./ui/badge"
 import MultiSelectTags from "./MultiSelectTags"
 import { generateTagsList } from "@/lib/tag-generator"
 import AlgorandLogo from "./icons/AlgorandLogo"
 import LoadingIcon from "./icons/LoadingIcon"
+import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
 
 type ManageSingleListingProps = {
   segment: NfdRecord
-  algorand: AlgorandClient
-  typedAppClient: AlgoDirectoryClient
   sender: string
   transactionSigner: TransactionSigner
 }
@@ -32,8 +23,6 @@ type TypeSubmitting = "create" | "refresh" | "abandon"
 
 export const ManageSingleListing: Component<{
   segment: NfdRecord
-  algorand: AlgorandClient
-  typedAppClient: AlgoDirectoryClient
   sender: string
   transactionSigner: TransactionSigner
 }> = (props: ManageSingleListingProps) => {
@@ -42,8 +31,10 @@ export const ManageSingleListing: Component<{
   const [vouchAmount, setVouchAmount] = createSignal(0.0722) // Each listing requires min 72_200uA
   const [tags, setTags] = createSignal<string[]>([])
   const tagMasterlist = createMemo(() => generateTagsList())
-  createComputed(() => {
-    console.debug("vouchAmount: ", vouchAmount())
+
+  const typedAppClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
+    appId: BigInt(APP_ID),
+    defaultSender: props.sender,
   })
 
   // Fetch the listing data for this segment
@@ -51,12 +42,14 @@ export const ManageSingleListing: Component<{
     try {
       const response = await fetchListing(props.segment.appID!)
       // Update tags from Uint8Array to string[]
-      setTags(Array.from(response?.tags || [])
-        .slice(0, 5)
-        .filter((tag: number) => tag !== 0)
-        .map((tag: number) => {
-          return tagMasterlist()[(tag - 1).toString() as keyof typeof tagMasterlist]
-      }))
+      setTags(
+        Array.from(response?.tags || [])
+          .slice(0, 5)
+          .filter((tag: number) => tag !== 0)
+          .map((tag: number) => {
+            return tagMasterlist()[(tag - 1).toString() as keyof typeof tagMasterlist]
+          }),
+      )
 
       // Update vouch amount
       setVouchAmount(Number((Number(response?.vouchAmount) * 1e-6).toFixed(4)))
@@ -84,15 +77,15 @@ export const ManageSingleListing: Component<{
   async function createListing() {
     setIsSubmitting(true)
     setTypeSubmitting("create")
-    const newTags = getUInt8Tags();
-    const payTxn = await props.algorand.createTransaction.payment({
+    const newTags = getUInt8Tags()
+    const payTxn = await algorand.createTransaction.payment({
       sender: props.sender,
-      receiver: props.typedAppClient.appAddress,
+      receiver: typedAppClient.appAddress,
       amount: AlgoAmount.Algo(vouchAmount()),
     })
     console.debug("payTxn: ", payTxn)
     try {
-      const createResult = await props.typedAppClient.send.createListing({
+      const createResult = await typedAppClient.send.createListing({
         args: {
           collateralPayment: payTxn,
           nfdAppId: props.segment.appID!,
@@ -114,9 +107,9 @@ export const ManageSingleListing: Component<{
   async function refreshListing() {
     setIsSubmitting(true)
     setTypeSubmitting("refresh")
-    const newTags = getUInt8Tags();
+    const newTags = getUInt8Tags()
     try {
-      const refreshResult = await props.typedAppClient.send.refreshListing({
+      const refreshResult = await typedAppClient.send.refreshListing({
         args: {
           nfdAppId: props.segment.appID!,
           listingTags: newTags,
@@ -130,14 +123,14 @@ export const ManageSingleListing: Component<{
     } finally {
       refetch()
       setIsSubmitting(false)
-    } 
+    }
   }
 
   async function abandonListing() {
     setIsSubmitting(true)
     setTypeSubmitting("abandon")
     try {
-      const abandonResult = await props.typedAppClient.send.abandonListing({
+      const abandonResult = await typedAppClient.send.abandonListing({
         args: {
           nfdAppId: props.segment.appID!,
         },
@@ -157,11 +150,14 @@ export const ManageSingleListing: Component<{
   }
 
   return (
-    <Suspense fallback={
-      // Using h-96 to emulate the cards height
-      <div class="flex items-center justify-center h-96 w-full">
-        <span class="animate-spin"><LoadingIcon /></span>
-      </div>
+    <Suspense
+      fallback={
+        // Using h-96 to emulate the cards height
+        <div class="flex h-96 w-full items-center justify-center">
+          <span class="animate-spin">
+            <LoadingIcon />
+          </span>
+        </div>
       }
     >
       <Show
@@ -172,12 +168,12 @@ export const ManageSingleListing: Component<{
               <CardTitle class="text-base">{props.segment.name}</CardTitle>
             </CardHeader>
             <CardContent class="flex flex-col space-y-3">
-              <div class="flex flex-row justify-between items-center">
+              <div class="flex flex-row items-center justify-between">
                 <label class="">Vouch Amount:</label>
                 <div class="flex flex-row items-center gap-1">
                   <input
                     disabled={isSubmitting()}
-                    class="w-32 h-8 border rounded-md p-4 bg-secondary"
+                    class="h-8 w-32 rounded-md border bg-secondary p-4"
                     type="number"
                     min={0.0722}
                     value={vouchAmount()}
@@ -193,26 +189,31 @@ export const ManageSingleListing: Component<{
                   <AlgorandLogo />
                 </div>
               </div>
-              <div class="flex flex-wrap gap-2 justify-start items-center h-14">
+              <div class="flex h-14 flex-wrap items-center justify-start gap-2">
                 {tags().map((tag: string) => (
-                  <Badge>
-                    {tag}
-                  </Badge>
+                  <Badge>{tag}</Badge>
                 ))}
-            </div>
-              <MultiSelectTags tags={tags()} masterlist={tagMasterlist()} isSubmitting={isSubmitting()} setTags={setTags}/>
+              </div>
+              <MultiSelectTags
+                tags={tags()}
+                masterlist={tagMasterlist()}
+                isSubmitting={isSubmitting()}
+                setTags={setTags}
+              />
             </CardContent>
             <div class="px-6">
-              <div class="h-px bg-border -mx-6 mb-6" />
+              <div class="-mx-6 mb-6 h-px bg-border" />
             </div>
             <CardFooter>
               <Button
                 disabled={isSubmitting()}
                 onClick={createListing}
-                class="w-full flex flex-row justify-center items-center gap-2"
+                class="flex w-full flex-row items-center justify-center gap-2"
               >
                 <Show when={isSubmitting() && typeSubmitting() === "create"}>
-                  <span class="animate-spin"><LoadingIcon /></span>
+                  <span class="animate-spin">
+                    <LoadingIcon />
+                  </span>
                 </Show>
                 Create Listing
               </Button>
@@ -229,7 +230,7 @@ export const ManageSingleListing: Component<{
               <span>{`Updated: `}</span>
               <span>{`${listing()?.timestamp ? formatTimestamp(listing()!.timestamp) : ""}`}</span>
             </div>
-            <div class="flex flex-row justify-between items-center">
+            <div class="flex flex-row items-center justify-between">
               <label class="">Vouch Amount:</label>
               <div class="flex flex-row items-center gap-1">
                 <span>{vouchAmount()}</span>
@@ -250,39 +251,46 @@ export const ManageSingleListing: Component<{
                 <AlgorandLogo />
               </div>
             </div>
-            <div class="flex flex-wrap gap-2 justify-start items-center h-14">
+            <div class="flex h-14 flex-wrap items-center justify-start gap-2">
               {tags().map((tag: string) => (
-                <Badge variant="secondary">
-                  {tag}
-                </Badge>
+                <Badge variant="secondary">{tag}</Badge>
               ))}
             </div>
-            <MultiSelectTags tags={tags()} masterlist={tagMasterlist()} isSubmitting={isSubmitting()} setTags={setTags}/>
+            <MultiSelectTags
+              tags={tags()}
+              masterlist={tagMasterlist()}
+              isSubmitting={isSubmitting()}
+              setTags={setTags}
+            />
           </CardContent>
           <div class="px-6">
-            <div class="h-px bg-border -mx-6 mb-6" />
+            <div class="-mx-6 mb-6 h-px bg-border" />
           </div>
           <CardFooter>
-            <div class="flex flex-col justify-start items-center w-full space-y-2">
+            <div class="flex w-full flex-col items-center justify-start space-y-2">
               <Button
                 variant="secondary"
-                class="w-full flex flex-row justify-center items-center gap-2"
+                class="flex w-full flex-row items-center justify-center gap-2"
                 disabled={isSubmitting()}
                 onClick={refreshListing}
               >
                 <Show when={isSubmitting() && typeSubmitting() === "refresh"}>
-                  <span class="animate-spin"><LoadingIcon /></span>
+                  <span class="animate-spin">
+                    <LoadingIcon />
+                  </span>
                 </Show>
                 Refresh Listing
               </Button>
               <Button
                 variant="destructive"
-                class="w-full flex flex-row justify-center items-center gap-2"
+                class="flex w-full flex-row items-center justify-center gap-2"
                 disabled={isSubmitting()}
                 onClick={abandonListing}
               >
                 <Show when={isSubmitting() && typeSubmitting() === "abandon"}>
-                  <span class="animate-spin"><LoadingIcon /></span>
+                  <span class="animate-spin">
+                    <LoadingIcon />
+                  </span>
                 </Show>
                 Abandon Listing
               </Button>

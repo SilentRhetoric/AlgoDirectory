@@ -18,10 +18,12 @@ import { Listing } from "@/types/types"
 // TODO: Use netlify.toml to set something so that this will query the
 // mainnet API when deployed on Netlify and otherwise default to testnet
 
-const algorand = AlgorandClient.testNet()
+export const APP_ID = 722603330 // Silent 722603330 Tako 723090110
 
-const typedClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
-  appId: BigInt(723090110), // Silent: appId 722603330 - Tako: appId 723090110
+export const algorand = AlgorandClient.testNet()
+
+const typedAppClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
+  appId: BigInt(APP_ID),
 })
 
 const listingKeyCodecString = "(uint64,uint64,uint64,byte[13],string)"
@@ -52,7 +54,7 @@ function boxNamesToListings(boxNames: BoxName[]): Listing[] {
 
 async function fetchListings(): Promise<Listing[]> {
   try {
-    const boxes = await typedClient.appClient.getBoxNames()
+    const boxes = await typedAppClient.appClient.getBoxNames()
     console.debug("boxes", boxes)
     return boxNamesToListings(boxes)
   } catch (error) {
@@ -69,14 +71,13 @@ export const getListings = cache(async (): Promise<Listing[]> => {
     console.error("Error fetching listings: ", error)
     return []
   }
-  
 }, "getListings")
 
 // For client-side fetching of individual listings
 export async function fetchListing(appID: number): Promise<Listing> {
   try {
     const boxNameBytes = encodeUint64(appID)
-    const box = await typedClient.appClient.getBoxValue(boxNameBytes)
+    const box = await typedAppClient.appClient.getBoxValue(boxNameBytes)
     const decoded = listingKeyCodec.decode(box)
     const [timestamp, vouchAmount, nfdAppID, tags, name] = Object.values(decoded)
     const listing: Listing = { timestamp, vouchAmount, nfdAppID, tags, name }
