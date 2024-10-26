@@ -103,8 +103,8 @@ export default function ListingDetails(props: RouteSectionProps) {
                     Address:
                   </span>
                 </span>
-                <span class="flex flex-row items-center overflow-auto w-full break-words">
-                  {/* {nfdInfo()?.properties?.userDefined?.address} */}
+                <span class="flex items-base overflow-auto w-full break-words">
+                  {nfdInfo()?.properties?.userDefined?.address}
                 </span>
               </div>
             </div>
