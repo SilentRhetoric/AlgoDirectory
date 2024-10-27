@@ -1,6 +1,20 @@
 import { A } from "@solidjs/router"
+import { NETWORK } from "@/lib/algod-api"
 
 export default function Header() {
+  const bannerText = () => {
+    switch (NETWORK) {
+      case "mainnet":
+        return ""
+      case "testnet":
+        return "Testnet"
+      case "betanet":
+        return "Betanet"
+      default:
+        return "Unsupported network"
+    }
+  }
+
   return (
     <nav class="bg-background sticky top-0 z-50 flex flex-row items-center gap-4 p-4 uppercase">
       <A href="/">
@@ -38,7 +52,7 @@ export default function Header() {
           </g>
         </svg>
       </A>
-      <p class="uppercase">testnet/building in public</p>
+      <p class="uppercase">{bannerText()}</p>
       <div class="grow"></div>
       <A href="/about">About</A>
       <A href="/manage">Manage</A>

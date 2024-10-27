@@ -33,7 +33,8 @@ export const ManageSingleListing: Component<{
   const [tags, setTags] = createSignal<string[]>([])
   const tagMasterlist = createMemo(() => generateTagsList())
 
-  const typedAppClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
+  // Client created here so it is configured to send from the connected account
+  const typedAppClient = algorand().client.getTypedAppClientById(AlgoDirectoryClient, {
     appId: BigInt(APP_ID),
     defaultSender: props.sender,
   })
@@ -57,7 +58,7 @@ export const ManageSingleListing: Component<{
       return response
     } catch (error: any) {
       if (error?.message.includes("box not found")) {
-        console.warn(`No box data for: \n${props.segment.appID} - (${props.segment.name})`)
+        console.debug(`No box data for: \n${props.segment.appID} - (${props.segment.name})`)
       } else {
         console.error("Error fetching listing: ", error?.message)
       }
@@ -78,7 +79,7 @@ export const ManageSingleListing: Component<{
     setIsSubmitting(true)
     setTypeSubmitting("create")
     const newTags = getUInt8Tags()
-    const payTxn = await algorand.createTransaction.payment({
+    const payTxn = await algorand().createTransaction.payment({
       sender: props.sender,
       receiver: typedAppClient.appAddress,
       amount: AlgoAmount.Algo(vouchAmount()),
