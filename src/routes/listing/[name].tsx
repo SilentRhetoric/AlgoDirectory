@@ -15,7 +15,7 @@ export default function ListingDetails(props: RouteSectionProps) {
   return (
     <main class="flex flex-col gap-2 p-4">
       <SiteTitle>{nfdInfo()?.name.split(".")[0]}</SiteTitle>
-      <div class="border-black flex aspect-[3/1] w-full flex-row items-center justify-center rounded-sm border-[1px]">
+      <div class="flex aspect-[3/1] w-full flex-row items-center justify-center rounded-sm border-[1px] border-black">
         {nfdInfo()?.properties?.userDefined?.banner ? (
           <img
             src={nfdInfo()?.properties?.userDefined?.banner}
@@ -28,7 +28,7 @@ export default function ListingDetails(props: RouteSectionProps) {
       </div>
       <div class="grid grid-cols-[96px_auto] gap-2 text-balance text-sm min-[375px]:text-base sm:text-lg">
         <div>
-          <div class="border-black flex h-16 w-16 flex-row items-center justify-center rounded-sm border-[1px]">
+          <div class="flex h-16 w-16 flex-row items-center justify-center rounded-sm border-[1px] border-black">
             {nfdInfo()?.properties?.userDefined?.avatar ? (
               <img
                 src={nfdInfo()?.properties?.userDefined?.avatar}
@@ -67,5 +67,3 @@ export default function ListingDetails(props: RouteSectionProps) {
     </main>
   )
 }
-
-// TODO: If the list of listings is stored in state, next/prev buttons can be added to navigate between listings

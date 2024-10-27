@@ -1,32 +1,32 @@
 # AlgoDirectory
 
-Bonfire is a tool for burning Algorand Standard Assets (ASA). The live web app can be found at [https://thebonfire.app](https://thebonfire.app).
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e88b5e95-9cf0-4adc-9422-df467d3075be/deploy-status)](https://app.netlify.com/sites/algodirectory/deploys)
 
-The app utilizes [SolidJS](https://www.solidjs.com) for reactivity and [SolidStart](https://docs.solidjs.com/solid-start) as a meta-framework, [Vinxi](https://vinxi.vercel.app/) dev tooling, [Tailwind CSS](https://tailwindcss.com) styles, and [solid-ui](https://www.solid-ui.com/) components.
+AlgoDirectory is an on-chain directory of the Algorand ecosystem. It uses a decentralized,
+permissionless smart contract protocol to manage listings and create incentives for listing
+owners to maintain their own data rather than relying on the efforts of a central curator.
+
+To learn more about AlgoDirectory, how it works, and its history, visit <https://algodirectory.app/about>.
 
 This work has been performed with support from the Algorand Foundation xGov Grants Program.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/e88b5e95-9cf0-4adc-9422-df467d3075be/deploy-status)](https://app.netlify.com/sites/algodirectory/deploys)
+## Contributing
 
-## What is AlgoDirectory?
+The AlgoDirectory project consists of three repositories:
 
-AlgoDirectory was created to be the best first stop for new users upon joining the Algorand ecosystem, a valuable reference guide for existing Algorand enthusiasts, and the premier place for projects to be listed and discovered.
+1. [AlgoDirectory](https://github.com/SilentRhetoric/AlgoDirectory): This web interface for interacting with the Directory
+2. [AlgoDirectory-Contract](https://github.com/SilentRhetoric/AlgoDirectory-Contract): The smart contract and associated deployment and testing scripts
+3. [AlgoDirectory-Subscriber](https://github.com/SilentRhetoric/AlgoDirectory-Subscriber): A subsriber process that watches the chain for transactions to post on Twitter
 
-AlgoDirectory improves upon previous Algorand directories in three key ways:
+We welcome pull requests from community contributors, although we recommend reaching out to us first given the complexity of the project.
 
-### Decentralized, Permissionless, Permanent
+### Trunk-Based Development
 
-AlgoDirectory leverages Algorand’s powerful on-chain capabilties to provide a directory that applies the values we love about Algorand to the Directory itself. It will be decentralized across the network, open to anyone through a permissionless smart contract, and permanent for the lifetime of the chain.
+The site is configured via `netlify.toml` such a way that the `main` branch points to Mainnet and the `testnet` branch points to Testnet. For feature development, consider `testnet` to be the trunk, create feature branches from there, and PR into `testnet`. The `main` branch will be updated from `testnet` periodically as "releases."
 
-### Designed for Quality and Freshness
+### Developing on this SolidStart Project
 
-A central challenge of directories is keeping their information up to date so it is useful to people. AlgoDirectory uses a novel Vouching Protocol to automate the process of determining if listings are still valid and active. Listing owners effectively vouch for their listings by providing a guarantee and interacting with them regularly. This system provides on-chain data about whether someone stands behind a listing and how long it has been since the owner refreshed a listing. This way, listings can be automatically sorted and filtered so that active with people vouching for them get the visibility they deserve while stale ones or ones that have been abandoned are still discoverable but de-emphasized.
-
-### Sustainable for the Long Term
-
-Another key objective of AlgoDirectory is to be sustainable so that it outlasts the efforts of its creators and any centralized website hosting. Algorand has had several directories over the years, some of which are now gone because their creators are no longer curating them and paying for their Web2 sites. By putting the Directory on chain and providing open source code to interact with it, listings on AlgoDirectory will always be accessible.
-
-## Developing on this SolidStart Project
+The app utilizes [SolidJS](https://www.solidjs.com) for reactivity and [SolidStart](https://docs.solidjs.com/solid-start) as a meta-framework, [Vinxi](https://vinxi.vercel.app/) dev tooling, [Tailwind CSS](https://tailwindcss.com) styles, and [solid-ui](https://www.solid-ui.com/) components.
 
 Once you've installed dependencies with `pnpm install`, start a development server:
 
@@ -34,7 +34,7 @@ Once you've installed dependencies with `pnpm install`, start a development serv
 pnpm run dev
 ```
 
-## Building
+### Building this SolidStart Project
 
 Solid apps are built with _presets_, which optimise your project for deployment to different environments.
 
