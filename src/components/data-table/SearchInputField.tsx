@@ -8,11 +8,12 @@ type Props<TData> = {
 
 const SearchInputField = <TData,>(props: Props<TData>) => {
   return (
-    <TextFieldRoot>
+    <TextFieldRoot class='w-full'>
       <TextField
+        as="input"
         type="text"
         placeholder="Search Names..."
-        class="h-8 w-64"
+        class="flex h-8 w-full sm:w-64"
         value={(props.table.getColumn("name")?.getFilterValue() as string) ?? ""}
         onInput={(e) =>
           props.table.getColumn("name")?.setFilterValue(e.currentTarget.value)
