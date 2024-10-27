@@ -49,7 +49,6 @@ export class ListingPreview {
     return this._nfdAppID
   }
 
-  // TODO: Convert the array of bytes into an array of tags from a tag list
   get tags(): Uint8Array {
     return this._tags
   }

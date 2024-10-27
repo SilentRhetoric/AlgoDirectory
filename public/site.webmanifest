@@ -1,7 +1,7 @@
 {
   "name": "Directory",
   "short_name": "Directory",
-  "description": "An on-chain directory of Algorand",
+  "description": "An on-chain directory of the Algorand ecosystem",
   "icons": [
     {
       "src": "favicon.ico",

@@ -1,0 +1,26 @@
+# Production context: all deploys from the Production branch
+# set in your site’s Branches settings in the UI will inherit
+# these settings. You can define environment variables
+# here but we recommend using the Netlify UI for sensitive
+# values to keep them out of your source repository.
+[context.production.environment]
+  VITE_NETWORK = "mainnet"
+  VITE_APP_ID = "722603330"
+  VITE_NFD_PARENT_APP_ID="576232821"
+
+# Testnet context: all deploys from the "testnet" branch
+# will inherit these environment variables.
+[context.testnet.environment]
+  VITE_NETWORK = "testnet"
+  VITE_APP_ID = "722603330"
+  VITE_NFD_PARENT_APP_ID="576232821"
+
+# Dev context: environment variables set here
+# are available for local development environments
+# run using Netlify Dev. These values can be
+# overwritten on branches that have a more specific
+# branch context configured.
+[context.dev.environment]
+  VITE_NETWORK = "testnet"
+  VITE_APP_ID = "722603330"
+  VITE_NFD_PARENT_APP_ID="576232821"

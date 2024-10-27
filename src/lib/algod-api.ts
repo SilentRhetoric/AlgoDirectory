@@ -15,14 +15,22 @@ import { BoxName } from "@algorandfoundation/algokit-utils/types/app"
 import { ABIType, encodeUint64 } from "algosdk"
 import { Listing } from "@/types/types"
 
-// TODO: Use netlify.toml to set something so that this will query the
-// mainnet API when deployed on Netlify and otherwise default to testnet
+// Configure the site via env vars to use mainnet/testnet and the right app ID
+export const NETWORK = import.meta.env.VITE_NETWORK
+export const APP_ID = Number(import.meta.env.VITE_APP_ID)
 
-export const APP_ID = 722603330 // Silent 722603330 Tako 723090110
+export const algorand = () => {
+  switch (NETWORK) {
+    case "mainnet":
+      return AlgorandClient.mainNet()
+    case "testnet":
+      return AlgorandClient.testNet()
+    default:
+      throw new Error(`Unsupported network: ${NETWORK}`)
+  }
+}
 
-export const algorand = AlgorandClient.testNet()
-
-const typedAppClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
+const typedAppClient = algorand().client.getTypedAppClientById(AlgoDirectoryClient, {
   appId: BigInt(APP_ID),
 })
 
@@ -83,7 +91,7 @@ export async function fetchListing(appID: number): Promise<Listing> {
     const listing: Listing = { timestamp, vouchAmount, nfdAppID, tags, name }
     return listing
   } catch (error: any) {
-    // console.error("Error fetching box: ", error.message)
+    console.error("Error fetching box: ", error.message)
     throw new Error(error.message)
   }
 }
