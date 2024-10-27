@@ -8,7 +8,7 @@ type Props<TData> = {
 
 const SearchInputField = <TData,>(props: Props<TData>) => {
   return (
-    <TextFieldRoot>
+    <TextFieldRoot class='w-full'>
       <TextField
         as="input"
         type="text"

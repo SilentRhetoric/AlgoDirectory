@@ -1,6 +1,6 @@
 import { type Table } from '@tanstack/solid-table';
 import { createFilter } from "@kobalte/core";
-import { createMemo, createSignal, onMount, Setter, Show } from "solid-js";
+import { createMemo, createSignal, For, onMount, Setter, Show } from "solid-js";
 import { generateTagsList } from "@/lib/tag-generator"
 import { Button } from '@/components/ui/button';
 import {
@@ -18,7 +18,8 @@ import {
 import CheckIcon from '@/components/icons/CheckIcon';
 import { NUM_TAGS_ALLOWED } from "@/lib/const";
 import FilterIcon from '@/components/icons/FilterIcon';
-import { set } from 'date-fns';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '../ui/separator';
 
 
 type ComboBoxTagProps<TData> = {
@@ -36,23 +37,19 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
       value: e,
     }))
 
-  const handleSelect = (e: string) => {
-    // We add the + 1 to the props.tags.length to account for the new tag
-    
+  const handleSelect = (tagSelected: string) => {
     setTagsSelected((prev) =>
-      prev.includes(e)
-        ? prev.filter((value) => value !== e)
-        : [...prev, e]
+      prev.includes(tagSelected)
+        ? prev.filter((value) => value !== tagSelected)
+        : [...prev, tagSelected]
     )
     props.table.getColumn("tags")?.setFilterValue(tagsSelected())
+  }
 
-    // if (props.tags.includes(currentValue) || (props.tags.length + 1) <= NUM_TAGS_ALLOWED) {
-    //   props.setTags((prev) =>
-    //     prev.includes(currentValue)
-    //       ? prev.filter((value) => value !== currentValue)
-    //       : [...prev, currentValue]
-    //   )
-    // }
+  const clearAllTags = () => {
+    setTagsSelected([])
+    // props.table.getColumn("tags")?.setFilterValue([])
+    props.table.resetColumnFilters()
   }
 
   // Used to disable scroll restoration
@@ -84,10 +81,17 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
           variant="outline"
           role="combobox"
           aria-expanded={open()}
-          class="flex w-full sm:w-56 h-8 gap-2"
+          class="flex w-32 sm:w-48 h-8 gap-2"
         >
           <FilterIcon className="size-4"/>
           TAGS
+          <Show when={tagsSelected().length > 0}>
+            <div class="flex flex-row gap-4">
+              <Badge class="leading-[0.93rem] flex justify-center items-center size-4 rounded-full p-0">
+                {tagsSelected().length}
+              </Badge>
+            </div>
+          </Show>
         </Button>
       </PopoverTrigger>
       <PopoverContent class="flex flex-row w-full sm:w-56 p-[1px]" showCloseButton={false}>
@@ -96,7 +100,14 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
             placeholder="Search tags..." 
           />
           <CommandList>
-            <CommandGroup>
+            <CommandGroup class="flex flex-col justify-center">
+              <CommandItem
+                onSelect={clearAllTags}
+                class="flex flex-row gap-2 mt-1 px-8"
+              >
+                <span class="">Clear All Tags</span>
+              </CommandItem>
+              <Separator class="my-3" />
               {masterList().map((framework) => (
                 <CommandItem
                   value={framework.value}
