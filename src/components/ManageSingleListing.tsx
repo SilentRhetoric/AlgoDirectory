@@ -12,7 +12,7 @@ import { generateTagsList } from "@/lib/tag-generator"
 import AlgorandLogo from "./icons/AlgorandLogo"
 import LoadingIcon from "./icons/LoadingIcon"
 import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
-import CreateListingSkeleton from "./CreateListingSkeleton"
+import ManageListingSkeleton from "./ManageListingSkeleton"
 
 type ManageSingleListingProps = {
   segment: NfdRecord
@@ -152,11 +152,9 @@ export const ManageSingleListing: Component<{
   return (
     <Suspense
       fallback={
-        <div class="my-3 flex h-96 w-full items-center justify-center space-y-4">
-          <span class="animate-pulse">
-            <CreateListingSkeleton />
-          </span>
-        </div>
+        <span class="animate-pulse">
+          <ManageListingSkeleton />
+        </span>
       }
     >
       <Show

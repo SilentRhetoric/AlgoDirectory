@@ -1,8 +1,7 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import AlgorandLogo from "@/components/icons/AlgorandLogo"
 
-const CreateListingSkeleton = () => {
+const ManageListingSkeleton = () => {
   return (
     <Card>
       <CardHeader>
@@ -10,17 +9,17 @@ const CreateListingSkeleton = () => {
           <Skeleton class="h-5 w-[250px]" />
         </CardTitle>
       </CardHeader>
-      <CardContent class="flex h-48 w-full flex-col justify-between space-y-3">
-        <div class="mt-2 flex w-full flex-col space-y-2">
+      <CardContent class="flex h-48 w-full flex-col justify-between space-y-2">
+        <div class="mt-2 flex w-full flex-col gap-2">
           <div class="flex flex-row justify-between">
-            <Skeleton class="h-4 w-[80px]" />
-            <Skeleton class="h-4 w-[120px]" />
+            <Skeleton class="h-5 w-[80px]" />
+            <Skeleton class="h-5 w-[120px]" />
           </div>
           <div class="flex flex-row items-center justify-between">
-            <Skeleton class="h-4 w-[120px]" />
+            <Skeleton class="h-5 w-[120px]" />
             <div class="flex flex-row items-center gap-1">
-              <Skeleton class="h-4 w-[60px]" />
-              <Skeleton class="h-4 w-[25px]" />
+              <Skeleton class="h-5 w-[60px]" />
+              <Skeleton class="h-5 w-[25px]" />
             </div>
           </div>
         </div>
@@ -46,4 +45,4 @@ const CreateListingSkeleton = () => {
   )
 }
 
-export default CreateListingSkeleton
+export default ManageListingSkeleton
