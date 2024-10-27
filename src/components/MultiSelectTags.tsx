@@ -1,7 +1,6 @@
 import { createSignal, onMount, Setter, Show } from "solid-js";
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -43,7 +42,6 @@ function MultiSelectTags(props: MultiSelectTagsProps) {
       )
     }
   }
-
   
   // Used to disable scroll restoration
   onMount(() => {
@@ -85,7 +83,6 @@ function MultiSelectTags(props: MultiSelectTagsProps) {
         <Command>
           <CommandInput placeholder="Search tags..." />
           <CommandList>
-            {/* <CommandEmpty>No framework found.</CommandEmpty> */}
             <CommandGroup>
               {masterList().map((framework) => (
                 <CommandItem

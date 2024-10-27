@@ -1,37 +1,124 @@
 import { type Table } from '@tanstack/solid-table';
 import { createFilter } from "@kobalte/core";
-import { createSignal } from "solid-js";
+import { createMemo, createSignal, onMount, Setter, Show } from "solid-js";
+import { generateTagsList } from "@/lib/tag-generator"
+import { Button } from '@/components/ui/button';
 import {
-  Combobox,
-  ComboboxItem,
-  ComboboxTrigger,
-  ComboboxContent,
-  ComboboxInput
-} from "@/components/ui/combobox";
+  Command,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import CheckIcon from '@/components/icons/CheckIcon';
+import { NUM_TAGS_ALLOWED } from "@/lib/const";
+import FilterIcon from '@/components/icons/FilterIcon';
+import { set } from 'date-fns';
 
-type Props<TData> = {
+
+type ComboBoxTagProps<TData> = {
   table: Table<TData>;
 };
 
-const TagsComboBox = <TData,>(props: Props<TData>) => {
-  const ALL_OPTIONS = ["Apple", "Banana", "Blueberry", "Grapes", "Pineapple"];
- 
-  const filter = createFilter({ sensitivity: "base" });
-  const [options, setOptions] = createSignal(ALL_OPTIONS);
-  const onInputChange = (value: string) => {
-    setOptions(ALL_OPTIONS.filter(option => filter.contains(option, value)));
+const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
+  let scrollPosition = 0;
+  const [open, setOpen] = createSignal(false)
+  const [tagsSelected, setTagsSelected] = createSignal<string[]>([])
+  const taglist = createMemo(() => generateTagsList())
+  const masterList = () =>
+    taglist().map((e) => ({
+      title: e,
+      value: e,
+    }))
+
+  const handleSelect = (e: string) => {
+    // We add the + 1 to the props.tags.length to account for the new tag
+    
+    setTagsSelected((prev) =>
+      prev.includes(e)
+        ? prev.filter((value) => value !== e)
+        : [...prev, e]
+    )
+    props.table.getColumn("tags")?.setFilterValue(tagsSelected())
+
+    // if (props.tags.includes(currentValue) || (props.tags.length + 1) <= NUM_TAGS_ALLOWED) {
+    //   props.setTags((prev) =>
+    //     prev.includes(currentValue)
+    //       ? prev.filter((value) => value !== currentValue)
+    //       : [...prev, currentValue]
+    //   )
+    // }
+  }
+
+  // Used to disable scroll restoration
+  onMount(() => {
+     // Disable scroll restoration
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  });
+
+  const handlePopoverOpen = (isOpen: boolean) => {
+    // Store current scroll position
+    scrollPosition = window.scrollY;
+    
+    // Use requestAnimationFrame to ensure scroll position is maintained
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollPosition);
+    });
+  
+    setOpen(isOpen);
   };
+  
   return (
-    <Combobox
-      options={options()}
-      onInputChange={onInputChange}
-      itemComponent={props => <ComboboxItem item={props.item}>{props.item.rawValue}</ComboboxItem>}
-    >
-      <ComboboxTrigger>
-        <ComboboxInput />
-      </ComboboxTrigger>
-      <ComboboxContent />
-    </Combobox>
+    <Popover open={open()} onOpenChange={handlePopoverOpen}>
+      <PopoverTrigger
+        class="flex h-8 w-full gap-2 [&>svg]:hidden"
+      >
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open()}
+          class="flex w-full sm:w-56 h-8 gap-2"
+        >
+          <FilterIcon className="size-4"/>
+          TAGS
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent class="flex flex-row w-full sm:w-56 p-[1px]" showCloseButton={false}>
+        <Command>
+          <CommandInput
+            placeholder="Search tags..." 
+          />
+          <CommandList>
+            <CommandGroup>
+              {masterList().map((framework) => (
+                <CommandItem
+                  value={framework.value}
+                  onSelect={handleSelect}
+                  class="flex flex-row gap-2"
+                >
+                  <Show 
+                    when={tagsSelected().includes(framework.value)}
+                    fallback={<span class="ml-4"></span>}
+                  >
+                    <CheckIcon />
+                  </Show>
+                  <span class="">
+                    {framework.title}
+                  </span>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>  
   );
 };
 

@@ -23,7 +23,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import SearchInputField from "./SearchInputField"
-import ColumnViewDropDown from "./ColumnViewDropDown"
 import TagsSelect from "./TagsSelect"
 import TagsComboBox from "./TagsComboBox"
 import { useNavigate } from "@solidjs/router"
@@ -73,13 +72,13 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
   })
 
   return (
-    <div class="w-full space-y-2.5">
-      <div class="flex items-center justify-between gap-2">
-        <SearchInputField table={table} />
-        <div class="flex items-center gap-2">
-          {/* <TagsComboBox table={table} /> */}
-          <TagsSelect table={table} />
-          {/* <ColumnViewDropDown table={table} /> */}
+    <div class="flex flex-col w-full space-y-2.5">
+      <div class="flex flex-row items-center justify-between gap-2 w-full">
+        <div class="flex items-center w-full sm:w-64">
+          <SearchInputField table={table} />
+        </div>
+        <div class="flex items-center w-ful sm:w-56">
+          <TagsComboBox table={table} />
         </div>
       </div>
       <div class="rounded-md border">
