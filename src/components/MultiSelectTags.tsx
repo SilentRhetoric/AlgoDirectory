@@ -69,18 +69,19 @@ function MultiSelectTags(props: MultiSelectTagsProps) {
     <Popover open={open()} onOpenChange={handlePopoverOpen}>
       <PopoverTrigger
         disabled={props.isSubmitting}
+        class="flex flex-row items-center justify-center w-full"
       >
         <Button
           disabled={props.isSubmitting}
           variant="secondary"
           role="combobox"
-          aria-expanded={open}
+          aria-expanded={open()}
           class="flex flex-row items-center justify-center w-full"
         >
           Edit Tags
         </Button>
       </PopoverTrigger>
-      <PopoverContent class="flex flex-row w-64 p-[1px]" showCloseButton={false}>
+      <PopoverContent class="flex flex-row w p-[1px]" showCloseButton={false}>
         <Command>
           <CommandInput placeholder="Search tags..." />
           <CommandList>
@@ -88,7 +89,6 @@ function MultiSelectTags(props: MultiSelectTagsProps) {
             <CommandGroup>
               {masterList().map((framework) => (
                 <CommandItem
-                  key={framework.value}
                   value={framework.value}
                   onSelect={handleSelect}
                   class="flex flex-row gap-2"

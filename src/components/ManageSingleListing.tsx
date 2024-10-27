@@ -167,8 +167,8 @@ export const ManageSingleListing: Component<{
             <CardHeader>
               <CardTitle class="text-base">{props.segment.name}</CardTitle>
             </CardHeader>
-            <CardContent class="flex flex-col space-y-3">
-              <div class="flex flex-row items-center justify-between">
+            <CardContent class="flex flex-col space-y-2 w-full h-48 justify-between">
+              <div class="flex flex-row items-center justify-between w-full">
                 <label class="">Vouch Amount:</label>
                 <div class="flex flex-row items-center gap-1">
                   <input
@@ -189,22 +189,24 @@ export const ManageSingleListing: Component<{
                   <AlgorandLogo />
                 </div>
               </div>
-              <div class="flex h-14 flex-wrap items-center justify-start gap-2">
-                {tags().map((tag: string) => (
-                  <Badge>{tag}</Badge>
-                ))}
+              <div class="flex flex-col justify-end gap-3">
+                <div class="flex flex-wrap justify-start gap-2">
+                  {tags().map((tag: string) => (
+                    <Badge>{tag}</Badge>
+                  ))}
+                </div>
+                <MultiSelectTags
+                  tags={tags()}
+                  masterlist={tagMasterlist()}
+                  isSubmitting={isSubmitting()}
+                  setTags={setTags}
+                />
               </div>
-              <MultiSelectTags
-                tags={tags()}
-                masterlist={tagMasterlist()}
-                isSubmitting={isSubmitting()}
-                setTags={setTags}
-              />
             </CardContent>
             <div class="px-6">
               <div class="-mx-6 mb-6 h-px bg-border" />
             </div>
-            <CardFooter>
+            <CardFooter class="flex flex-col justify-center items-center">
               <Button
                 disabled={isSubmitting()}
                 onClick={createListing}
@@ -212,7 +214,7 @@ export const ManageSingleListing: Component<{
               >
                 <Show when={isSubmitting() && typeSubmitting() === "create"}>
                   <span class="animate-spin">
-                    <LoadingIcon />
+                    <LoadingIcon className="w-5 h-5" />
                   </span>
                 </Show>
                 Create Listing
@@ -225,43 +227,33 @@ export const ManageSingleListing: Component<{
           <CardHeader>
             <CardTitle class="text-base">{props.segment.name}</CardTitle>
           </CardHeader>
-          <CardContent class="flex flex-col space-y-3">
-            <div class="flex flex-row justify-between">
-              <span>{`Updated: `}</span>
-              <span>{`${listing()?.timestamp ? formatTimestamp(listing()!.timestamp) : ""}`}</span>
-            </div>
-            <div class="flex flex-row items-center justify-between">
-              <label class="">Vouch Amount:</label>
-              <div class="flex flex-row items-center gap-1">
-                <span>{vouchAmount()}</span>
-                {/* <input
-                  class="w-32 h-8 border rounded-md p-4 bg-secondary"
-                  type="number"
-                  min={0.0722}
-                  value={vouchAmount()}
-                  onChange={(
-                    e: Event & {
-                      currentTarget: HTMLInputElement
-                      target: HTMLInputElement
-                    },
-                  ) => {
-                    setVouchAmount(Number(e.target.value))
-                  }}
-                /> */}
-                <AlgorandLogo />
+          <CardContent class="flex flex-col space-y-2 w-full h-48 justify-between">
+            <div class="flex flex-col w-full">
+              <div class="flex flex-row justify-between">
+                <span>{`Updated: `}</span>
+                <span>{`${listing()?.timestamp ? formatTimestamp(listing()!.timestamp) : ""}`}</span>
+              </div>
+              <div class="flex flex-row items-center justify-between">
+                <label class="">Vouch Amount:</label>
+                <div class="flex flex-row items-center gap-1">
+                  <span>{vouchAmount()}</span>
+                  <AlgorandLogo />
+                </div>
               </div>
             </div>
-            <div class="flex h-14 flex-wrap items-center justify-start gap-2">
-              {tags().map((tag: string) => (
-                <Badge variant="secondary">{tag}</Badge>
-              ))}
+            <div class="flex flex-col justify-end gap-3">
+              <div class="flex flex-wrap justify-start gap-2">
+                {tags().map((tag: string) => (
+                    <Badge>{tag}</Badge>
+                  ))}
+              </div>
+              <MultiSelectTags
+                tags={tags()}
+                masterlist={tagMasterlist()}
+                isSubmitting={isSubmitting()}
+                setTags={setTags}
+              />
             </div>
-            <MultiSelectTags
-              tags={tags()}
-              masterlist={tagMasterlist()}
-              isSubmitting={isSubmitting()}
-              setTags={setTags}
-            />
           </CardContent>
           <div class="px-6">
             <div class="-mx-6 mb-6 h-px bg-border" />
