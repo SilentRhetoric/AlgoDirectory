@@ -15,13 +15,23 @@ import { BoxName } from "@algorandfoundation/algokit-utils/types/app"
 import { ABIType, encodeUint64 } from "algosdk"
 import { Listing } from "@/types/types"
 
-// TODO: Use netlify.toml to set something so that this will query the
-// mainnet API when deployed on Netlify and otherwise default to testnet
+// Configure the site via env vars to use mainnet/testnet and the right app ID
+export const NETWORK = import.meta.env.VITE_NETWORK
+export const APP_ID = Number(import.meta.env.VITE_APP_ID)
 
-const algorand = AlgorandClient.testNet()
+export const algorand = () => {
+  switch (NETWORK) {
+    case "mainnet":
+      return AlgorandClient.mainNet()
+    case "testnet":
+      return AlgorandClient.testNet()
+    default:
+      throw new Error(`Unsupported network: ${NETWORK}`)
+  }
+}
 
-const typedClient = algorand.client.getTypedAppClientById(AlgoDirectoryClient, {
-  appId: BigInt(723090110), // Silent: appId 722603330 - Tako: appId 723090110
+const typedAppClient = algorand().client.getTypedAppClientById(AlgoDirectoryClient, {
+  appId: BigInt(APP_ID),
 })
 
 const listingKeyCodecString = "(uint64,uint64,uint64,byte[13],string)"
@@ -52,7 +62,7 @@ function boxNamesToListings(boxNames: BoxName[]): Listing[] {
 
 async function fetchListings(): Promise<Listing[]> {
   try {
-    const boxes = await typedClient.appClient.getBoxNames()
+    const boxes = await typedAppClient.appClient.getBoxNames()
     console.debug("boxes", boxes)
     return boxNamesToListings(boxes)
   } catch (error) {
@@ -69,20 +79,19 @@ export const getListings = cache(async (): Promise<Listing[]> => {
     console.error("Error fetching listings: ", error)
     return []
   }
-  
 }, "getListings")
 
 // For client-side fetching of individual listings
 export async function fetchListing(appID: number): Promise<Listing> {
   try {
     const boxNameBytes = encodeUint64(appID)
-    const box = await typedClient.appClient.getBoxValue(boxNameBytes)
+    const box = await typedAppClient.appClient.getBoxValue(boxNameBytes)
     const decoded = listingKeyCodec.decode(box)
     const [timestamp, vouchAmount, nfdAppID, tags, name] = Object.values(decoded)
     const listing: Listing = { timestamp, vouchAmount, nfdAppID, tags, name }
     return listing
   } catch (error: any) {
-    // console.error("Error fetching box: ", error.message)
+    console.error("Error fetching box: ", error.message)
     throw new Error(error.message)
   }
 }

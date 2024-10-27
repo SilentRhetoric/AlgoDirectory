@@ -1,5 +1,6 @@
 import { formatDistanceToNow } from "date-fns"
 import { NfdRecordResponseFull } from "@/lib/nfd-swagger-codegen"
+import { microAlgo } from "@algorandfoundation/algokit-utils"
 
 export type Listing = {
   timestamp: bigint // 8 bytes
@@ -48,7 +49,6 @@ export class ListingPreview {
     return this._nfdAppID
   }
 
-  // TODO: Convert the array of bytes into an array of tags from a tag list
   get tags(): Uint8Array {
     return this._tags
   }

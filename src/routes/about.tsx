@@ -7,21 +7,79 @@ export default function About() {
       <h1 class="font-thin uppercase">About AlgoDirectory</h1>
       <h2 class="font-thin">Overview</h2>
       <p>
-        AlgoDirectory is like a traditional directory, but the data lives on the Algorand blockchain
-        and uses a novel smart contract protocol to incentivize the maintenance of its data by
-        listing owners.
+        AlgoDirectory is an on-chain directory of the Algorand ecosystem. It uses a decentralized,
+        permissionless smart contract protocol to manage listings and create incentives for listing
+        owners to maintain their own data rather than relying on the efforts of a central curator.
+      </p>
+      <h2 class="font-thin">How It Works</h2>
+      <p>
+        The Directory extends the functionality of segments of the Non-Fungible Domain
+        directory.algo. Segment owners can "list" their segment in the Directory, where properties
+        of the NFD segment become details in the listing.
+      </p>
+      <p>
+        The AlgoDirectory smart contract uses a "Vouching Protocol" that allows listing owners to
+        "vouch" for their listings by depositing collateral to "put their money where their mouth
+        is" and signal that they stand behind the listing.
+      </p>
+      <p>
+        The web app interface allows users to sort through all listings and see individual listing
+        details. The Directory also allows users to see how much Algo has been deposited to vouch
+        for each listing and how recently the listing was updated.
+      </p>
+      <p>
+        All together, this system puts responsibility for data maintenance onto listing owners
+        rather than centralized directory curators, who have historically been unpaid volunteers.
+      </p>
+      <p>
+        Anything can be listed in AlgoDirectory: businesses, apps, NFT projects, websites,
+        individuals, open source software, or anything that may be relevant to the Algorand
+        ecosystem.
       </p>
       <p>
         To create a listing in AlgoDirectory, first{" "}
         <a
           href="https://app.nf.domains/name/directory.algo?view=segments"
           target="_blank"
-          class="font-thin text-blue-500"
+          class="font-thin text-blue-500 hover:underline"
         >
           mint a segment
         </a>{" "}
         of directory.algo at NFDomains, then return to this site and click "Manage" to be guided
         through the listing process.
+      </p>
+      <h2 class="font-thin">Vouching Protocol</h2>
+      <p>AlgoDirectory's Vouching Protocol provides the following methods to manage listings:</p>
+      <p>
+        <span class="uppercase">Create: </span>Select a segment of directory.algo that you own and
+        deposit some collateral to vouch for your listing. The amount vouched will be displayed in
+        the Directory and affect default listing order. You can list an NFD segment you own as long
+        as it is not for sale or expired at NFD.
+      </p>
+      <p>
+        <span class="uppercase">Refresh: </span>Listings in the Directory automatically age to show
+        their freshness. To reset the age of your listing, refresh it. You can edit the listing's
+        tags when refreshing it. You can refresh a listing for an NFD segment you own as long as it
+        is not for sale or expired at NFD.
+      </p>
+      <p>
+        <span class="uppercase">Abandon: </span>To recover the collateral for a listing, it can be
+        abandoned, which delists that segment from the Directory. The collateral is returned to the
+        original creator's address. If you have purchased an NFD segment, you can abandon the
+        existing listing for it and then create your own.
+      </p>
+      <p>
+        <span class="uppercase">Remove: </span>If the NFD segment underlying a listing has been sold
+        and changed owners, it is considered to be stale and can be removed by any caller.
+        Collateral is returned to the original listing creator, so there is no penalty when this
+        occurs. This feature is not currently available through the web app.
+      </p>
+      <p>
+        <span class="uppercase">Delete: </span>AlgoDirectory has administrators, a role that is
+        granted by holding a special token, who can delete any listing at any time for any reason.
+        If a listing is deleted by an admin, the collateral is yeeted to the fee sink as a penalty.
+        Do not create a listing if you think it might be objectionable, lest it get deleted by an
+        admin.
       </p>
       <h2 class="font-thin">History</h2>
       <p>
@@ -32,8 +90,9 @@ export default function About() {
       </p>
       <p>
         This was one of several Web2 directories that have been created throughout Algorand's
-        history. Others have included Algo Tables, AlgoAdoption, Algo Curator, Into The Algoverse,
-        Awesome Algorand, and multiple subsites created by the Algorand Foundation.
+        history, most of which are now defunct. Others have included Algo Tables, AlgoAdoption, Algo
+        Curator, Into The Algoverse, Awesome Algorand, and even a subsite created by the Algorand
+        Foundation.
       </p>
       <p>
         Following the news that directorydotalgo.xyz was shutting down, we endeavored to pick up the
@@ -95,15 +154,26 @@ export default function About() {
       <p>
         AlgoDirectory does utilize NFD’s API for implementation convenience, so there is some
         technical dependency on NFD, but decentralization absolutists should note that all of the
-        data management occurs on-chain, the smart contracts are permissionless and can be locked
-        for immutability, and and the Directory could be enhanced in the future to read NFD metadata
-        directly from the chain. I think this is a reasonable and practical approach to
-        bootstrapping an on-chain directory.
+        data management occurs on-chain, the NFD smart contracts are permissionless and can be
+        locked for immutability, and and the Directory UI could theoretically be enhanced in the
+        future to read NFD metadata directly from the chain. We think this is a reasonable and
+        practical approach to bootstrapping an on-chain directory.
+      </p>
+      <h2 class="font-thin">Business Model</h2>
+      <p>
+        This work has been performed with support from the Algorand Foundation xGov Grants Program.
+        The creation of AlgoDirectory was funded by xGov-123, and we thank the Algorand xGovs for
+        approving our proposal proactively. We hope that the Directory will be embraced by the
+        community and become a valuable resource for it.
       </p>
       <p>
-        The Directory is designed to operate at cost and not intended to generate profit for the
-        AlgoDirectory team, so there is no markup above NFD's minimum cost to mint segments of
-        directory.algo.
+        The Directory is not intended to generate profit for the AlgoDirectory team, so there is no
+        markup above NFD's minimum cost to mint segments. When minting a segment of directory.algo,
+        100% of minting fees go to NFDomains.
+      </p>
+      <p>
+        Creating listings requires collateral to be deposited, but AlgoDirectory does not take any
+        fees for any interaction (Algorand transaction fees are required, of course).
       </p>
       <h2 class="font-thin">Disclaimer</h2>
       <p>
@@ -113,13 +183,23 @@ export default function About() {
         software is provided under MIT license, and the source code is available through the GitHub
         link in the page footer.
       </p>
+      <h2 class="font-thin">Terms of Use</h2>
+      <p>
+        All AlgoDirectory listings are subject to administrator review and may be deleted at the
+        sole discretion of any administrator without notice. If a listing is deleted, the collateral
+        deposited for that listing will be sent to the Algorand Mainnet fee sink address.
+        AlgoDirectory, its creators, any appointed administrators, and Distributed Ledger
+        Technologies, LLC, are not liable for any loss or damages whatsoever resulting from the use
+        of this software or the deletion of any listing. Play nice, keep listings safe for work, and
+        enjoy the Directory.
+      </p>
       <h2 class="font-thin">App Info</h2>
       <p>
         Wallet interfaces provided by{" "}
         <a
           href="https://github.com/TxnLab/use-wallet"
           target="_blank"
-          class="font-thin"
+          class="font-thin text-blue-500 hover:underline"
         >
           use-wallet
         </a>

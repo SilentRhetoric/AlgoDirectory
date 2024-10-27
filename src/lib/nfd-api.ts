@@ -6,11 +6,24 @@ that is a segment of directory.algo and get its properties.
 import { cache } from "@solidjs/router"
 import { NfdRecordResponseFull, NfdV2SearchRecords } from "@/lib/nfd-swagger-codegen"
 
-// TODO: Use netlify.toml to set something so that this will query the
-// mainnet API when deployed on Netlify and otherwise default to testnet
+// Configure the site via env vars to use mainnet/testnet and the right app ID
+export const NETWORK = import.meta.env.VITE_NETWORK
+export const APP_ID = Number(import.meta.env.VITE_APP_ID)
+export const NFD_PARENT_APP_ID = Number(import.meta.env.VITE_NFD_PARENT_APP_ID)
+
+const segmentInfoUrlRoot = () => {
+  switch (NETWORK) {
+    case "mainnet":
+      return "api.nf.domains"
+    case "testnet":
+      return "api.testnet.nf.domains"
+    default:
+      throw new Error(`Unsupported network: ${NETWORK}`)
+  }
+}
 
 const segmentInfoUrl = (name: string) =>
-  `https://api.testnet.nf.domains/nfd/${name}.directory.algo?view=full&poll=false&nocache=false`
+  `https://${segmentInfoUrlRoot()}/nfd/${name}.directory.algo?view=full&poll=false&nocache=false`
 
 async function fetchNFDInfo(name: string) {
   const url = segmentInfoUrl(name)
@@ -40,9 +53,8 @@ export const getNFDInfo = cache(async (name: string): Promise<NfdRecordResponseF
   return fetchNFDInfo(name)
 }, "getNfd")
 
-// TODO: get the directory.algo segment app ID from the environment
 const ownedSegmentsUrl = (address: string) =>
-  `https://api.testnet.nf.domains/nfd/v2/search?parentAppID=576232821&owner=${address}&limit=200&offset=0&sort=createdDesc&view=thumbnail`
+  `https://${segmentInfoUrlRoot()}/nfd/v2/search?parentAppID=${NFD_PARENT_APP_ID}&owner=${address}&limit=200&offset=0&sort=createdDesc&view=thumbnail`
 
 async function fetchOwnedSegments(address: string) {
   const url = ownedSegmentsUrl(address)

@@ -1,11 +1,13 @@
+import { createAsyncStore } from "@solidjs/router"
+import { Suspense } from "solid-js"
 import { columns } from "@/components/data-table/Columns"
 import { DataTable } from "@/components/data-table/DataTable"
-import { createAsyncStore } from "@solidjs/router"
+import LoadingIcon from "@/components/icons/LoadingIcon"
 import { getListings } from "@/lib/algod-api"
-import tagMap from "@/assets/tags.json" // Adjust the path as necessary
-import { Suspense } from "solid-js"
 import { formatTimestamp } from "@/lib/utilities"
 import { NUM_TAGS_ALLOWED } from "@/lib/const"
+import tagMap from "@/assets/tags.json" // Adjust the path as necessary
+
 
 const Home = () => {
   const listings = createAsyncStore(async () => {
@@ -13,7 +15,7 @@ const Home = () => {
     const rawListings = await getListings()
 
     // We need to convert the raw listings to a format that can be displayed
-    const c_listings = rawListings?.map(
+    const adjustedListings = rawListings?.map(
       (listing: {
         nfdAppID: any
         name: any
@@ -33,13 +35,16 @@ const Home = () => {
           }), // convert to string for master tag list a string[] instead of Uint8Array[]
       }),
     )
-    // console.log("c_listings", c_listings)
-    return c_listings
+    return adjustedListings
   })
 
   return (
     <div class="w-full p-4">
-      <Suspense fallback="Loading directory listings...">
+      <Suspense fallback={
+        <div class="mx-auto flex items-center justify-center min-h-screen">
+          <span class="animate-spin"><LoadingIcon /></span>
+        </div>
+      }>
         <DataTable
           columns={columns}
           data={listings}
