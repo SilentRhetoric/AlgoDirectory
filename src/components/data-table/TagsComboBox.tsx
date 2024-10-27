@@ -44,11 +44,15 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
         : [...prev, tagSelected]
     )
     props.table.getColumn("tags")?.setFilterValue(tagsSelected())
+
+    // if it's the last tag removed, clear the filter
+    if (tagsSelected().length === 0) {
+      props.table.resetColumnFilters()
+    }
   }
 
   const clearAllTags = () => {
     setTagsSelected([])
-    // props.table.getColumn("tags")?.setFilterValue([])
     props.table.resetColumnFilters()
   }
 
@@ -100,14 +104,14 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
             placeholder="Search tags..." 
           />
           <CommandList>
-            <CommandGroup class="flex flex-col justify-center">
+            <CommandGroup class="flex flex-col justify-center px-0">
               <CommandItem
                 onSelect={clearAllTags}
-                class="flex flex-row gap-2 mt-1 px-8"
+                class="flex flex-row gap-2 mt-0 px-8"
               >
                 <span class="">Clear All Tags</span>
               </CommandItem>
-              <Separator class="my-3" />
+              <Separator class="my-2 w-full" />
               {masterList().map((framework) => (
                 <CommandItem
                   value={framework.value}
