@@ -23,7 +23,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import SearchInputField from "./SearchInputField"
-import TagsSelect from "./TagsSelect"
 import TagsComboBox from "./TagsComboBox"
 import { useNavigate } from "@solidjs/router"
 import { Listing } from "@/types/types"
@@ -34,7 +33,7 @@ type Props<TData, TValue> = {
 }
 
 export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [local] = splitProps(props, ["columns", "data"])
   const [sorting, setSorting] = createSignal<SortingState>([])
   const [columnFilters, setColumnFilters] = createSignal<ColumnFiltersState>([])
@@ -60,7 +59,7 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
           pageSize: 10_000,
           pageIndex: 0,
         }
-      }
+      },
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -72,12 +71,12 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
   })
 
   return (
-    <div class="flex flex-col w-full space-y-2.5">
-      <div class="flex flex-row items-center justify-between gap-2 w-full">
-        <div class="flex flex--row justify-start items-center w-full">
+    <div class="flex w-full flex-col space-y-2.5">
+      <div class="flex w-full flex-row items-center justify-between gap-2">
+        <div class="flex--row flex w-full items-center justify-start">
           <SearchInputField table={table} />
         </div>
-        <div class="flex items-center w-ful sm:w-56">
+        <div class="w-ful flex items-center sm:w-56">
           <TagsComboBox table={table} />
         </div>
       </div>

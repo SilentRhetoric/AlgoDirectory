@@ -12,6 +12,7 @@ import { generateTagsList } from "@/lib/tag-generator"
 import AlgorandLogo from "./icons/AlgorandLogo"
 import LoadingIcon from "./icons/LoadingIcon"
 import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
+import CreateListingSkeleton from "./CreateListingSkeleton"
 
 type ManageSingleListingProps = {
   segment: NfdRecord
@@ -65,7 +66,6 @@ export const ManageSingleListing: Component<{
   })
 
   const getUInt8Tags = () => {
-    // const vouchAmt = BigInt(vouchAmount() * 1e6)
     const newTags = new Uint8Array(13)
 
     // Convert tags to ints, but making sure to add 1 to each index looked up
@@ -152,10 +152,9 @@ export const ManageSingleListing: Component<{
   return (
     <Suspense
       fallback={
-        // Using h-96 to emulate the cards height
-        <div class="flex h-96 w-full items-center justify-center">
-          <span class="animate-spin">
-            <LoadingIcon />
+        <div class="my-3 flex h-96 w-full items-center justify-center space-y-4">
+          <span class="animate-pulse">
+            <CreateListingSkeleton />
           </span>
         </div>
       }
@@ -167,8 +166,8 @@ export const ManageSingleListing: Component<{
             <CardHeader>
               <CardTitle class="text-base">{props.segment.name}</CardTitle>
             </CardHeader>
-            <CardContent class="flex flex-col space-y-2 w-full h-48 justify-between">
-              <div class="flex flex-row items-center justify-between w-full">
+            <CardContent class="flex h-48 w-full flex-col justify-between space-y-2">
+              <div class="flex w-full flex-row items-center justify-between">
                 <label class="">Vouch Amount:</label>
                 <div class="flex flex-row items-center gap-1">
                   <input
@@ -206,7 +205,7 @@ export const ManageSingleListing: Component<{
             <div class="px-6">
               <div class="-mx-6 mb-6 h-px bg-border" />
             </div>
-            <CardFooter class="flex flex-col justify-center items-center">
+            <CardFooter class="flex flex-col items-center justify-center">
               <Button
                 disabled={isSubmitting()}
                 onClick={createListing}
@@ -214,7 +213,7 @@ export const ManageSingleListing: Component<{
               >
                 <Show when={isSubmitting() && typeSubmitting() === "create"}>
                   <span class="animate-spin">
-                    <LoadingIcon className="w-5 h-5" />
+                    <LoadingIcon className="h-5 w-5" />
                   </span>
                 </Show>
                 Create Listing
@@ -227,8 +226,8 @@ export const ManageSingleListing: Component<{
           <CardHeader>
             <CardTitle class="text-base">{props.segment.name}</CardTitle>
           </CardHeader>
-          <CardContent class="flex flex-col space-y-2 w-full h-48 justify-between">
-            <div class="flex flex-col w-full">
+          <CardContent class="flex h-48 w-full flex-col justify-between space-y-2">
+            <div class="flex w-full flex-col">
               <div class="flex flex-row justify-between">
                 <span>{`Updated: `}</span>
                 <span>{`${listing()?.timestamp ? formatTimestamp(listing()!.timestamp) : ""}`}</span>
@@ -244,8 +243,8 @@ export const ManageSingleListing: Component<{
             <div class="flex flex-col justify-end gap-3">
               <div class="flex flex-wrap justify-start gap-2">
                 {tags().map((tag: string) => (
-                    <Badge>{tag}</Badge>
-                  ))}
+                  <Badge>{tag}</Badge>
+                ))}
               </div>
               <MultiSelectTags
                 tags={tags()}
