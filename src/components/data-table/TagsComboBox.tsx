@@ -98,20 +98,20 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
           </Show>
         </Button>
       </PopoverTrigger>
-      <PopoverContent class="flex flex-row w-full sm:w-56 p-[1px]" showCloseButton={false}>
+      <PopoverContent class="flex flex-row w-48 p-[1px]" showCloseButton={false}>
         <Command>
           <CommandInput
             placeholder="Search tags..." 
           />
+          <CommandItem
+            onSelect={clearAllTags}
+            class="flex flex-row gap-2 mt-2 mx-1 px-8 cursor-pointer"
+          >
+            <span class="">Clear All Tags</span>
+          </CommandItem>
+          <Separator class="my-2 w-full overflow-visible" />
           <CommandList>
             <CommandGroup class="flex flex-col justify-center px-0">
-              <CommandItem
-                onSelect={clearAllTags}
-                class="flex flex-row gap-2 mt-0 px-8"
-              >
-                <span class="">Clear All Tags</span>
-              </CommandItem>
-              <Separator class="my-2 w-full" />
               {masterList().map((framework) => (
                 <CommandItem
                   value={framework.value}
