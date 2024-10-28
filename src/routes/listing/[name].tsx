@@ -11,11 +11,14 @@ import {
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 // import { Button } from "@/components/ui/button"
-import { createComputed, createMemo, createResource, Match, Suspense, Switch } from "solid-js"
+import { createComputed, createMemo, createResource, For, Match, Suspense, Switch } from "solid-js"
 import { fetchSingleListing } from "@/lib/algod-api"
 import { formatTimestamp } from "@/lib/utilities"
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import AlgorandLogo from "@/components/icons/AlgorandLogo"
+import tagMap from "@/assets/tags.json"
+import { NUM_TAGS_ALLOWED } from "@/lib/const"
+import { B } from "node_modules/@kobalte/core/dist/button-root-da654b3e"
 // import ArrowLeftCircle from "@/components/icons/ArrowCirlceLeft"
 // import { useNavigate } from "@solidjs/router"
 
@@ -100,7 +103,25 @@ export default function ListingDetails(props: RouteSectionProps) {
               <div id="listingFirstColumn flex flex-col gap-2">
                 <div class="flex">
                   <p class="w-32 uppercase">Tags</p>
-                  <p class="overflow-hidden text-wrap break-words">TAGS GO HERE @TAKO</p>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <For
+                      each={Array.from(listingInfo()?.tags || [])
+                        .slice(0, NUM_TAGS_ALLOWED)
+                        .filter((value) => value !== 0)
+                        .map((value) => {
+                          return tagMap[value?.toString() as keyof typeof tagMap].short as string
+                        })}
+                    >
+                      {(tag) => (
+                        <Badge
+                          variant="secondary"
+                          class="capitalize"
+                        >
+                          <span class="flex flex-row items-center">{tag}</span>
+                        </Badge>
+                      )}
+                    </For>
+                  </div>
                 </div>
               </div>
               <div id="listingSecondColumn flex flex-col gap-2">
