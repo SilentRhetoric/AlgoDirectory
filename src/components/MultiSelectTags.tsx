@@ -15,12 +15,14 @@ type MultiSelectTagsProps = {
   tags: string[]
   masterlist: string[]
   isSubmitting: boolean
+  isDisabled: boolean
   setTags: Setter<string[]>
 }
 
 function MultiSelectTags(props: MultiSelectTagsProps) {
   let scrollPosition = 0
   const [open, setOpen] = createSignal(false)
+  const [isDisabled] = createSignal(props.isDisabled || false)
 
   const masterList = () =>
     props.masterlist.map((e) => ({
@@ -65,11 +67,11 @@ function MultiSelectTags(props: MultiSelectTagsProps) {
       onOpenChange={handlePopoverOpen}
     >
       <PopoverTrigger
-        disabled={props.isSubmitting}
+        disabled={props.isSubmitting || isDisabled()}
         class="flex w-full flex-row items-center justify-center"
       >
         <Button
-          disabled={props.isSubmitting}
+          disabled={props.isSubmitting || isDisabled()}
           variant="secondary"
           role="combobox"
           aria-expanded={open()}
