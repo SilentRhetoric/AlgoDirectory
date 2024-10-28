@@ -51,7 +51,7 @@ function boxNamesToListings(boxNames: BoxName[]): Listing[] {
     const decoded = listingKeyCodec.decode(box.nameRaw)
     const [timestamp, vouchAmount, nfdAppID, tags, name] = Object.values(decoded)
     const listing: Listing = { timestamp, vouchAmount, nfdAppID, tags, name }
-    console.debug("listing:", listing)
+    // console.debug("listing:", listing)
     accumulator.push(listing)
 
     return accumulator
@@ -64,7 +64,7 @@ function boxNamesToListings(boxNames: BoxName[]): Listing[] {
 async function fetchListings(): Promise<Listing[]> {
   try {
     const boxes = await typedAppClient.appClient.getBoxNames()
-    console.debug("boxes", boxes)
+    // console.debug("boxes", boxes)
     return boxNamesToListings(boxes)
   } catch (error) {
     console.error("Error fetching boxes", error)

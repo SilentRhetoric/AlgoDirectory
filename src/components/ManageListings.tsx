@@ -1,7 +1,7 @@
 import { useWallet } from "@txnlab/use-wallet-solid"
 import { createResource, For, Show, Suspense } from "solid-js"
 import { getOwnedSegments } from "@/lib/nfd-api"
-import { ellipseString } from "@/lib/utilities"
+import { ellipseString } from "@/lib/formatting"
 import { ManageSingleListing } from "./ManageSingleListing"
 import { Button } from "@/components/ui/button"
 

@@ -9,7 +9,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import CheckIcon from "./icons/CheckIcon"
-import { NUM_TAGS_ALLOWED } from "@/lib/const"
+import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 
 type MultiSelectTagsProps = {
   tags: string[]

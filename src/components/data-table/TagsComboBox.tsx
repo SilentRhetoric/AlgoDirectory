@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import CheckIcon from "@/components/icons/CheckIcon"
-import { NUM_TAGS_ALLOWED } from "@/lib/const"
+import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import FilterIcon from "@/components/icons/FilterIcon"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "../ui/separator"

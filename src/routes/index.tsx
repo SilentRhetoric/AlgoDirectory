@@ -4,8 +4,8 @@ import { columns } from "@/components/data-table/Columns"
 import { DataTable } from "@/components/data-table/DataTable"
 import LoadingIcon from "@/components/icons/LoadingIcon"
 import { getListings } from "@/lib/algod-api"
-import { formatTimestamp } from "@/lib/utilities"
-import { NUM_TAGS_ALLOWED } from "@/lib/const"
+import { formatTimestamp } from "@/lib/formatting"
+import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import tagMap from "@/assets/tags.json" // Adjust the path as necessary
 import SiteTitle from "@/components/SiteTitle"
 

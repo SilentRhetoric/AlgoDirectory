@@ -118,7 +118,11 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
               <For each={table.getRowModel().rows}>
                 {(row) => (
                   <TableRow
-                    onClick={() => navigate(`/listing/${(row.original as Listing)?.name}`)}
+                    onClick={() =>
+                      navigate(
+                        `/listing/${(row.original as Listing)?.name}?appid=${(row.original as Listing)?.nfdAppID}`,
+                      )
+                    }
                     data-state={row.getIsSelected() && "selected"}
                     class="cursor-pointer"
                   >
