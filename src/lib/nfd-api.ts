@@ -49,12 +49,12 @@ async function fetchNFDInfo(name: string) {
 }
 
 export const getNFDInfo = cache(async (name: string): Promise<NfdRecordResponseFull> => {
-  "use server"
+  "use server" // NOTE: This runs on the server
   return fetchNFDInfo(name)
 }, "getNfd")
 
 const ownedSegmentsUrl = (address: string) =>
-  `https://${segmentInfoUrlRoot()}/nfd/v2/search?parentAppID=${NFD_PARENT_APP_ID}&owner=${address}&limit=200&offset=0&sort=createdDesc&view=thumbnail`
+  `https://${segmentInfoUrlRoot()}/nfd/v2/search?parentAppID=${NFD_PARENT_APP_ID}&owner=${address}&limit=200&offset=0&sort=createdDesc&view=full`
 
 async function fetchOwnedSegments(address: string) {
   const url = ownedSegmentsUrl(address)

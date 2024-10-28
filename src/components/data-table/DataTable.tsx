@@ -136,7 +136,7 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
           </TableBody>
         </Table>
       </div>
-      <div class="flex flex-col-reverse items-center justify-between gap-4 sm:flex-row">
+      {/* <div class="flex flex-col-reverse items-center justify-between gap-4 sm:flex-row">
         <div class="flex items-center justify-center whitespace-nowrap px-1 text-sm">
           Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </div>
@@ -237,7 +237,7 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
             </svg>
           </Button>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

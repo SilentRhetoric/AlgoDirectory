@@ -60,6 +60,7 @@ function boxNamesToListings(boxNames: BoxName[]): Listing[] {
   return justListings
 }
 
+// For fetching of the listings list
 async function fetchListings(): Promise<Listing[]> {
   try {
     const boxes = await typedAppClient.appClient.getBoxNames()
@@ -72,7 +73,7 @@ async function fetchListings(): Promise<Listing[]> {
 }
 
 export const getListings = cache(async (): Promise<Listing[]> => {
-  "use server"
+  "use server" // NOTE: This runs on the server
   try {
     return fetchListings()
   } catch (error: any) {
@@ -81,8 +82,8 @@ export const getListings = cache(async (): Promise<Listing[]> => {
   }
 }, "getListings")
 
-// For client-side fetching of individual listings
-export async function fetchListing(appID: number): Promise<Listing> {
+// For fetching of individual listings
+export async function fetchSingleListing(appID: number): Promise<Listing> {
   try {
     const boxNameBytes = encodeUint64(appID)
     const box = await typedAppClient.appClient.getBoxValue(boxNameBytes)
@@ -95,3 +96,9 @@ export async function fetchListing(appID: number): Promise<Listing> {
     throw new Error(error.message)
   }
 }
+
+// // Currently doing this on the client, so commented this out
+// export const getSingleListing = cache(async (appID: number): Promise<Listing> => {
+//   "use server" // NOTE: This runs on the server
+//   return fetchSingleListing(appID)
+// }, "getSingleListing")

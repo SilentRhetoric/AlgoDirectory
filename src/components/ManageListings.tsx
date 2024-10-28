@@ -15,7 +15,7 @@ export default function ManageListings() {
 
   return (
     <div>
-      <h1 class="flex flex-row items-center py-4 font-thin uppercase sm:justify-start">
+      <h1 class="flex flex-row items-center py-4 uppercase sm:justify-start">
         <span>
           Your{" "}
           <a
@@ -60,11 +60,12 @@ export default function ManageListings() {
                 onClick={() => activeWallet()!.disconnect()}
                 aria-label="Disconnect"
                 class="uppercase"
+                variant="secondary"
               >
                 Disconnect
               </Button>
             </div>
-            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 md:gap-3 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               <For each={ownedSegments()?.nfds}>
                 {(segment) => (
                   <ManageSingleListing
