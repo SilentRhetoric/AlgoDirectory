@@ -48,6 +48,7 @@ const getAllNameInfo = cache(async (name: string, appID?: number) => {
   return FetchAllNameInfo(name, appID)
 }, "getAllNameInfo")
 
+<<<<<<< HEAD
 export default function ListingDetails(props: RouteSectionProps) {
   const [searchParams, setSearchParams] = useSearchParams()
   const appIDFromQueryParams = Number(searchParams.appid)
