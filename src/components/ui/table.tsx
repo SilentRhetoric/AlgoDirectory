@@ -88,14 +88,3 @@ export const TableCell = (props: ComponentProps<"td">) => {
     />
   )
 }
-
-export const TableCaption = (props: ComponentProps<"caption">) => {
-  const [local, rest] = splitProps(props, ["class"])
-
-  return (
-    <caption
-      class={cn("mt-4 text-sm text-muted-foreground", local.class)}
-      {...rest}
-    />
-  )
-}

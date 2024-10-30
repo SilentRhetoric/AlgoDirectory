@@ -35,7 +35,7 @@ const ManageListingSkeleton = () => {
         </div>
       </CardContent>
       <div class="px-6">
-        <div class="-mx-6 mb-6 h-px bg-border" />
+        <div class="-mx-6 mb-4 h-px bg-border" />
       </div>
       <CardFooter class="flex flex-col items-center justify-center gap-2">
         <Skeleton class="h-9 w-full" />

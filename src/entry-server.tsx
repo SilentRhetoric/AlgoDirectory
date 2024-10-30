@@ -15,7 +15,6 @@ export default createHandler(() => (
             name="theme-color"
             content="#FFFFFF"
           />
-          <title>AlgoDirectory</title>
           <meta
             name="description"
             content="An on-chain directory of the Algorand ecosystem"

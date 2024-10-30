@@ -1,12 +1,12 @@
 import { Component, createSignal, For } from "solid-js"
 import { Listing } from "@/types/types"
-import { Badge } from "@/components/ui/badge";
-import tagMap from "@/assets/tags.json"; // Adjust the path as necessary
+import { Badge } from "@/components/ui/badge"
+import tagMap from "@/assets/tags.json" // Adjust the path as necessary
 
 import { formatDistanceToNow } from "date-fns"
 import { microAlgo } from "@algorandfoundation/algokit-utils"
 import { A } from "@solidjs/router"
-import { NUM_TAGS_ALLOWED } from "@/lib/const";
+import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 
 function formatTimestamp(timestamp: bigint) {
   // Convert the Unix timestamp to milliseconds
@@ -20,18 +20,22 @@ type ListingCardProps = { listing: Listing }
 
 export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardProps) => {
   // filter and convert to strings the tags to remove all 0's that represent empty tags
-  const [rawTags] = createSignal(Array.from(props.listing.tags)
-    .filter(value => value !== 0) // remove empty tags
-    .map(value => value.toString()) // convert to string for master tag list
-    .slice(0, NUM_TAGS_ALLOWED) // limit the number of tags to the first 5
-  );
+  const [rawTags] = createSignal(
+    Array.from(props.listing.tags)
+      .filter((value) => value !== 0) // remove empty tags
+      .map((value) => value.toString()) // convert to string for master tag list
+      .slice(0, NUM_TAGS_ALLOWED), // limit the number of tags to the first 5
+  )
 
   // import the master tags list from the tags.json file and create a signal
-  const [tagList] = createSignal(tagMap);
+  const [tagList] = createSignal(tagMap)
 
   // map the tags to the short and long titles
-  const [tags] = createSignal(rawTags()
-    .map(rawTags => tagList()[rawTags as keyof typeof tagList] as { short: string, long: string }));
+  const [tags] = createSignal(
+    rawTags().map(
+      (rawTags) => tagList()[rawTags as keyof typeof tagList] as { short: string; long: string },
+    ),
+  )
 
   return (
     <A href={`/listing/${props.listing.name}`}>
@@ -72,7 +76,12 @@ export const ListingCard: Component<{ listing: Listing }> = (props: ListingCardP
         <p class="flex flex-row">
           <For each={tags()}>
             {(tag) => (
-                <Badge class="mr-2" variant="secondary">{tag.short}</Badge>
+              <Badge
+                class="mr-2"
+                variant="secondary"
+              >
+                {tag.short}
+              </Badge>
             )}
           </For>
         </p>

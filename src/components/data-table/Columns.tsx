@@ -33,7 +33,7 @@ export const columns: ColumnDef<DisplayedListing>[] = [
     ),
     cell: (props) => (
       <div>
-        <span class="ml-4 uppercase">{props.row.original.name}</span>
+        <span class="uppercase">{props.row.original.name}</span>
       </div>
     ),
   },
@@ -93,9 +93,7 @@ export const columns: ColumnDef<DisplayedListing>[] = [
         }
       />
     ),
-    cell: (props) => (
-      <span class="ml-4">{props.row.original.amount}</span>
-    ),
+    cell: (props) => <span class="">{props.row.original.amount}</span>,
   },
   {
     accessorKey: "timestamp",
@@ -105,9 +103,7 @@ export const columns: ColumnDef<DisplayedListing>[] = [
         title="Updated"
       />
     ),
-    cell: (props) => (
-      <span class="ml-4">{props.row.original.timestamp}</span>
-    ),
+    cell: (props) => <span class="">{props.row.original.timestamp}</span>,
   },
 
   // {

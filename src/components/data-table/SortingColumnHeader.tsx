@@ -2,9 +2,9 @@ import type { Column } from "@tanstack/solid-table"
 import { Match, Show, splitProps, Switch, VoidProps } from "solid-js"
 
 import { Button } from "@/components/ui/button"
-import SortIcon from "../icons/SortIcon";
-import AscendingSortIcon from "../icons/AscendingSortIcon";
-import DescendingSortIcon from "../icons/DescendingSortIcon";
+import SortIcon from "../icons/SortIcon"
+import AscendingSortIcon from "../icons/AscendingSortIcon"
+import DescendingSortIcon from "../icons/DescendingSortIcon"
 
 const SortingColumnHeader = <TData, TValue>(
   props: VoidProps<{ column: Column<TData, TValue>; title: string | any }>,
@@ -27,12 +27,10 @@ const SortingColumnHeader = <TData, TValue>(
       <Button
         variant="ghost"
         onClick={() => toggleSorting()}
-        class="flex flex-row gap-1 uppercase"
+        class="flex flex-row gap-1 px-0 uppercase"
       >
         {local.title}
-        <Switch
-          fallback={<SortIcon className="size-3.5" />}
-        >
+        <Switch fallback={<SortIcon className="size-3.5" />}>
           <Match when={local.column.getIsSorted() === "asc"}>
             <AscendingSortIcon className="size-3.5" />
           </Match>
