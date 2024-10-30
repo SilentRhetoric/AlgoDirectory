@@ -35,11 +35,10 @@ async function fetchNFDInfo(name: string) {
         return { error: "Not found" }
       }
       const nfdInfo = JSON.parse(text)
-      console.debug("nfdInfo:", nfdInfo)
+      // console.debug("nfdInfo:", nfdInfo)
       return nfdInfo
     } catch (e) {
-      console.error(`Received from API: ${text}`)
-      console.error(e)
+      console.error(`Errorr ${e} received from API: ${text}`)
       return { error: e }
     }
   } catch (error) {
@@ -49,12 +48,12 @@ async function fetchNFDInfo(name: string) {
 }
 
 export const getNFDInfo = cache(async (name: string): Promise<NfdRecordResponseFull> => {
-  "use server"
+  "use server" // NOTE: This runs on the server
   return fetchNFDInfo(name)
 }, "getNfd")
 
 const ownedSegmentsUrl = (address: string) =>
-  `https://${segmentInfoUrlRoot()}/nfd/v2/search?parentAppID=${NFD_PARENT_APP_ID}&owner=${address}&limit=200&offset=0&sort=createdDesc&view=thumbnail`
+  `https://${segmentInfoUrlRoot()}/nfd/v2/search?parentAppID=${NFD_PARENT_APP_ID}&owner=${address}&limit=200&offset=0&sort=createdDesc&view=full`
 
 async function fetchOwnedSegments(address: string) {
   const url = ownedSegmentsUrl(address)
@@ -66,11 +65,10 @@ async function fetchOwnedSegments(address: string) {
         return { error: "Not found" }
       }
       const ownedSegmentsInfo = JSON.parse(text)
-      console.debug("ownedSegmentsInfo:", ownedSegmentsInfo)
+      // console.debug("ownedSegmentsInfo:", ownedSegmentsInfo)
       return ownedSegmentsInfo
     } catch (e) {
-      console.error(`Received from API: ${text}`)
-      console.error(e)
+      console.error(`Error ${e} received from API: ${text}`)
       return { error: e }
     }
   } catch (error) {

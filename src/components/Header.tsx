@@ -5,7 +5,7 @@ export default function Header() {
   const bannerText = () => {
     switch (NETWORK) {
       case "mainnet":
-        return ""
+        return "Coming Soon"
       case "testnet":
         return "Testnet"
       case "betanet":
@@ -16,7 +16,7 @@ export default function Header() {
   }
 
   return (
-    <nav class="bg-background sticky top-0 z-50 flex flex-row items-center gap-4 p-4 uppercase">
+    <nav class="sticky top-0 z-50 flex flex-row items-center gap-4 bg-background p-4 uppercase">
       <A href="/">
         <svg
           viewBox="0 0 86 48"

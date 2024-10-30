@@ -1,9 +1,9 @@
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import { TransactionSigner } from "algosdk"
 import { Component, createMemo, createResource, createSignal, Show, Suspense } from "solid-js"
-import { algorand, APP_ID, fetchListing } from "@/lib/algod-api"
+import { algorand, APP_ID, fetchSingleListing } from "@/lib/algod-api"
 import { NfdRecord } from "@/lib/nfd-swagger-codegen"
-import { formatTimestamp } from "@/lib/utilities"
+import { formatTimestamp } from "@/lib/formatting"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "./ui/badge"
@@ -12,6 +12,7 @@ import { generateTagsList } from "@/lib/tag-generator"
 import AlgorandLogo from "./icons/AlgorandLogo"
 import LoadingIcon from "./icons/LoadingIcon"
 import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
+import ManageListingSkeleton from "./ManageListingSkeleton"
 
 type ManageSingleListingProps = {
   segment: NfdRecord
@@ -32,6 +33,28 @@ export const ManageSingleListing: Component<{
   const [tags, setTags] = createSignal<string[]>([])
   const tagMasterlist = createMemo(() => generateTagsList())
 
+  const expiredOrForSale = (segment: NfdRecord) => {
+    if (segment.expired === true) {
+      return true
+    }
+    // Weird error when using NfdRecord.StateEnum.ForSale
+    // @ts-expect-error
+    if (segment.state === "forSale") {
+      return true
+    } else return false
+  }
+
+  const expiredOrForSaleText = (segment: NfdRecord) => {
+    if (segment.expired === true) {
+      return "Expired"
+    }
+    // Weird error when using NfdRecord.StateEnum.ForSale
+    // @ts-expect-error
+    if (segment.state === "forSale") {
+      return "For Sale"
+    } else return false
+  }
+
   // Client created here so it is configured to send from the connected account
   const typedAppClient = algorand().client.getTypedAppClientById(AlgoDirectoryClient, {
     appId: BigInt(APP_ID),
@@ -39,9 +62,9 @@ export const ManageSingleListing: Component<{
   })
 
   // Fetch the listing data for this segment
-  const [listing, { refetch }] = createResource(async () => {
+  const [listingInfo, { refetch }] = createResource(async () => {
     try {
-      const response = await fetchListing(props.segment.appID!)
+      const response = await fetchSingleListing(props.segment.appID!)
       // Update tags from Uint8Array to string[]
       setTags(
         Array.from(response?.tags || [])
@@ -53,7 +76,7 @@ export const ManageSingleListing: Component<{
       )
 
       // Update vouch amount
-      setVouchAmount(Number((Number(response?.vouchAmount) * 1e-6).toFixed(4)))
+      setVouchAmount(new AlgoAmount({ microAlgo: response?.vouchAmount }).algo)
       return response
     } catch (error: any) {
       if (error?.message.includes("box not found")) {
@@ -66,7 +89,6 @@ export const ManageSingleListing: Component<{
   })
 
   const getUInt8Tags = () => {
-    // const vouchAmt = BigInt(vouchAmount() * 1e6)
     const newTags = new Uint8Array(13)
 
     // Convert tags to ints, but making sure to add 1 to each index looked up
@@ -153,24 +175,22 @@ export const ManageSingleListing: Component<{
   return (
     <Suspense
       fallback={
-        // Using h-96 to emulate the cards height
-        <div class="flex h-96 w-full items-center justify-center">
-          <span class="animate-spin">
-            <LoadingIcon />
-          </span>
-        </div>
+        <span class="animate-pulse">
+          <ManageListingSkeleton />
+        </span>
       }
     >
       <Show
-        when={listing.latest}
+        when={listingInfo.latest}
         fallback={
           <Card>
             <CardHeader>
-              <CardTitle class="text-base">{props.segment.name}</CardTitle>
+              <CardTitle class="">{props.segment.name.split(".")[0]}</CardTitle>
             </CardHeader>
-            <CardContent class="flex flex-col space-y-3">
-              <div class="flex flex-row items-center justify-between">
-                <label class="">Vouch Amount:</label>
+            <CardContent class="flex h-48 w-full flex-col">
+              <label class="uppercase text-red-500">{expiredOrForSaleText(props.segment)}</label>
+              <div class="flex w-full flex-row items-center justify-between">
+                <label class="uppercase">Vouch Amount</label>
                 <div class="flex flex-row items-center gap-1">
                   <input
                     disabled={isSubmitting()}
@@ -190,30 +210,37 @@ export const ManageSingleListing: Component<{
                   <AlgorandLogo />
                 </div>
               </div>
-              <div class="flex h-14 flex-wrap items-center justify-start gap-2">
-                {tags().map((tag: string) => (
-                  <Badge>{tag}</Badge>
-                ))}
+              <div class="flex flex-col justify-end gap-2">
+                <div class="flex flex-wrap justify-start gap-2">
+                  {tags().map((tag: string) => (
+                    <Badge variant="secondary">{tag}</Badge>
+                  ))}
+                </div>
+                <Show
+                  when={!expiredOrForSale(props.segment)}
+                  fallback={null}
+                >
+                  <MultiSelectTags
+                    tags={tags()}
+                    masterlist={tagMasterlist()}
+                    isSubmitting={isSubmitting()}
+                    setTags={setTags}
+                  />
+                </Show>
               </div>
-              <MultiSelectTags
-                tags={tags()}
-                masterlist={tagMasterlist()}
-                isSubmitting={isSubmitting()}
-                setTags={setTags}
-              />
             </CardContent>
             <div class="px-6">
-              <div class="-mx-6 mb-6 h-px bg-border" />
+              <div class="-mx-6 mb-4 h-px bg-border" />
             </div>
-            <CardFooter>
+            <CardFooter class="flex flex-col items-center justify-center">
               <Button
-                disabled={isSubmitting()}
+                disabled={expiredOrForSale(props.segment) || isSubmitting()}
                 onClick={createListing}
                 class="flex w-full flex-row items-center justify-center gap-2"
               >
                 <Show when={isSubmitting() && typeSubmitting() === "create"}>
                   <span class="animate-spin">
-                    <LoadingIcon />
+                    <LoadingIcon className="h-5 w-5" />
                   </span>
                 </Show>
                 Create Listing
@@ -224,55 +251,46 @@ export const ManageSingleListing: Component<{
       >
         <Card>
           <CardHeader>
-            <CardTitle class="text-base">{props.segment.name}</CardTitle>
+            <CardTitle class="">{props.segment.name.split(".")[0]}</CardTitle>
           </CardHeader>
-          <CardContent class="flex flex-col space-y-3">
-            <div class="flex flex-row justify-between">
-              <span>{`Updated: `}</span>
-              <span>{`${listing()?.timestamp ? formatTimestamp(listing()!.timestamp) : ""}`}</span>
-            </div>
-            <div class="flex flex-row items-center justify-between">
-              <label class="">Vouch Amount:</label>
-              <div class="flex flex-row items-center gap-1">
-                <span>{vouchAmount()}</span>
-                {/* <input
-                  class="w-32 h-8 border rounded-md p-4 bg-secondary"
-                  type="number"
-                  min={0.0722}
-                  value={vouchAmount()}
-                  onChange={(
-                    e: Event & {
-                      currentTarget: HTMLInputElement
-                      target: HTMLInputElement
-                    },
-                  ) => {
-                    setVouchAmount(Number(e.target.value))
-                  }}
-                /> */}
-                <AlgorandLogo />
+          <CardContent class="flex h-48 w-full flex-col justify-between">
+            <div class="flex w-full flex-col">
+              <label class="uppercase text-red-500">{expiredOrForSaleText(props.segment)}</label>
+              <div class="flex flex-row items-center justify-between">
+                <label class="uppercase">Vouch Amount</label>
+                <div class="flex flex-row items-center gap-1">
+                  <span>{vouchAmount()}</span>
+                  <AlgorandLogo />
+                </div>
+              </div>
+              <div class="flex flex-row justify-between">
+                <label class="uppercase">Updated</label>
+                <span>{`${listingInfo()?.timestamp ? formatTimestamp(listingInfo()!.timestamp) : ""}`}</span>
               </div>
             </div>
-            <div class="flex h-14 flex-wrap items-center justify-start gap-2">
-              {tags().map((tag: string) => (
-                <Badge variant="secondary">{tag}</Badge>
-              ))}
+            <div class="flex flex-col justify-end gap-2">
+              <div class="flex flex-wrap justify-start gap-2">
+                {tags().map((tag: string) => (
+                  <Badge variant="secondary">{tag}</Badge>
+                ))}
+              </div>
+              <MultiSelectTags
+                tags={tags()}
+                masterlist={tagMasterlist()}
+                isSubmitting={isSubmitting()}
+                setTags={setTags}
+              />
             </div>
-            <MultiSelectTags
-              tags={tags()}
-              masterlist={tagMasterlist()}
-              isSubmitting={isSubmitting()}
-              setTags={setTags}
-            />
           </CardContent>
           <div class="px-6">
-            <div class="-mx-6 mb-6 h-px bg-border" />
+            <div class="-mx-6 mb-4 h-px bg-border" />
           </div>
           <CardFooter>
-            <div class="flex w-full flex-col items-center justify-start space-y-2">
+            <div class="flex w-full flex-col items-center justify-start gap-2">
               <Button
                 variant="secondary"
                 class="flex w-full flex-row items-center justify-center gap-2"
-                disabled={isSubmitting()}
+                disabled={expiredOrForSale(props.segment) || isSubmitting()}
                 onClick={refreshListing}
               >
                 <Show when={isSubmitting() && typeSubmitting() === "refresh"}>

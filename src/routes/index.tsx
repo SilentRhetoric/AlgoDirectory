@@ -4,10 +4,10 @@ import { columns } from "@/components/data-table/Columns"
 import { DataTable } from "@/components/data-table/DataTable"
 import LoadingIcon from "@/components/icons/LoadingIcon"
 import { getListings } from "@/lib/algod-api"
-import { formatTimestamp } from "@/lib/utilities"
-import { NUM_TAGS_ALLOWED } from "@/lib/const"
+import { formatTimestamp } from "@/lib/formatting"
+import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import tagMap from "@/assets/tags.json" // Adjust the path as necessary
-
+import SiteTitle from "@/components/SiteTitle"
 
 const Home = () => {
   const listings = createAsyncStore(async () => {
@@ -40,11 +40,16 @@ const Home = () => {
 
   return (
     <div class="w-full p-4">
-      <Suspense fallback={
-        <div class="mx-auto flex items-center justify-center min-h-screen">
-          <span class="animate-spin"><LoadingIcon /></span>
-        </div>
-      }>
+      <SiteTitle>Home</SiteTitle>
+      <Suspense
+        fallback={
+          <div class="mx-auto flex min-h-screen items-center justify-center">
+            <span class="animate-spin">
+              <LoadingIcon />
+            </span>
+          </div>
+        }
+      >
         <DataTable
           columns={columns}
           data={listings}

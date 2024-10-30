@@ -23,9 +23,9 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import SearchInputField from "./SearchInputField"
-import ColumnViewDropDown from "./ColumnViewDropDown"
-import TagsSelect from "./TagsSelect"
 import TagsComboBox from "./TagsComboBox"
+import { useNavigate } from "@solidjs/router"
+import { Listing } from "@/types/types"
 
 type Props<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
@@ -33,6 +33,7 @@ type Props<TData, TValue> = {
 }
 
 export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
+  const navigate = useNavigate()
   const [local] = splitProps(props, ["columns", "data"])
   const [sorting, setSorting] = createSignal<SortingState>([])
   const [columnFilters, setColumnFilters] = createSignal<ColumnFiltersState>([])
@@ -58,7 +59,7 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
           pageSize: 10_000,
           pageIndex: 0,
         }
-      }
+      },
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -70,13 +71,13 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
   })
 
   return (
-    <div class="w-full space-y-2.5">
-      <div class="flex items-center justify-between gap-2">
-        <SearchInputField table={table} />
-        <div class="flex items-center gap-2">
-          {/* <TagsComboBox table={table} /> */}
-          <TagsSelect table={table} />
-          {/* <ColumnViewDropDown table={table} /> */}
+    <div class="flex w-full flex-col space-y-2.5">
+      <div class="flex w-full flex-row items-center justify-between gap-2">
+        <div class="flex--row flex w-full items-center justify-start">
+          <SearchInputField table={table} />
+        </div>
+        <div class="w-ful flex items-center sm:w-56">
+          <TagsComboBox table={table} />
         </div>
       </div>
       <div class="rounded-md border">
@@ -116,7 +117,15 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
             >
               <For each={table.getRowModel().rows}>
                 {(row) => (
-                  <TableRow data-state={row.getIsSelected() && "selected"}>
+                  <TableRow
+                    onClick={() =>
+                      navigate(
+                        `/listing/${(row.original as Listing)?.name}?appid=${(row.original as Listing)?.nfdAppID}`,
+                      )
+                    }
+                    data-state={row.getIsSelected() && "selected"}
+                    class="cursor-pointer"
+                  >
                     <For each={row.getVisibleCells()}>
                       {(cell) => (
                         <TableCell>
@@ -131,7 +140,7 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
           </TableBody>
         </Table>
       </div>
-      <div class="flex flex-col-reverse items-center justify-between gap-4 sm:flex-row">
+      {/* <div class="flex flex-col-reverse items-center justify-between gap-4 sm:flex-row">
         <div class="flex items-center justify-center whitespace-nowrap px-1 text-sm">
           Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </div>
@@ -232,7 +241,7 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
             </svg>
           </Button>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
