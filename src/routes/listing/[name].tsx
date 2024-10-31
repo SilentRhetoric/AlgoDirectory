@@ -70,7 +70,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   class="aspect-[2/1] w-full overflow-hidden rounded-t-xl border-b"
                 />
                 <div class="absolute -bottom-6 left-6 sm:-bottom-10 sm:left-10">
-                  <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-16">
+                  <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-32">
                     <img
                       src={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
                       alt="avatar"

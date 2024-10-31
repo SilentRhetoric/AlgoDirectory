@@ -162,9 +162,9 @@ export default function About() {
         AlgoDirectory does utilize NFD’s API for implementation convenience, so there is some
         technical dependency on NFD, but decentralization absolutists should note that all of the
         data management occurs onchain, the NFD smart contracts are permissionless and can be locked
-        for immutability, and and the Directory UI could theoretically be enhanced in the future to
-        read NFD properties directly from the chain. We think this is a reasonable and practical
-        approach to bootstrapping an onchain directory.
+        for immutability, and the Directory UI could theoretically be enhanced in the future to read
+        NFD properties directly from the chain. We think this is a reasonable and practical approach
+        to bootstrapping an onchain directory.
       </p>
       <h2>Business Model</h2>
       <p>
