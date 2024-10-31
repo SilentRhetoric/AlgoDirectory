@@ -213,6 +213,15 @@ export default function About() {
         . Support Free Open Source Software (FOSS) with code contributions or sponsorship!
       </p>
       <p>Version {version}</p>
+      <p>
+        <a
+          href={`https://lora.algokit.io/${import.meta.env.VITE_NETWORK}/application/${Number(import.meta.env.VITE_APP_ID)}`}
+          target="_blank"
+          class="text-blue-500 hover:underline"
+        >
+          App ID
+        </a>
+      </p>
     </main>
   )
 }

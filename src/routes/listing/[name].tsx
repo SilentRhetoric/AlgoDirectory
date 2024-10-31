@@ -9,7 +9,7 @@ import SiteTitle from "@/components/SiteTitle"
 import { getNFDInfo } from "@/lib/nfd-api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { For, Match, Suspense, Switch } from "solid-js"
+import { For, Match, Suspense, Switch, createSignal } from "solid-js"
 import { fetchSingleListing } from "@/lib/algod-api"
 import { formatTimestamp } from "@/lib/formatting"
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
@@ -52,6 +52,7 @@ const getAllNameInfo = cache(async (name: string, appID?: number) => {
 }, "getAllNameInfo")
 
 export default function ListingDetails(props: RouteSectionProps) {
+  const [network] = createSignal(import.meta.env.VITE_NETWORK === "mainnet" ? "" : "testnet.")
   const [searchParams, setSearchParams] = useSearchParams()
   const appIDFromQueryParams = Number(searchParams.appid)
   // Defering stream here so that the page doesn't navigate until the data loads
@@ -66,7 +67,10 @@ export default function ListingDetails(props: RouteSectionProps) {
         <Card class="mx-auto w-full max-w-6xl">
           <div class="relative mb-4 flex h-full w-full items-center justify-center">
             {allNameInfo()?.nfdInfo?.properties?.userDefined?.banner ? (
-              <>
+              <a
+                href={`https://app.${network()}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
+                target="_blank"
+              >
                 <img
                   src={allNameInfo()?.nfdInfo?.properties?.userDefined?.banner}
                   alt="banner"
@@ -81,7 +85,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                     />
                   </div>
                 </div>
-              </>
+              </a>
             ) : (
               <p class="flex aspect-[2/1] w-full items-center justify-center border-b text-xs">
                 No banner
@@ -90,7 +94,12 @@ export default function ListingDetails(props: RouteSectionProps) {
           </div>
           <CardHeader class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <CardTitle class="text-2xl uppercase sm:pt-4 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
-              {allNameInfo()?.nfdInfo?.name.split(".")[0]}
+              <a
+                href={`https://app.${network()}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
+                target="_blank"
+              >
+                {allNameInfo()?.nfdInfo?.name.split(".")[0]}
+              </a>
             </CardTitle>
             <Switch>
               <Match when={allNameInfo()?.nfdInfo?.state === ("forSale" as any)}>
