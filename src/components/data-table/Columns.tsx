@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { DisplayedListing } from "@/types/types"
 import { Badge } from "@/components/ui/badge"
-import { A } from "@solidjs/router"
+import { formatTimestamp } from "@/lib/formatting"
 import SortingColumnHeader from "./SortingColumnHeader"
 
 // Custom filter function to find tags
@@ -106,7 +106,7 @@ export const columns: ColumnDef<DisplayedListing>[] = [
         title="Updated"
       />
     ),
-    cell: (props) => <span class="">{props.row.original.timestamp}</span>,
+    cell: (props) => <span class="">{formatTimestamp(BigInt(props.row.original.timestamp))}</span>,
   },
 
   // {
