@@ -13,6 +13,7 @@ import AlgorandLogo from "./icons/AlgorandLogo"
 import LoadingIcon from "./icons/LoadingIcon"
 import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
 import ManageListingSkeleton from "./ManageListingSkeleton"
+import LinkIcon from "./icons/LinkIcon"
 
 type ManageSingleListingProps = {
   segment: NfdRecord
@@ -32,6 +33,7 @@ export const ManageSingleListing: Component<{
   const [vouchAmount, setVouchAmount] = createSignal(0.0722) // Each listing requires min 72_200uA
   const [tags, setTags] = createSignal<string[]>([])
   const tagMasterlist = createMemo(() => generateTagsList())
+  const [network] = createSignal(import.meta.env.VITE_NETWORK === "mainnet" ? "" : "testnet.")
 
   const expiredOrForSale = (segment: NfdRecord) => {
     if (segment.expired === true) {
@@ -185,7 +187,16 @@ export const ManageSingleListing: Component<{
         fallback={
           <Card>
             <CardHeader>
-              <CardTitle class="">{props.segment.name.split(".")[0]}</CardTitle>
+              <CardTitle class="flex flex-row gap-2">
+                <a
+                  href={`https://app.${network()}nf.domains/name/${props.segment.name}`}
+                  target="_blank"
+                  class="flex flex-row gap-2"
+                >
+                  <LinkIcon className="size-5" />
+                  {props.segment.name.split(".")[0]}
+                </a>
+              </CardTitle>
             </CardHeader>
             <CardContent class="flex h-48 w-full flex-col justify-between">
               <div class="flex w-full flex-col">
@@ -254,7 +265,16 @@ export const ManageSingleListing: Component<{
       >
         <Card>
           <CardHeader>
-            <CardTitle class="">{props.segment.name.split(".")[0]}</CardTitle>
+            <CardTitle class="flex flex-row gap-2">
+              <a
+                href={`https://app.${network()}nf.domains/name/${props.segment.name}`}
+                target="_blank"
+                class="flex flex-row gap-2"
+              >
+                <LinkIcon className="size-5" />
+                {props.segment.name.split(".")[0]}
+              </a>
+            </CardTitle>
           </CardHeader>
           <CardContent class="flex h-48 w-full flex-col justify-between">
             <div class="flex w-full flex-col">
