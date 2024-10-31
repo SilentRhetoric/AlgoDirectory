@@ -187,27 +187,29 @@ export const ManageSingleListing: Component<{
             <CardHeader>
               <CardTitle class="">{props.segment.name.split(".")[0]}</CardTitle>
             </CardHeader>
-            <CardContent class="flex h-48 w-full flex-col">
-              <label class="uppercase text-red-500">{expiredOrForSaleText(props.segment)}</label>
-              <div class="flex w-full flex-row items-center justify-between">
-                <label class="uppercase">Vouch Amount</label>
-                <div class="flex flex-row items-center gap-1">
-                  <input
-                    disabled={isSubmitting()}
-                    class="h-8 w-32 rounded-md border bg-secondary p-4"
-                    type="number"
-                    min={0.0722}
-                    value={vouchAmount()}
-                    onChange={(
-                      e: Event & {
-                        currentTarget: HTMLInputElement
-                        target: HTMLInputElement
-                      },
-                    ) => {
-                      setVouchAmount(Number(e.target.value))
-                    }}
-                  />
-                  <AlgorandLogo />
+            <CardContent class="flex h-48 w-full flex-col justify-between">
+              <div class="flex w-full flex-col">
+                <label class="uppercase text-red-500">{expiredOrForSaleText(props.segment)}</label>
+                <div class="flex w-full flex-row justify-between">
+                  <label class="uppercase">Vouch Amount</label>
+                  <div class="flex flex-row items-center gap-1">
+                    <input
+                      disabled={isSubmitting()}
+                      class="h-8 w-32 rounded-md border bg-secondary p-4"
+                      type="number"
+                      min={0.0722}
+                      value={vouchAmount()}
+                      onChange={(
+                        e: Event & {
+                          currentTarget: HTMLInputElement
+                          target: HTMLInputElement
+                        },
+                      ) => {
+                        setVouchAmount(Number(e.target.value))
+                      }}
+                    />
+                    <AlgorandLogo />
+                  </div>
                 </div>
               </div>
               <div class="flex flex-col justify-end gap-2">
@@ -224,6 +226,7 @@ export const ManageSingleListing: Component<{
                     tags={tags()}
                     masterlist={tagMasterlist()}
                     isSubmitting={isSubmitting()}
+                    // isDisabled={expiredOrForSale(props.segment)}
                     setTags={setTags}
                   />
                 </Show>
@@ -240,7 +243,7 @@ export const ManageSingleListing: Component<{
               >
                 <Show when={isSubmitting() && typeSubmitting() === "create"}>
                   <span class="animate-spin">
-                    <LoadingIcon className="h-5 w-5" />
+                    <LoadingIcon className="size-4" />
                   </span>
                 </Show>
                 Create Listing
@@ -295,7 +298,7 @@ export const ManageSingleListing: Component<{
               >
                 <Show when={isSubmitting() && typeSubmitting() === "refresh"}>
                   <span class="animate-spin">
-                    <LoadingIcon />
+                    <LoadingIcon className="size-4" />
                   </span>
                 </Show>
                 Refresh Listing
@@ -308,7 +311,7 @@ export const ManageSingleListing: Component<{
               >
                 <Show when={isSubmitting() && typeSubmitting() === "abandon"}>
                   <span class="animate-spin">
-                    <LoadingIcon />
+                    <LoadingIcon className="size-4" />
                   </span>
                 </Show>
                 Abandon Listing
