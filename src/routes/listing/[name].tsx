@@ -9,13 +9,15 @@ import SiteTitle from "@/components/SiteTitle"
 import { getNFDInfo } from "@/lib/nfd-api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Match, Suspense, Switch } from "solid-js"
+import { For, Match, Suspense, Switch } from "solid-js"
 import { fetchSingleListing } from "@/lib/algod-api"
 import { formatTimestamp } from "@/lib/formatting"
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import AlgorandLogo from "@/components/icons/AlgorandLogo"
 import { Listing } from "@/types/types"
 import { NfdRecordResponseFull } from "@/lib/nfd-swagger-codegen"
+import { NUM_TAGS_ALLOWED } from "@/lib/constants"
+import tagMap from "@/assets/tags.json"
 
 export const route = {
   preload({ params }) {
@@ -40,6 +42,7 @@ async function FetchAllNameInfo(name: string, appID?: number) {
     const nfdInfo = await getNFDInfo(name)
     const listingInfo = await getListing(nfdInfo.appID!)
     allInfo = { listingInfo, nfdInfo }
+    console.log(allInfo)
   }
   return allInfo
 }
@@ -113,9 +116,28 @@ export default function ListingDetails(props: RouteSectionProps) {
               <div id="listingFirstColumn flex flex-col gap-2">
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Tags</p>
-                  <p class="overflow-hidden text-wrap break-words">TAGS GO HERE @TAKO</p>
+                  <div class="flex flex-wrap items-center gap-1">
+                    <For
+                      each={Array.from(allNameInfo()?.listingInfo.tags || [])
+                        .slice(0, NUM_TAGS_ALLOWED)
+                        .filter((value) => value !== 0)
+                        .map((value) => {
+                          return tagMap[value?.toString() as keyof typeof tagMap].short as string
+                        })}
+                    >
+                      {(tag) => (
+                        <Badge
+                          variant="secondary"
+                          class="capitalize"
+                        >
+                          <span class="flex flex-row items-center">{tag}</span>
+                        </Badge>
+                      )}
+                    </For>
+                  </div>
                 </div>
               </div>
+
               <div id="listingSecondColumn flex flex-col gap-2">
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Value</p>
