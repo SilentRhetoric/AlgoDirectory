@@ -94,6 +94,9 @@ export const columns: ColumnDef<DisplayedListing>[] = [
       />
     ),
     cell: (props) => <span class="">{props.row.original.amount}</span>,
+    sortingFn: (a, b) => {
+      return Number(a.original.amount) - Number(b.original.amount)
+    },
   },
   {
     accessorKey: "timestamp",
