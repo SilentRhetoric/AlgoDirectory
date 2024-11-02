@@ -27,7 +27,7 @@ const SortingColumnHeader = <TData, TValue>(
       <Button
         variant="ghost"
         onClick={() => toggleSorting()}
-        class="flex flex-row gap-1 px-0 uppercase"
+        class="flex flex-row gap-1 px-0 uppercase hover:bg-transparent"
       >
         {local.title}
         <Switch fallback={<SortIcon className="size-3.5" />}>
