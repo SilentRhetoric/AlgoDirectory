@@ -4,10 +4,10 @@ import { columns } from "@/components/data-table/Columns"
 import { DataTable } from "@/components/data-table/DataTable"
 import LoadingIcon from "@/components/icons/LoadingIcon"
 import { getListings } from "@/lib/algod-api"
-import { formatTimestamp } from "@/lib/formatting"
 import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import tagMap from "@/assets/tags.json" // Adjust the path as necessary
 import SiteTitle from "@/components/SiteTitle"
+import GetASegment from "@/components/GetASegment"
 
 const Home = () => {
   const listings = createAsyncStore(async () => {
@@ -26,7 +26,7 @@ const Home = () => {
         nfdAppID: listing.nfdAppID,
         name: listing.name,
         amount: (Number(listing.vouchAmount) * 1e-6).toFixed(4),
-        timestamp: formatTimestamp(listing.timestamp),
+        timestamp: Number(listing.timestamp).toString(),
         tags: Array.from(listing.tags)
           .slice(0, NUM_TAGS_ALLOWED) // limit the number of tags to the first 5
           .filter((value) => value !== 0) // remove empty tags
@@ -39,7 +39,7 @@ const Home = () => {
   })
 
   return (
-    <div class="w-full p-4">
+    <div class="flex w-full flex-col gap-4 p-4">
       <SiteTitle>Home</SiteTitle>
       <Suspense
         fallback={
@@ -55,6 +55,7 @@ const Home = () => {
           data={listings}
         />
       </Suspense>
+      <GetASegment />
     </div>
   )
 }

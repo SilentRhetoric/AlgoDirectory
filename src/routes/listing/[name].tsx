@@ -9,13 +9,16 @@ import SiteTitle from "@/components/SiteTitle"
 import { getNFDInfo } from "@/lib/nfd-api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Match, Suspense, Switch } from "solid-js"
+import { For, Match, Suspense, Switch, createSignal } from "solid-js"
 import { fetchSingleListing } from "@/lib/algod-api"
 import { formatTimestamp } from "@/lib/formatting"
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import AlgorandLogo from "@/components/icons/AlgorandLogo"
 import { Listing } from "@/types/types"
 import { NfdRecordResponseFull } from "@/lib/nfd-swagger-codegen"
+import { NUM_TAGS_ALLOWED } from "@/lib/constants"
+import tagMap from "@/assets/tags.json"
+import LinkIcon from "@/components/icons/LinkIcon"
 
 export const route = {
   preload({ params }) {
@@ -40,6 +43,7 @@ async function FetchAllNameInfo(name: string, appID?: number) {
     const nfdInfo = await getNFDInfo(name)
     const listingInfo = await getListing(nfdInfo.appID!)
     allInfo = { listingInfo, nfdInfo }
+    console.log(allInfo)
   }
   return allInfo
 }
@@ -48,8 +52,8 @@ const getAllNameInfo = cache(async (name: string, appID?: number) => {
   return FetchAllNameInfo(name, appID)
 }, "getAllNameInfo")
 
-<<<<<<< HEAD
 export default function ListingDetails(props: RouteSectionProps) {
+  const [network] = createSignal(import.meta.env.VITE_NETWORK === "mainnet" ? "" : "testnet.")
   const [searchParams, setSearchParams] = useSearchParams()
   const appIDFromQueryParams = Number(searchParams.appid)
   // Defering stream here so that the page doesn't navigate until the data loads
@@ -64,14 +68,17 @@ export default function ListingDetails(props: RouteSectionProps) {
         <Card class="mx-auto w-full max-w-6xl">
           <div class="relative mb-4 flex h-full w-full items-center justify-center">
             {allNameInfo()?.nfdInfo?.properties?.userDefined?.banner ? (
-              <>
+              <a
+                href={`https://app.${network()}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
+                target="_blank"
+              >
                 <img
                   src={allNameInfo()?.nfdInfo?.properties?.userDefined?.banner}
                   alt="banner"
                   class="aspect-[2/1] w-full overflow-hidden rounded-t-xl border-b"
                 />
                 <div class="absolute -bottom-6 left-6 sm:-bottom-10 sm:left-10">
-                  <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-16">
+                  <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-32">
                     <img
                       src={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
                       alt="avatar"
@@ -79,7 +86,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                     />
                   </div>
                 </div>
-              </>
+              </a>
             ) : (
               <p class="flex aspect-[2/1] w-full items-center justify-center border-b text-xs">
                 No banner
@@ -88,7 +95,14 @@ export default function ListingDetails(props: RouteSectionProps) {
           </div>
           <CardHeader class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <CardTitle class="text-2xl uppercase sm:pt-4 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
-              {allNameInfo()?.nfdInfo?.name.split(".")[0]}
+              <a
+                href={`https://app.${network()}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
+                target="_blank"
+                class="flex flex-row items-center gap-2"
+              >
+                {allNameInfo()?.nfdInfo?.name.split(".")[0]}
+                <LinkIcon className="size-6" />
+              </a>
             </CardTitle>
             <Switch>
               <Match when={allNameInfo()?.nfdInfo?.state === ("forSale" as any)}>
@@ -114,9 +128,28 @@ export default function ListingDetails(props: RouteSectionProps) {
               <div id="listingFirstColumn flex flex-col gap-2">
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Tags</p>
-                  <p class="overflow-hidden text-wrap break-words">TAGS GO HERE @TAKO</p>
+                  <div class="flex flex-wrap items-center gap-1">
+                    <For
+                      each={Array.from(allNameInfo()?.listingInfo.tags || [])
+                        .slice(0, NUM_TAGS_ALLOWED)
+                        .filter((value) => value !== 0)
+                        .map((value) => {
+                          return tagMap[value?.toString() as keyof typeof tagMap].short as string
+                        })}
+                    >
+                      {(tag) => (
+                        <Badge
+                          variant="secondary"
+                          class="capitalize"
+                        >
+                          <span class="flex flex-row items-center">{tag}</span>
+                        </Badge>
+                      )}
+                    </For>
+                  </div>
                 </div>
               </div>
+
               <div id="listingSecondColumn flex flex-col gap-2">
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Value</p>
@@ -151,7 +184,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">Website</p>
                   <a
                     href={allNameInfo()?.nfdInfo?.properties?.userDefined?.website}
-                    class="overflow-hidden text-wrap break-words hover:underline"
+                    class="overflow-hidden text-wrap break-words"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.website}
                   </a>
@@ -160,7 +193,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">Email</p>
                   <a
                     href={`mailto:${allNameInfo()?.nfdInfo?.properties?.userDefined?.email}`}
-                    class="overflow-hidden text-wrap break-words hover:underline"
+                    class="overflow-hidden text-wrap break-words"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.email}
                   </a>
@@ -194,7 +227,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">LinkedIn</p>
                   <a
                     href={allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin}
-                    class="overflow-hidden text-wrap break-words hover:underline"
+                    class="overflow-hidden text-wrap break-words"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin}
                   </a>
