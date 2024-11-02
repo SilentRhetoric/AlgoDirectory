@@ -1,106 +1,56 @@
 {
-  "1": {
-    "short": "Marketplace",
-    "long": "Marketplace"
-  },
-  "2": {
-    "short": "Wallet",
-    "long": "Wallet"
-  },
-  "3": {
-    "short": "NFTs",
-    "long": "Non-Fungible Token"
-  },
-  "4": {
-    "short": "DAO",
-    "long": "Decentralized Autonomous Organization"
-  },
-  "5": {
-    "short": "dApp",
-    "long": "Decentralized Application"
-  },
-  "6": {
-    "short": "Smart Contract",
-    "long": "Smart Contract"
-  },
-  "7": {
-    "short": "dLending",
-    "long": "Decentralized Lending"
-  },
-  "8": {
-    "short": "Interop",
-    "long": "Interoperability"
-  },
-  "9": {
-    "short": "Bridge",
-    "long": "Bridge"
-  },
-  "10": {
-    "short": "dStorage",
-    "long": "Decentralized Storage"
-  },
-  "11": {
-    "short": "DEX",
-    "long": "Decentralized Exchange"
-  },
-  "12": {
-    "short": "Yield Farming",
-    "long": "Yield Farming"
-  },
-  "13": {
-    "short": "Staking",
-    "long": "Staking"
-  },
-  "14": {
-    "short": "Governance Token",
-    "long": "Governance Token"
-  },
-  "15": {
-    "short": "Metaverse",
-    "long": "Metaverse"
-  },
-  "16": {
-    "short": "Gaming",
-    "long": "Gaming"
-  },
-  "17": {
-    "short": "Oracle",
-    "long": "Oracle"
-  },
-  "18": {
-    "short": "ZK",
-    "long": "Zero-Knowledge Proof"
-  },
-  "19": {
-    "short": "LST",
-    "long": "Liquid Staking"
-  },
-  "20": {
-    "short": "DSM",
-    "long": "Decentralized Social Media"
-  },
-  "21": {
-    "short": "Tokenized Asset",
-    "long": "Tokenized Asset"
-  },
-  "22": {
-    "short": "Real Estate",
-    "long": "Real Estate"
-  },
-  "23": {
-    "short": "dInsurance",
-    "long": "Decentralized Insurance"
-  },
-  "24": {
-    "short": "Cross-Chain",
-    "long": "Cross-Chain Technology"
-  },
-  "25": {
-    "short": "DID",
-    "long": "Decentralized Identity"
-  },
-  "26": {
-    "short": "DePIN",
-    "long": "Decentralized Physical Infrastructure Network "
-  }
+  "1": { "short": "Analytics", "long": "" },
+  "2": { "short": "API", "long": "" },
+  "3": { "short": "Banking", "long": "" },
+  "4": { "short": "Betting", "long": "" },
+  "5": { "short": "Bridge", "long": "" },
+  "6": { "short": "Commodities", "long": "" },
+  "7": { "short": "Currency", "long": "" },
+  "8": { "short": "DAO", "long": "" },
+  "9": { "short": "DeFi", "long": "" },
+  "10": { "short": "DePIN", "long": "" },
+  "11": { "short": "Derivatives", "long": "" },
+  "12": { "short": "DEX", "long": "" },
+  "13": { "short": "DID", "long": "" },
+  "14": { "short": "Domains", "long": "" },
+  "15": { "short": "Education", "long": "" },
+  "16": { "short": "Environmental", "long": "" },
+  "17": { "short": "Explorer", "long": "" },
+  "18": { "short": "Farming", "long": "" },
+  "19": { "short": "FX", "long": "" },
+  "20": { "short": "Gaming", "long": "" },
+  "21": { "short": "Governance", "long": "" },
+  "22": { "short": "IDE", "long": "" },
+  "23": { "short": "Identity", "long": "" },
+  "24": { "short": "Insurance", "long": "" },
+  "25": { "short": "Interoperability", "long": "" },
+  "26": { "short": "Lending", "long": "" },
+  "27": { "short": "Library", "long": "" },
+  "28": { "short": "Loyalty", "long": "" },
+  "29": { "short": "Marketplace", "long": "" },
+  "30": { "short": "Meme", "long": "" },
+  "31": { "short": "Metaverse", "long": "" },
+  "32": { "short": "Money Token", "long": "" },
+  "33": { "short": "Monitoring", "long": "" },
+  "34": { "short": "Music", "long": "" },
+  "35": { "short": "NFT", "long": "" },
+  "36": { "short": "Node", "long": "" },
+  "37": { "short": "On/Off-Ramp", "long": "" },
+  "38": { "short": "Oracle", "long": "" },
+  "39": { "short": "Real Estate", "long": "" },
+  "40": { "short": "RWA", "long": "" },
+  "41": { "short": "Securities", "long": "" },
+  "42": { "short": "Smart Contract", "long": "" },
+  "43": { "short": "Snap", "long": "" },
+  "44": { "short": "Social", "long": "" },
+  "45": { "short": "Stablecoin", "long": "" },
+  "46": { "short": "Staking", "long": "" },
+  "47": { "short": "Storage", "long": "" },
+  "48": { "short": "Supply Chain", "long": "" },
+  "49": { "short": "Tickets", "long": "" },
+  "50": { "short": "Tokenization", "long": "" },
+  "51": { "short": "Tool", "long": "" },
+  "52": { "short": "Trading", "long": "" },
+  "53": { "short": "Wallet", "long": "" },
+  "54": { "short": "Zero Knowledge", "long": "" }
 }
