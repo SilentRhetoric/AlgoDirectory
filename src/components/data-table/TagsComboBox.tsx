@@ -80,13 +80,16 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
         <div
           role="combobox"
           aria-expanded={open()}
-          class="flex h-8 w-32 items-center justify-center gap-1 rounded-md border border-input bg-background px-4 py-2 text-sm font-thin transition-[color,background-color,box-shadow] hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 sm:w-48"
+          class="flex h-8 w-32 items-center justify-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-thin transition-[color,background-color,box-shadow] hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 sm:w-48"
         >
-          <FilterIcon className="size-4" />
+          <FilterIcon className="size-3.5" />
           TAGS
           <Show when={tagsSelected().length > 0}>
-            <div class="flex flex-row gap-4">
-              <Badge class="flex size-4 items-center justify-center rounded-full p-0 leading-[0.93rem]">
+            <div class="flex flex-row gap-5">
+              <Badge
+                variant="outline"
+                class="flex size-4 items-center justify-center rounded-full p-0 leading-[0.93rem]"
+              >
                 {tagsSelected().length}
               </Badge>
             </div>
