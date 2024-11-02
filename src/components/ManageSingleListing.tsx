@@ -119,6 +119,7 @@ export const ManageSingleListing: Component<{
         extraFee: (1000).microAlgo(),
         signer: props.transactionSigner,
         populateAppCallResources: true,
+        note: "I have read and agree to the AlgoDirectory terms of use. I understand that this listing can only be abandoned by this account to recover the vouched collateral. I acknowledge that inappropriate listings may be deleted with no return of collateral.",
       })
       console.debug("createResult: ", createResult)
     } catch (error: any) {
