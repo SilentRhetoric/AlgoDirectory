@@ -191,10 +191,9 @@ export const ManageSingleListing: Component<{
                 <a
                   href={`https://app.${network()}nf.domains/name/${props.segment.name}`}
                   target="_blank"
-                  class="flex flex-row gap-2"
+                  class="flex flex-row items-center gap-2"
                 >
-                  <LinkIcon className="size-5" />
-                  {props.segment.name.split(".")[0]}
+                  {props.segment.name.split(".")[0]} <LinkIcon className="size-6" />
                 </a>
               </CardTitle>
             </CardHeader>
@@ -269,10 +268,9 @@ export const ManageSingleListing: Component<{
               <a
                 href={`https://app.${network()}nf.domains/name/${props.segment.name}`}
                 target="_blank"
-                class="flex flex-row gap-2"
+                class="flex flex-row items-center gap-2"
               >
-                <LinkIcon className="size-5" />
-                {props.segment.name.split(".")[0]}
+                {props.segment.name.split(".")[0]} <LinkIcon className="size-6" />
               </a>
             </CardTitle>
           </CardHeader>

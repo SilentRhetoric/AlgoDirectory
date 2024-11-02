@@ -7,6 +7,7 @@ import { getListings } from "@/lib/algod-api"
 import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import tagMap from "@/assets/tags.json" // Adjust the path as necessary
 import SiteTitle from "@/components/SiteTitle"
+import GetASegment from "@/components/GetASegment"
 
 const Home = () => {
   const listings = createAsyncStore(async () => {
@@ -38,7 +39,7 @@ const Home = () => {
   })
 
   return (
-    <div class="w-full p-4">
+    <div class="flex w-full flex-col gap-4 p-4">
       <SiteTitle>Home</SiteTitle>
       <Suspense
         fallback={
@@ -54,6 +55,7 @@ const Home = () => {
           data={listings}
         />
       </Suspense>
+      <GetASegment />
     </div>
   )
 }

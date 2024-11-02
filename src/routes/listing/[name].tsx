@@ -18,6 +18,7 @@ import { Listing } from "@/types/types"
 import { NfdRecordResponseFull } from "@/lib/nfd-swagger-codegen"
 import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import tagMap from "@/assets/tags.json"
+import LinkIcon from "@/components/icons/LinkIcon"
 
 export const route = {
   preload({ params }) {
@@ -97,8 +98,10 @@ export default function ListingDetails(props: RouteSectionProps) {
               <a
                 href={`https://app.${network()}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
                 target="_blank"
+                class="flex flex-row items-center gap-2"
               >
                 {allNameInfo()?.nfdInfo?.name.split(".")[0]}
+                <LinkIcon className="size-6" />
               </a>
             </CardTitle>
             <Switch>
@@ -181,7 +184,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">Website</p>
                   <a
                     href={allNameInfo()?.nfdInfo?.properties?.userDefined?.website}
-                    class="overflow-hidden text-wrap break-words hover:underline"
+                    class="overflow-hidden text-wrap break-words"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.website}
                   </a>
@@ -190,7 +193,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">Email</p>
                   <a
                     href={`mailto:${allNameInfo()?.nfdInfo?.properties?.userDefined?.email}`}
-                    class="overflow-hidden text-wrap break-words hover:underline"
+                    class="overflow-hidden text-wrap break-words"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.email}
                   </a>
@@ -224,7 +227,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">LinkedIn</p>
                   <a
                     href={allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin}
-                    class="overflow-hidden text-wrap break-words hover:underline"
+                    class="overflow-hidden text-wrap break-words"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin}
                   </a>
