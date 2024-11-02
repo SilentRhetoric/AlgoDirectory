@@ -7,7 +7,7 @@ const GetASegment: Component = () => {
       href="https://app.testnet.nf.domains/name/directory.algo?view=segments"
       target="_blank"
     >
-      <span class="flex flex-row items-center gap-1 text-sm uppercase">
+      <span class="flex flex-row items-center gap-1 text-sm">
         Get a segment of directory.algo
         <LinkIcon className="size-4" />
       </span>{" "}

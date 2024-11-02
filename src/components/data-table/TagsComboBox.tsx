@@ -1,8 +1,6 @@
 import { type Table } from "@tanstack/solid-table"
-import { createFilter } from "@kobalte/core"
-import { createMemo, createSignal, For, onMount, Setter, Show } from "solid-js"
+import { createMemo, createSignal, onMount, Show } from "solid-js"
 import { generateTagsList } from "@/lib/tag-generator"
-import { Button } from "@/components/ui/button"
 import {
   Command,
   CommandGroup,
@@ -12,7 +10,6 @@ import {
 } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import CheckIcon from "@/components/icons/CheckIcon"
-import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import FilterIcon from "@/components/icons/FilterIcon"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "../ui/separator"
@@ -106,7 +103,7 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
             onSelect={clearAllTags}
             class="mx-1 mt-2 flex cursor-pointer flex-row gap-2 px-8"
           >
-            <span class="">Clear All Tags</span>
+            <span class="font-thin">Clear All Tags</span>
           </CommandItem>
           <Separator class="my-2 w-full overflow-visible" />
           <CommandList>
@@ -123,7 +120,7 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
                   >
                     <CheckIcon />
                   </Show>
-                  <span class="">{framework.title}</span>
+                  <span class="font-thin">{framework.title}</span>
                 </CommandItem>
               ))}
             </CommandGroup>

@@ -255,7 +255,7 @@ export const ManageSingleListing: Component<{
               <Button
                 disabled={expiredOrForSale(props.segment) || isSubmitting()}
                 onClick={createListing}
-                class="flex w-full flex-row items-center justify-center gap-2"
+                class="flex w-full flex-row items-center justify-center gap-2 uppercase"
               >
                 <Show when={isSubmitting() && typeSubmitting() === "create"}>
                   <span class="animate-spin">
@@ -321,7 +321,7 @@ export const ManageSingleListing: Component<{
             <div class="flex w-full flex-col items-center justify-start gap-2">
               <Button
                 variant="secondary"
-                class="flex w-full flex-row items-center justify-center gap-2"
+                class="flex w-full flex-row items-center justify-center gap-2 uppercase"
                 disabled={expiredOrForSale(props.segment) || isSubmitting()}
                 onClick={refreshListing}
               >
@@ -334,7 +334,7 @@ export const ManageSingleListing: Component<{
               </Button>
               <Button
                 variant="destructive"
-                class="flex w-full flex-row items-center justify-center gap-2"
+                class="flex w-full flex-row items-center justify-center gap-2 uppercase"
                 disabled={isSubmitting()}
                 onClick={abandonListing}
               >

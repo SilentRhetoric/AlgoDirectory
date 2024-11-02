@@ -73,7 +73,7 @@ function MultiSelectTags(props: MultiSelectTagsProps) {
           variant="secondary"
           role="combobox"
           aria-expanded={open()}
-          class="flex w-full flex-row items-center justify-center"
+          class="flex w-full flex-row items-center justify-center uppercase"
         >
           Edit Tags
         </Button>
@@ -90,7 +90,7 @@ function MultiSelectTags(props: MultiSelectTagsProps) {
                 <CommandItem
                   value={framework.value}
                   onSelect={handleSelect}
-                  class="flex flex-row gap-2"
+                  class="flex flex-row gap-2 font-thin"
                 >
                   <Show
                     when={props.tags.includes(framework.value)}
