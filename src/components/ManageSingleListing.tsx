@@ -226,7 +226,12 @@ export const ManageSingleListing: Component<{
               <div class="flex flex-col justify-end gap-2">
                 <div class="flex flex-wrap justify-start gap-2">
                   {tags().map((tag: string) => (
-                    <Badge variant="secondary">{tag}</Badge>
+                    <Badge
+                      class="hover:bg-secondary"
+                      variant="secondary"
+                    >
+                      {tag}
+                    </Badge>
                   ))}
                 </div>
                 <Show
@@ -293,7 +298,12 @@ export const ManageSingleListing: Component<{
             <div class="flex flex-col justify-end gap-2">
               <div class="flex flex-wrap justify-start gap-2">
                 {tags().map((tag: string) => (
-                  <Badge variant="secondary">{tag}</Badge>
+                  <Badge
+                    class="hover:bg-secondary"
+                    variant="secondary"
+                  >
+                    {tag}
+                  </Badge>
                 ))}
               </div>
               <MultiSelectTags

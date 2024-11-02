@@ -47,7 +47,7 @@ export const columns: ColumnDef<DisplayedListing>[] = [
           {props.row.original.tags.map((tag) => (
             <Badge
               variant="secondary"
-              class="mr-1"
+              class="mr-1 hover:bg-secondary"
             >
               {tag}
             </Badge>
