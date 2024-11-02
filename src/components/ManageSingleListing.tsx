@@ -1,7 +1,7 @@
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import { TransactionSigner } from "algosdk"
 import { Component, createMemo, createResource, createSignal, Show, Suspense } from "solid-js"
-import { algorand, APP_ID, fetchSingleListing } from "@/lib/algod-api"
+import { algorand, DIRECTORY_APP_ID, fetchSingleListing } from "@/lib/algod-api"
 import { NfdRecord } from "@/lib/nfd-swagger-codegen"
 import { formatTimestamp } from "@/lib/formatting"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ import LoadingIcon from "./icons/LoadingIcon"
 import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
 import ManageListingSkeleton from "./ManageListingSkeleton"
 import LinkIcon from "./icons/LinkIcon"
+import { nfdSiteUrlRoot } from "@/lib/nfd-api"
 
 type ManageSingleListingProps = {
   segment: NfdRecord
@@ -33,7 +34,6 @@ export const ManageSingleListing: Component<{
   const [vouchAmount, setVouchAmount] = createSignal(0.0722) // Each listing requires min 72_200uA
   const [tags, setTags] = createSignal<string[]>([])
   const tagMasterlist = createMemo(() => generateTagsList())
-  const [network] = createSignal(import.meta.env.VITE_NETWORK === "mainnet" ? "" : "testnet.")
 
   const expiredOrForSale = (segment: NfdRecord) => {
     if (segment.expired === true) {
@@ -59,7 +59,7 @@ export const ManageSingleListing: Component<{
 
   // Client created here so it is configured to send from the connected account
   const typedAppClient = algorand().client.getTypedAppClientById(AlgoDirectoryClient, {
-    appId: BigInt(APP_ID),
+    appId: BigInt(DIRECTORY_APP_ID),
     defaultSender: props.sender,
   })
 
@@ -119,7 +119,7 @@ export const ManageSingleListing: Component<{
         extraFee: (1000).microAlgo(),
         signer: props.transactionSigner,
         populateAppCallResources: true,
-        note: "I have read and agree to the AlgoDirectory terms of use. I understand that this listing can only be abandoned by this account to recover the vouched collateral. I acknowledge that inappropriate listings may be deleted with no return of collateral.",
+        note: "I have read and agree to the AlgoDirectory Terms of Use and Privacy Policy at https://algodirectory.app/about.",
       })
       console.debug("createResult: ", createResult)
     } catch (error: any) {
@@ -190,11 +190,11 @@ export const ManageSingleListing: Component<{
             <CardHeader>
               <CardTitle class="flex flex-row gap-2">
                 <a
-                  href={`https://app.${network()}nf.domains/name/${props.segment.name}`}
+                  href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${props.segment.name}`}
                   target="_blank"
-                  class="flex flex-row items-center gap-2"
+                  class="flex flex-row gap-2"
                 >
-                  {props.segment.name.split(".")[0]} <LinkIcon className="size-6" />
+                  {props.segment.name.split(".")[0]} <LinkIcon />
                 </a>
               </CardTitle>
             </CardHeader>
@@ -272,11 +272,11 @@ export const ManageSingleListing: Component<{
           <CardHeader>
             <CardTitle class="flex flex-row gap-2">
               <a
-                href={`https://app.${network()}nf.domains/name/${props.segment.name}`}
+                href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${props.segment.name}`}
                 target="_blank"
-                class="flex flex-row items-center gap-2"
+                class="flex flex-row gap-2"
               >
-                {props.segment.name.split(".")[0]} <LinkIcon className="size-6" />
+                {props.segment.name.split(".")[0]} <LinkIcon />
               </a>
             </CardTitle>
           </CardHeader>

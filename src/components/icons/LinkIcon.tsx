@@ -1,23 +1,13 @@
-import { Component, JSX } from "solid-js"
-
-interface IconProps {
-  size?: number
-  color?: string
-  className?: string
-}
-
-const LinkIcon: Component<IconProps> = ({ size = 24, color = "currentColor", className = "" }) => {
+const LinkIcon = () => {
   return (
     <svg
-      width={size}
-      height={size}
       viewBox="0 0 24 24"
       fill="none"
-      stroke={color}
+      stroke="currentColor"
       stroke-width="1"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class={`${className}`}
+      class="size-4"
     >
       <path
         stroke-linecap="round"

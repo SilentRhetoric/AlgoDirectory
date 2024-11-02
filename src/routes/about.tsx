@@ -1,5 +1,6 @@
 import SiteTitle from "@/components/SiteTitle"
 import { version } from "../../package.json"
+import { DIRECTORY_APP_ID, NETWORK } from "@/lib/algod-api"
 
 export default function About() {
   return (
@@ -182,23 +183,31 @@ export default function About() {
         Creating listings requires collateral to be deposited, but AlgoDirectory does not take any
         fees for any interaction (Algorand transaction fees are required, of course).
       </p>
-      <h2>Disclaimer</h2>
-      <p>
-        Use at your own risk. Always verify in your wallet that each transaction is what you
-        expected before signing. Once collateral is sent to the smart contract to create a listing,
-        the collateral can only be returned to that account when the listing is abandoned. This
-        software is provided under MIT license, and the source code is available through the GitHub
-        link in the page footer.
-      </p>
       <h2>Terms of Use</h2>
       <p>
-        All AlgoDirectory listings are subject to administrator review and may be deleted at the
-        sole discretion of any administrator without notice. If a listing is deleted, the collateral
-        deposited for that listing will be sent to the Algorand Mainnet fee sink address.
-        AlgoDirectory, its creators, any appointed administrators, and Distributed Ledger
-        Technologies, LLC, are not liable for any loss or damages whatsoever resulting from the use
-        of this software or the deletion of any listing. Play nice, keep listings safe for work, and
-        enjoy the Directory.
+        Effective November 1, 2024. Use of this service is entirely at your own risk and we accept
+        no liability whatsoever. The service is provided "as is" with no warranties or guarantees of
+        any kind. This software is provided under MIT license, and the source code is available
+        through the GitHub link in the page footer.
+      </p>
+      <p>
+        Only the account that creates a listing can abandon it to recover the collateral deposited
+        to vouch for that listing. All AlgoDirectory listings are subject to review and may be
+        deleted at the sole discretion of any administrator without notice. If a listing is deleted,
+        the collateral deposited when the listing was created will be sent to the Algorand network
+        fee sink address and not returned to the listing creator.
+      </p>
+      <p>
+        Using the app also means that you agree to the privacy policy. These Terms may change at any
+        time wihtout notice. Play nice, keep listings safe for work, and enjoy the Directory.
+      </p>
+      <h2>Privacy Policy</h2>
+      <p>
+        Effective November 1, 2024. AlgoDirectory runs on the Algorand public blockchain, so all
+        transactions and listing data will be publicly available forever. Do not create a listing or
+        otherwise interact with the app if you don't want that data to be immutably added to the
+        public blockchain. This policy may change at any time without notice. This site does not use
+        cookies, although we think chocolate chip cookies are delicious.
       </p>
       <h2>App Info</h2>
       <p>
@@ -215,11 +224,11 @@ export default function About() {
       <p>
         UI version {version}. Smart contract App ID:{" "}
         <a
-          href={`https://lora.algokit.io/${import.meta.env.VITE_NETWORK}/application/${Number(import.meta.env.VITE_APP_ID)}`}
+          href={`https://lora.algokit.io/${NETWORK}/application/${DIRECTORY_APP_ID}`}
           target="_blank"
           class="text-blue-500"
         >
-          {Number(import.meta.env.VITE_APP_ID)}.
+          {DIRECTORY_APP_ID}.
         </a>
       </p>
       <p></p>

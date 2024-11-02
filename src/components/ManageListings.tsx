@@ -4,7 +4,6 @@ import { getOwnedSegments } from "@/lib/nfd-api"
 import { ellipseString } from "@/lib/formatting"
 import { ManageSingleListing } from "./ManageSingleListing"
 import { Button } from "@/components/ui/button"
-import LinkIcon from "./icons/LinkIcon"
 import GetASegment from "./GetASegment"
 
 export default function ManageListings() {
