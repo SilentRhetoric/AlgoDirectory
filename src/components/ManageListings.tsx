@@ -52,7 +52,7 @@ export default function ManageListings() {
                 onClick={() => activeWallet()!.disconnect()}
                 aria-label="Disconnect"
                 class="uppercase"
-                variant="secondary"
+                variant="outline"
               >
                 Disconnect
               </Button>

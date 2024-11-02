@@ -70,7 +70,7 @@ function MultiSelectTags(props: MultiSelectTagsProps) {
       >
         <Button
           disabled={props.isSubmitting}
-          variant="secondary"
+          variant="outline"
           role="combobox"
           aria-expanded={open()}
           class="flex w-full flex-row items-center justify-center uppercase"
