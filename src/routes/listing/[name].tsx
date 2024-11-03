@@ -9,7 +9,7 @@ import SiteTitle from "@/components/SiteTitle"
 import { getNFDInfo, nfdSiteUrlRoot } from "@/lib/nfd-api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { For, Match, Suspense, Switch } from "solid-js"
+import { For, Match, Show, Suspense, Switch } from "solid-js"
 import { fetchSingleListing } from "@/lib/algod-api"
 import { formatTimestamp } from "@/lib/formatting"
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
@@ -70,26 +70,54 @@ export default function ListingDetails(props: RouteSectionProps) {
               <a
                 href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
                 target="_blank"
+                class="aspect-[16/9] w-full"
               >
                 <img
                   src={allNameInfo()?.nfdInfo?.properties?.userDefined?.banner}
                   alt="banner"
-                  class="aspect-[2/1] w-full overflow-hidden rounded-t-xl border-b"
+                  class="aspect-[16/9] w-full overflow-hidden rounded-t-xl border-b object-cover"
                 />
                 <div class="absolute -bottom-6 left-6 sm:-bottom-10 sm:left-10">
                   <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-32">
-                    <img
-                      src={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
-                      alt="avatar"
-                      class="h-full w-full rounded-full"
-                    />
+                    <Show
+                      when={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
+                      fallback={
+                        <div class="flex h-full w-full items-center justify-center rounded-full bg-secondary text-xs">
+                          No avatar
+                        </div>
+                      }
+                    >
+                      <img
+                        src={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
+                        alt="avatar"
+                        class="h-full w-full rounded-full"
+                      />
+                    </Show>
                   </div>
                 </div>
               </a>
             ) : (
-              <p class="flex aspect-[2/1] w-full items-center justify-center border-b text-xs">
-                No banner
-              </p>
+              <div class="flex aspect-[2/1] h-full w-full items-center justify-center border-b text-xs">
+                <p class="">No banner</p>
+                <div class="absolute -bottom-6 left-6 sm:-bottom-10 sm:left-10">
+                  <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-32">
+                    <Show
+                      when={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
+                      fallback={
+                        <div class="flex h-full w-full items-center justify-center rounded-full bg-secondary">
+                          No avatar
+                        </div>
+                      }
+                    >
+                      <img
+                        src={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar || ""}
+                        alt="avatar"
+                        class="h-full w-full rounded-full"
+                      />
+                    </Show>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
           <CardHeader class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
