@@ -22,9 +22,9 @@ export const DIRECTORY_APP_ID = Number(import.meta.env.VITE_DIRECTORY_APP_ID)
 export const algorand = () => {
   switch (NETWORK) {
     case "mainnet":
-      return AlgorandClient.mainNet()
+      return AlgorandClient.mainNet().setDefaultValidityWindow(100)
     case "testnet":
-      return AlgorandClient.testNet()
+      return AlgorandClient.testNet().setDefaultValidityWindow(100)
     default:
       throw new Error(`Unsupported network: ${NETWORK}`)
   }

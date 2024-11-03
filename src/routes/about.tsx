@@ -60,34 +60,35 @@ export default function About() {
       <h2>Vouching Protocol</h2>
       <p>AlgoDirectory's Vouching Protocol provides the following methods to manage listings:</p>
       <p>
-        <span>Create: </span>Select a segment of directory.algo that you own and deposit some
-        collateral to vouch for your listing. The amount vouched will be displayed in the Directory
-        and affect default listing order. You can list an NFD segment you own as long as it is not
-        for sale or expired at NFD.
+        <span class="uppercase">Create: </span>Select a segment of directory.algo that you own and
+        deposit some collateral to vouch for your listing. The amount vouched will be displayed in
+        the Directory and affect default listing order. You can list an NFD segment you own as long
+        as it is not for sale or expired at NFD.
       </p>
       <p>
-        <span>Refresh: </span>Listings in the Directory automatically age to show their freshness.
-        To reset the age of your listing, refresh it. You can edit the listing's tags when
-        refreshing it. You can refresh a listing for an NFD segment you own as long as it is not for
-        sale or expired at NFD.
+        <span class="uppercase">Refresh: </span>Listings in the Directory automatically age to show
+        their freshness. To reset the age of your listing, refresh it. You can edit the listing's
+        tags when refreshing it. You can refresh a listing for an NFD segment you own as long as it
+        is not for sale or expired at NFD.
       </p>
       <p>
-        <span>Abandon: </span>To recover the collateral for a listing, it can be abandoned, which
-        delists that segment from the Directory. The collateral is returned to the original
-        creator's address. If you have purchased an NFD segment, you can abandon the existing
-        listing for it and then create your own.
+        <span class="uppercase">Abandon: </span>To recover the collateral for a listing, it can be
+        abandoned, which delists that segment from the Directory. The collateral is returned to the
+        original creator's address. If you have purchased an NFD segment, you can abandon the
+        existing listing for it and then create your own.
       </p>
       <p>
-        <span>Remove: </span>If the NFD segment underlying a listing has been sold and changed
-        owners, it is considered to be stale and can be removed by any caller. Collateral is
-        returned to the original listing creator, so there is no penalty when this occurs. This
-        feature is not currently available through the web app.
+        <span class="uppercase">Remove: </span>If the NFD segment underlying a listing has been sold
+        and changed owners, it is considered to be stale and can be removed by any caller.
+        Collateral is returned to the original listing creator, so there is no penalty when this
+        occurs. This feature is not currently available through the web app.
       </p>
       <p>
-        <span>Delete: </span>AlgoDirectory has administrators, a role that is granted by holding a
-        special token, who can delete any listing at any time for any reason. If a listing is
-        deleted by an admin, the collateral is yeeted to the fee sink as a penalty. Do not create a
-        listing if you think it might be objectionable, lest it get deleted by an admin.
+        <span class="uppercase">Delete: </span>AlgoDirectory has administrators, a role that is
+        granted by holding a special token, who can delete any listing at any time for any reason.
+        If a listing is deleted by an admin, the collateral is yeeted to the fee sink as a penalty.
+        Do not create a listing if you think it might be objectionable, lest it get deleted by an
+        admin.
       </p>
       <h2>History</h2>
       <p>
