@@ -64,8 +64,8 @@ export default function ListingDetails(props: RouteSectionProps) {
     <main class="flex flex-col gap-2 p-4">
       <SiteTitle>{allNameInfo()?.nfdInfo?.name.split(".")[0].toUpperCase()}</SiteTitle>
       <Suspense fallback={<div>Loading...</div>}>
-        <Card class="mx-auto w-full max-w-6xl">
-          <div class="relative mb-4 flex h-full w-full items-center justify-center">
+        <Card class="mx-auto w-full max-w-6xl overflow-hidden">
+          <div class="relative -mt-1 mb-4 flex h-full w-full items-center justify-center">
             {allNameInfo()?.nfdInfo?.properties?.userDefined?.banner ? (
               <a
                 href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
@@ -75,7 +75,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                 <img
                   src={allNameInfo()?.nfdInfo?.properties?.userDefined?.banner}
                   alt="banner"
-                  class="aspect-[16/9] w-full overflow-hidden rounded-t-xl border-b object-cover"
+                  class="aspect-[16/9] w-full border-b object-cover"
                 />
                 <div class="absolute -bottom-6 left-6 sm:-bottom-10 sm:left-10">
                   <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-32">
@@ -97,7 +97,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                 </div>
               </a>
             ) : (
-              <div class="flex aspect-[2/1] h-full w-full items-center justify-center border-b text-xs">
+              <div class="flex aspect-[16/9] h-full w-full items-center justify-center border-b text-xs">
                 <p class="">No banner</p>
                 <div class="absolute -bottom-6 left-6 sm:-bottom-10 sm:left-10">
                   <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-32">
