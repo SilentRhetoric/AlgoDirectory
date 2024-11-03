@@ -46,8 +46,8 @@ export const columns: ColumnDef<DisplayedListing>[] = [
         <span class="truncate font-thin">
           {props.row.original.tags.map((tag) => (
             <Badge
-              variant="secondary"
-              class="mr-1 hover:bg-secondary"
+              variant="outline"
+              class="mr-1 hover:bg-transparent"
             >
               {tag}
             </Badge>

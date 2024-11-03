@@ -206,7 +206,7 @@ export const ManageSingleListing: Component<{
                   <div class="flex flex-row items-center gap-1">
                     <input
                       disabled={isSubmitting()}
-                      class="h-8 w-32 rounded-md border bg-secondary p-4"
+                      class="h-8 w-32 rounded-md border bg-transparent p-4"
                       type="number"
                       min={0.0722}
                       value={vouchAmount()}
@@ -227,8 +227,8 @@ export const ManageSingleListing: Component<{
                 <div class="flex flex-wrap justify-start gap-2">
                   {tags().map((tag: string) => (
                     <Badge
-                      class="hover:bg-secondary"
-                      variant="secondary"
+                      class="hover:bg-transparent"
+                      variant="outline"
                     >
                       {tag}
                     </Badge>
@@ -255,7 +255,8 @@ export const ManageSingleListing: Component<{
               <Button
                 disabled={expiredOrForSale(props.segment) || isSubmitting()}
                 onClick={createListing}
-                class="flex w-full flex-row items-center justify-center gap-2 uppercase"
+                variant="outline"
+                class="flex w-full flex-row items-center justify-center gap-2 border-[0.5px] border-[hsl(var(--primary))] uppercase hover:bg-[hsl(var(--primary))] hover:text-black"
               >
                 <Show when={isSubmitting() && typeSubmitting() === "create"}>
                   <span class="animate-spin">
@@ -299,8 +300,8 @@ export const ManageSingleListing: Component<{
               <div class="flex flex-wrap justify-start gap-2">
                 {tags().map((tag: string) => (
                   <Badge
-                    class="hover:bg-secondary"
-                    variant="secondary"
+                    class="hover:bg-transparent"
+                    variant="outline"
                   >
                     {tag}
                   </Badge>
@@ -320,7 +321,7 @@ export const ManageSingleListing: Component<{
           <CardFooter>
             <div class="flex w-full flex-col items-center justify-start gap-2">
               <Button
-                variant="secondary"
+                variant="outline"
                 class="flex w-full flex-row items-center justify-center gap-2 uppercase"
                 disabled={expiredOrForSale(props.segment) || isSubmitting()}
                 onClick={refreshListing}
@@ -333,8 +334,8 @@ export const ManageSingleListing: Component<{
                 Refresh Listing
               </Button>
               <Button
-                variant="destructive"
-                class="flex w-full flex-row items-center justify-center gap-2 uppercase"
+                variant="outline"
+                class="flex w-full flex-row items-center justify-center gap-2 border-[hsl(var(--destructive))] uppercase hover:bg-[hsl(var(--destructive))] hover:text-white"
                 disabled={isSubmitting()}
                 onClick={abandonListing}
               >

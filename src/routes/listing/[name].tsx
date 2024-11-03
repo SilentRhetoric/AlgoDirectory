@@ -106,16 +106,16 @@ export default function ListingDetails(props: RouteSectionProps) {
             <Switch>
               <Match when={allNameInfo()?.nfdInfo?.state === ("forSale" as any)}>
                 <Badge
-                  variant={"destructive"}
-                  class="capitalize"
+                  variant={"outline"}
+                  class="border-[hsl(var(--destructive))] capitalize text-red-500"
                 >
                   <span>For Sale</span>
                 </Badge>
               </Match>
               <Match when={allNameInfo()?.nfdInfo?.state === ("expired" as any)}>
                 <Badge
-                  variant={"destructive"}
-                  class="capitalize"
+                  variant={"outline"}
+                  class="border-[hsl(var(--destructive))] capitalize text-red-500"
                 >
                   <span>Expired</span>
                 </Badge>
@@ -138,8 +138,8 @@ export default function ListingDetails(props: RouteSectionProps) {
                     >
                       {(tag) => (
                         <Badge
-                          variant="secondary"
-                          class="capitalize"
+                          variant="outline"
+                          class="bg-transparent capitalize"
                         >
                           <span class="flex flex-row items-center">{tag}</span>
                         </Badge>
