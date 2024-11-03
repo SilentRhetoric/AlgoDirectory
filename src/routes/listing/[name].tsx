@@ -1,6 +1,7 @@
 import {
   cache,
   createAsync,
+  redirect,
   RouteDefinition,
   RouteSectionProps,
   useSearchParams,
@@ -32,21 +33,32 @@ type NFDAndListingInfo = {
 }
 async function FetchAllNameInfo(name: string, appID?: number) {
   let allInfo = {} as NFDAndListingInfo
-  const getListing = async (appID: number) => await fetchSingleListing(appID)
-  const getNFD = async (name: string) => await getNFDInfo(name)
-  if (appID) {
-    // Fire off both requests at the same time because appID is known
-    const [listingInfo, nfdInfo] = await Promise.all([getListing(appID), getNFD(name)])
-    allInfo = { listingInfo, nfdInfo }
-  } else {
-    // Get NFD info first to get the appID, then get the listing info
-    const nfdInfo = await getNFDInfo(name)
-    const listingInfo = await getListing(nfdInfo.appID!)
-    allInfo = { listingInfo, nfdInfo }
-    console.log(allInfo)
+  try {
+    const getListing = async (appID: number) => await fetchSingleListing(appID)
+    const getNFD = async (name: string) => await getNFDInfo(name)
+    if (appID) {
+      // Fire off both requests at the same time bec ause appID is known
+      const [listingInfo, nfdInfo] = await Promise.all([getListing(appID), getNFD(name)])
+      allInfo = { listingInfo, nfdInfo }
+    } else {
+      // Get NFD info first to get the appID, then get the listing info
+      const nfdInfo = await getNFDInfo(name)
+      const listingInfo = await getListing(nfdInfo.appID!)
+      allInfo = { listingInfo, nfdInfo }
+    }
+  } catch (e) {
+    console.error(e)
+    throw redirect("/404")
   }
+
+  if (allInfo.listingInfo.name !== allInfo.nfdInfo.name.split(".")[0]) {
+    // This shouldn't happen, but just in case we got a mismatch
+    throw redirect("/404")
+  }
+
   return allInfo
 }
+
 const getAllNameInfo = cache(async (name: string, appID?: number) => {
   "use server"
   return FetchAllNameInfo(name, appID)
