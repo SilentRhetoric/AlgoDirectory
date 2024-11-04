@@ -4,7 +4,6 @@ import type {
   SortingState,
   VisibilityState,
 } from "@tanstack/solid-table"
-import { Button } from "@/components/ui/button"
 import {
   flexRender,
   createSolidTable,
