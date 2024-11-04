@@ -176,11 +176,6 @@ export default function About() {
         community and become a valuable resource for it.
       </p>
       <p>
-        The Directory is not intended to generate profit for the AlgoDirectory team, so there is no
-        markup above NFD's minimum cost to mint segments. When minting a segment of directory.algo,
-        100% of minting fees go to NFDomains.
-      </p>
-      <p>
         Creating listings requires collateral to be deposited, but AlgoDirectory does not take any
         fees for any interaction (Algorand transaction fees are required, of course).
       </p>

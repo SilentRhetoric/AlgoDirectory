@@ -5,7 +5,7 @@ export default function Header() {
   const bannerText = () => {
     switch (NETWORK) {
       case "mainnet":
-        return "Coming Soon"
+        return ""
       case "testnet":
         return "Testnet"
       case "betanet":

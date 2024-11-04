@@ -90,7 +90,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   class="aspect-[16/9] w-full border-b object-cover"
                 />
                 <div class="absolute -bottom-6 left-6 sm:-bottom-10 sm:left-10">
-                  <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-32">
+                  <div class="h-20 w-20 rounded-full border-[1px] sm:h-32 sm:w-32">
                     <Show
                       when={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
                       fallback={
@@ -102,7 +102,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                       <img
                         src={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
                         alt="avatar"
-                        class="h-full w-full rounded-full"
+                        class="h-full w-full rounded-full bg-background"
                       />
                     </Show>
                   </div>
@@ -223,7 +223,8 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">Website</p>
                   <a
                     href={allNameInfo()?.nfdInfo?.properties?.userDefined?.website}
-                    class="overflow-hidden text-wrap break-words"
+                    target="_blank"
+                    class="overflow-hidden text-wrap break-words text-blue-500"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.website}
                   </a>
@@ -232,7 +233,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">Email</p>
                   <a
                     href={`mailto:${allNameInfo()?.nfdInfo?.properties?.userDefined?.email}`}
-                    class="overflow-hidden text-wrap break-words"
+                    class="overflow-hidden text-wrap break-words text-blue-500"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.email}
                   </a>
@@ -266,7 +267,8 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">LinkedIn</p>
                   <a
                     href={allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin}
-                    class="overflow-hidden text-wrap break-words"
+                    target="_blank"
+                    class="overflow-hidden text-wrap break-words text-blue-500"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin}
                   </a>
