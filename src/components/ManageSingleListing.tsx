@@ -248,7 +248,6 @@ export const ManageSingleListing: Component<{
                     masterlist={props.sortedMasterTagList}
                     isSubmitting={isSubmitting()}
                     // isDisabled={expiredOrForSale(props.segment)}
-                    // isDisabled={expiredOrForSale(props.segment)}
                     setTags={setTags}
                   />
                 </Show>
@@ -266,7 +265,6 @@ export const ManageSingleListing: Component<{
               >
                 <Show when={isSubmitting() && typeSubmitting() === "create"}>
                   <span class="animate-spin">
-                    <LoadingIcon className="size-4" />
                     <LoadingIcon className="size-4" />
                   </span>
                 </Show>
@@ -336,7 +334,6 @@ export const ManageSingleListing: Component<{
                 <Show when={isSubmitting() && typeSubmitting() === "refresh"}>
                   <span class="animate-spin">
                     <LoadingIcon className="size-4" />
-                    <LoadingIcon className="size-4" />
                   </span>
                 </Show>
                 Refresh Listing
@@ -349,7 +346,6 @@ export const ManageSingleListing: Component<{
               >
                 <Show when={isSubmitting() && typeSubmitting() === "abandon"}>
                   <span class="animate-spin">
-                    <LoadingIcon className="size-4" />
                     <LoadingIcon className="size-4" />
                   </span>
                 </Show>
