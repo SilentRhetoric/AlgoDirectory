@@ -13,11 +13,17 @@ export default createHandler(() => (
           />
           <meta
             name="theme-color"
-            content="#FFFFFF"
+            media="(prefers-color-scheme: light)"
+            content="#ffffff"
+          />
+          <meta
+            name="theme-color"
+            media="(prefers-color-scheme: dark)"
+            content="#000000"
           />
           <meta
             name="description"
-            content="An on-chain directory of the Algorand ecosystem"
+            content="A decentralized, on-chain directory for the Algorand ecosystem"
           />
           <meta
             property="og:url"
@@ -33,7 +39,7 @@ export default createHandler(() => (
           />
           <meta
             property="og:description"
-            content="An on-chain directory of the Algorand ecosystem"
+            content="A decentralized, on-chain directory for the Algorand ecosystem"
           />
           <meta
             property="og:image"
@@ -57,7 +63,7 @@ export default createHandler(() => (
           />
           <meta
             name="twitter:description"
-            content="An on-chain directory of the Algorand ecosystem"
+            content="A decentralized, on-chain directory for the Algorand ecosystem"
           />
           <meta
             name="twitter:image"
