@@ -62,5 +62,6 @@
   "61": { "short": "Tool", "long": "" },
   "62": { "short": "Trading", "long": "" },
   "63": { "short": "Wallet", "long": "" },
-  "64": { "short": "Zero Knowledge", "long": "" }
+  "64": { "short": "Zero Knowledge", "long": "" },
+  "65": { "short": "Company", "long": "" }
 }
