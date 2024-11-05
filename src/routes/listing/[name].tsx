@@ -83,12 +83,11 @@ export default function ListingDetails(props: RouteSectionProps) {
               <a
                 href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
                 target="_blank"
-                class="aspect-[16/9] w-full"
               >
                 <img
                   src={allNameInfo()?.nfdInfo?.properties?.userDefined?.banner}
                   alt="banner"
-                  class="aspect-[16/9] w-full border-b object-cover"
+                  class="aspect-[3/1] w-full border-b object-cover"
                 />
                 <div class="absolute -bottom-6 left-6 sm:-bottom-10 sm:left-10">
                   <div class="h-20 w-20 rounded-full border-[1px] sm:h-32 sm:w-32">
