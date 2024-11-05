@@ -232,7 +232,6 @@ export default function About() {
           href="https://github.com/TxnLab/use-wallet"
           target="_blank"
           class="text-blue-500"
-          class="text-blue-500"
         >
           use-wallet
         </a>
