@@ -14,17 +14,38 @@ export default function About() {
         owners to maintain their own data rather than relying on the efforts of a central curator.
       </p>
       <h2>How It Works</h2>
+      <p>Creating an AlgoDirecory listing is as easy as 1, 2, 3:</p>
+      <ol>
+        <li>
+          1. Mint an NFD segment of{" "}
+          <a
+            href="https://app.nf.domains/name/directory.algo?view=segments"
+            target="_blank"
+            class="text-blue-500"
+          >
+            directory.algo
+          </a>{" "}
+          and fill out its metadata, images, etc. These properties become directory listing details.
+        </li>
+        <li>
+          2. Come back to{" "}
+          <a
+            href="https://algodirectory.app/manage"
+            class="text-blue-500"
+          >
+            algodirectory.app/manage
+          </a>{" "}
+          and connect the wallet account that owns the segment.
+        </li>
+        <li>
+          3. Select relevant tags, decide how much Algo you will to deposit to vouch for the
+          listing, and create your listing!
+        </li>
+      </ol>
       <p>
-        The Directory extends the functionality of segments of the Non-Fungible Domain{" "}
-        <a
-          href="https://app.nf.domains/name/directory.algo?view=segments"
-          target="_blank"
-          class="text-blue-500"
-        >
-          directory.algo
-        </a>
-        . Segment owners can "list" their segment in the Directory, where properties of the NFD
-        segment become details in the listing.
+        The Directory extends the functionality of segments of the Non-Fungible Domain
+        directory.algo. Segment owners can "list" their segment in the Directory, where various
+        metadata properties of the NFD segment become details in the listing.
       </p>
       <p>
         The AlgoDirectory smart contract uses a "Vouching Protocol" that allows listing owners to
@@ -44,18 +65,6 @@ export default function About() {
         Anything can be listed in AlgoDirectory: businesses, apps, NFT projects, websites,
         individuals, open source software, or anything that may be relevant to the Algorand
         ecosystem.
-      </p>
-      <p>
-        To create a listing in AlgoDirectory, first{" "}
-        <a
-          href="https://app.nf.domains/name/directory.algo?view=segments"
-          target="_blank"
-          class="text-blue-500"
-        >
-          mint a segment
-        </a>{" "}
-        of directory.algo at NFDomains, then return to this site and click "Manage" to be guided
-        through the listing process.
       </p>
       <h2>Vouching Protocol</h2>
       <p>AlgoDirectory's Vouching Protocol provides the following methods to manage listings:</p>
