@@ -13,10 +13,12 @@ import SortingColumnHeader from "./SortingColumnHeader"
 // Custom filter function to find tags
 const findTagsFilter: FilterFn<any> = (row, columnId, filterValue) => {
   const cellValue: string[] = row.getValue(columnId)
+  const filterSet = new Set(filterValue)
 
   if (Array.isArray(cellValue)) {
     // To match a logical AND use some() to match a logical OR use every()
-    const val = filterValue.some((value: string) => cellValue.includes(value))
+    // const val = filterValue.some((value: string) => cellValue.includes(value))
+    const val = cellValue.some((value) => filterSet.has(value))
     return val
   }
   return false

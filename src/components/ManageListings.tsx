@@ -1,10 +1,11 @@
 import { useWallet } from "@txnlab/use-wallet-solid"
-import { createResource, For, Show, Suspense } from "solid-js"
+import { createMemo, createResource, For, Show, Suspense } from "solid-js"
 import { getOwnedSegments } from "@/lib/nfd-api"
 import { ellipseString } from "@/lib/formatting"
 import { ManageSingleListing } from "./ManageSingleListing"
 import { Button } from "@/components/ui/button"
 import GetASegment from "./GetASegment"
+import { generateTagsList, generateTagsMap, sortedTagsList } from "@/lib/tag-generator"
 
 export default function ManageListings() {
   const { activeAddress, activeWallet, transactionSigner, wallets } = useWallet()
@@ -13,6 +14,11 @@ export default function ManageListings() {
     const response = await getOwnedSegments(activeAddress()!)
     return response
   })
+
+  // Generate the master list of tags and the map of tags
+  const masterTagList = createMemo(() => generateTagsList())
+  const sortedMasterTagList = createMemo(() => sortedTagsList)
+  const masterTagMap = createMemo(() => generateTagsMap())
 
   return (
     <div>
@@ -64,6 +70,9 @@ export default function ManageListings() {
                     segment={segment}
                     sender={activeAddress()!}
                     transactionSigner={transactionSigner}
+                    masterTagList={masterTagList()}
+                    sortedMasterTagList={sortedMasterTagList()}
+                    masterTagMap={masterTagMap()}
                   />
                 )}
               </For>
