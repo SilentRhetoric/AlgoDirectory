@@ -24,7 +24,6 @@ export default function ManageListings() {
     <div>
       <h1 class="flex flex-row items-center py-4 uppercase sm:justify-start">
         <span>Your segments</span>
-        <span>Your segments</span>
       </h1>
       <Show
         when={activeAddress()}

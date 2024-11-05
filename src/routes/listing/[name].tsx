@@ -10,16 +10,13 @@ import SiteTitle from "@/components/SiteTitle"
 import { getNFDInfo, nfdSiteUrlRoot } from "@/lib/nfd-api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { For, Match, Show, Suspense, Switch } from "solid-js"
+import { createSignal, For, Match, Show, Suspense, Switch } from "solid-js"
 import { fetchSingleListing } from "@/lib/algod-api"
 import { formatTimestamp } from "@/lib/formatting"
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import AlgorandLogo from "@/components/icons/AlgorandLogo"
 import { Listing } from "@/types/types"
 import { NfdRecordResponseFull } from "@/lib/nfd-swagger-codegen"
-import { NUM_TAGS_ALLOWED } from "@/lib/constants"
-import tagMap from "@/assets/tags.json"
-import LinkIcon from "@/components/icons/LinkIcon"
 import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import tagMap from "@/assets/tags.json"
 import LinkIcon from "@/components/icons/LinkIcon"
@@ -112,7 +109,6 @@ export default function ListingDetails(props: RouteSectionProps) {
                   </div>
                 </div>
               </a>
-              </a>
             ) : (
               <div class="flex aspect-[16/9] h-full w-full items-center justify-center border-b text-xs">
                 <p class="">No banner</p>
@@ -193,7 +189,6 @@ export default function ListingDetails(props: RouteSectionProps) {
                   </div>
                 </div>
               </div>
-
 
               <div id="listingSecondColumn flex flex-col gap-2">
                 <div class="grid grid-cols-[96px_1fr]">

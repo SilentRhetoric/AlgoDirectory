@@ -1,6 +1,18 @@
 import { NetworkId, WalletId, WalletManager, WalletProvider } from "@txnlab/use-wallet-solid"
 import { ErrorBoundary } from "solid-js"
 import ManageListings from "@/components/ManageListings"
+import { NETWORK } from "@/lib/algod-api"
+
+const walletNetwork = () => {
+  switch (NETWORK) {
+    case "mainnet":
+      return NetworkId.MAINNET
+    case "testnet":
+      return NetworkId.TESTNET
+    default:
+      throw new Error(`Unsupported network: ${NETWORK}`)
+  }
+}
 
 const walletManager = new WalletManager({
   wallets: [
@@ -16,7 +28,7 @@ const walletManager = new WalletManager({
       options: { siteName: "AlgoDirectory" },
     },
   ],
-  network: NetworkId.TESTNET,
+  network: walletNetwork(),
 })
 
 export default function WalletWrapper() {
