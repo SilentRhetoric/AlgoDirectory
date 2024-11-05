@@ -1,106 +1,66 @@
 {
-  "1": {
-    "short": "Marketplace",
-    "long": "Marketplace"
-  },
-  "2": {
-    "short": "Wallet",
-    "long": "Wallet"
-  },
-  "3": {
-    "short": "NFTs",
-    "long": "Non-Fungible Token"
-  },
-  "4": {
-    "short": "DAO",
-    "long": "Decentralized Autonomous Organization"
-  },
-  "5": {
-    "short": "dApp",
-    "long": "Decentralized Application"
-  },
-  "6": {
-    "short": "Smart Contract",
-    "long": "Smart Contract"
-  },
-  "7": {
-    "short": "dLending",
-    "long": "Decentralized Lending"
-  },
-  "8": {
-    "short": "Interop",
-    "long": "Interoperability"
-  },
-  "9": {
-    "short": "Bridge",
-    "long": "Bridge"
-  },
-  "10": {
-    "short": "dStorage",
-    "long": "Decentralized Storage"
-  },
-  "11": {
-    "short": "DEX",
-    "long": "Decentralized Exchange"
-  },
-  "12": {
-    "short": "Yield Farming",
-    "long": "Yield Farming"
-  },
-  "13": {
-    "short": "Staking",
-    "long": "Staking"
-  },
-  "14": {
-    "short": "Governance Token",
-    "long": "Governance Token"
-  },
-  "15": {
-    "short": "Metaverse",
-    "long": "Metaverse"
-  },
-  "16": {
-    "short": "Gaming",
-    "long": "Gaming"
-  },
-  "17": {
-    "short": "Oracle",
-    "long": "Oracle"
-  },
-  "18": {
-    "short": "ZK",
-    "long": "Zero-Knowledge Proof"
-  },
-  "19": {
-    "short": "LST",
-    "long": "Liquid Staking"
-  },
-  "20": {
-    "short": "DSM",
-    "long": "Decentralized Social Media"
-  },
-  "21": {
-    "short": "Tokenized Asset",
-    "long": "Tokenized Asset"
-  },
-  "22": {
-    "short": "Real Estate",
-    "long": "Real Estate"
-  },
-  "23": {
-    "short": "dInsurance",
-    "long": "Decentralized Insurance"
-  },
-  "24": {
-    "short": "Cross-Chain",
-    "long": "Cross-Chain Technology"
-  },
-  "25": {
-    "short": "DID",
-    "long": "Decentralized Identity"
-  },
-  "26": {
-    "short": "DePIN",
-    "long": "Decentralized Physical Infrastructure Network "
-  }
+  "1": { "short": "API", "long": "" },
+  "2": { "short": "Analytics", "long": "" },
+  "3": { "short": "Art", "long": "" },
+  "4": { "short": "Banking", "long": "" },
+  "5": { "short": "Bridge", "long": "" },
+  "6": { "short": "Charity", "long": "" },
+  "7": { "short": "Commodities", "long": "" },
+  "8": { "short": "Community", "long": "" },
+  "9": { "short": "Currency", "long": "" },
+  "10": { "short": "DAO", "long": "" },
+  "11": { "short": "DeFi", "long": "" },
+  "12": { "short": "DePIN", "long": "" },
+  "13": { "short": "DEX", "long": "" },
+  "14": { "short": "DID", "long": "" },
+  "15": { "short": "Data", "long": "" },
+  "16": { "short": "Developer", "long": "" },
+  "17": { "short": "Domains", "long": "" },
+  "18": { "short": "Education", "long": "" },
+  "19": { "short": "Entertainment", "long": "" },
+  "20": { "short": "Environment", "long": "" },
+  "21": { "short": "Event", "long": "" },
+  "22": { "short": "Explorer", "long": "" },
+  "23": { "short": "FX", "long": "" },
+  "24": { "short": "Game", "long": "" },
+  "25": { "short": "Gambling", "long": "" },
+  "26": { "short": "Governance", "long": "" },
+  "27": { "short": "Health", "long": "" },
+  "28": { "short": "IDE", "long": "" },
+  "29": { "short": "Identity", "long": "" },
+  "30": { "short": "Infrastructure", "long": "" },
+  "31": { "short": "Insurance", "long": "" },
+  "32": { "short": "Interoperability", "long": "" },
+  "33": { "short": "Investor", "long": "" },
+  "34": { "short": "Lending", "long": "" },
+  "35": { "short": "Library", "long": "" },
+  "36": { "short": "Loyalty", "long": "" },
+  "37": { "short": "Marketplace", "long": "" },
+  "38": { "short": "Meme", "long": "" },
+  "39": { "short": "Metaverse", "long": "" },
+  "40": { "short": "Money Token", "long": "" },
+  "41": { "short": "Monitoring", "long": "" },
+  "42": { "short": "Music", "long": "" },
+  "43": { "short": "NFT", "long": "" },
+  "44": { "short": "Node", "long": "" },
+  "45": { "short": "On/Off-Ramp", "long": "" },
+  "46": { "short": "Oracle", "long": "" },
+  "47": { "short": "Person", "long": "" },
+  "48": { "short": "Privacy", "long": "" },
+  "49": { "short": "Real Estate", "long": "" },
+  "50": { "short": "RWA", "long": "" },
+  "51": { "short": "Securities", "long": "" },
+  "52": { "short": "Smart Contract", "long": "" },
+  "53": { "short": "Social", "long": "" },
+  "54": { "short": "Sports", "long": "" },
+  "55": { "short": "Stablecoin", "long": "" },
+  "56": { "short": "Staking", "long": "" },
+  "57": { "short": "Storage", "long": "" },
+  "58": { "short": "Supply Chain", "long": "" },
+  "59": { "short": "Tickets", "long": "" },
+  "60": { "short": "Tokenization", "long": "" },
+  "61": { "short": "Tool", "long": "" },
+  "62": { "short": "Trading", "long": "" },
+  "63": { "short": "Wallet", "long": "" },
+  "64": { "short": "Zero Knowledge", "long": "" }
 }

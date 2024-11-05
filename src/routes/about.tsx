@@ -1,5 +1,6 @@
 import SiteTitle from "@/components/SiteTitle"
 import { version } from "../../package.json"
+import { DIRECTORY_APP_ID, NETWORK } from "@/lib/algod-api"
 
 export default function About() {
   return (
@@ -9,21 +10,43 @@ export default function About() {
       <h2>Overview</h2>
       <p>
         AlgoDirectory is an on-chain directory of the Algorand ecosystem. It uses a decentralized,
+        AlgoDirectory is an on-chain directory of the Algorand ecosystem. It uses a decentralized,
         permissionless smart contract protocol to manage listings and create incentives for listing
         owners to maintain their own data rather than relying on the efforts of a central curator.
       </p>
       <h2>How It Works</h2>
+      <p>Creating an AlgoDirecory listing is as easy as 1, 2, 3:</p>
+      <ol>
+        <li>
+          1. Mint an NFD segment of{" "}
+          <a
+            href="https://app.nf.domains/name/directory.algo?view=segments"
+            target="_blank"
+            class="text-blue-500"
+          >
+            directory.algo
+          </a>{" "}
+          and fill out its metadata, images, etc. These properties become directory listing details.
+        </li>
+        <li>
+          2. Come back to{" "}
+          <a
+            href="https://algodirectory.app/manage"
+            class="text-blue-500"
+          >
+            algodirectory.app/manage
+          </a>{" "}
+          and connect the wallet account that owns the segment.
+        </li>
+        <li>
+          3. Select relevant tags, decide how much Algo you will to deposit to vouch for the
+          listing, and create your listing!
+        </li>
+      </ol>
       <p>
-        The Directory extends the functionality of segments of the Non-Fungible Domain{" "}
-        <a
-          href="https://app.nf.domains/name/directory.algo?view=segments"
-          target="_blank"
-          class="text-blue-500"
-        >
-          directory.algo
-        </a>
-        . Segment owners can "list" their segment in the Directory, where properties of the NFD
-        segment become details in the listing.
+        The Directory extends the functionality of segments of the Non-Fungible Domain
+        directory.algo. Segment owners can "list" their segment in the Directory, where various
+        metadata properties of the NFD segment become details in the listing.
       </p>
       <p>
         The AlgoDirectory smart contract uses a "Vouching Protocol" that allows listing owners to
@@ -44,49 +67,38 @@ export default function About() {
         individuals, open source software, or anything that may be relevant to the Algorand
         ecosystem.
       </p>
-      <p>
-        To create a listing in AlgoDirectory, first{" "}
-        <a
-          href="https://app.nf.domains/name/directory.algo?view=segments"
-          target="_blank"
-          class="text-blue-500"
-        >
-          mint a segment
-        </a>{" "}
-        of directory.algo at NFDomains, then return to this site and click "Manage" to be guided
-        through the listing process.
-      </p>
       <h2>Vouching Protocol</h2>
       <p>AlgoDirectory's Vouching Protocol provides the following methods to manage listings:</p>
       <p>
-        <span>Create: </span>Select a segment of directory.algo that you own and deposit some
-        collateral to vouch for your listing. The amount vouched will be displayed in the Directory
-        and affect default listing order. You can list an NFD segment you own as long as it is not
-        for sale or expired at NFD.
+        <span class="uppercase">Create: </span>Select a segment of directory.algo that you own and
+        deposit some collateral to vouch for your listing. The amount vouched will be displayed in
+        the Directory and affect default listing order. You can list an NFD segment you own as long
+        as it is not for sale or expired at NFD.
       </p>
       <p>
-        <span>Refresh: </span>Listings in the Directory automatically age to show their freshness.
-        To reset the age of your listing, refresh it. You can edit the listing's tags when
-        refreshing it. You can refresh a listing for an NFD segment you own as long as it is not for
-        sale or expired at NFD.
+        <span class="uppercase">Refresh: </span>Listings in the Directory automatically age to show
+        their freshness. To reset the age of your listing, refresh it. You can edit the listing's
+        tags when refreshing it. You can refresh a listing for an NFD segment you own as long as it
+        is not for sale or expired at NFD.
       </p>
       <p>
-        <span>Abandon: </span>To recover the collateral for a listing, it can be abandoned, which
-        delists that segment from the Directory. The collateral is returned to the original
-        creator's address. If you have purchased an NFD segment, you can abandon the existing
-        listing for it and then create your own.
+        <span class="uppercase">Abandon: </span>To recover the collateral for a listing, it can be
+        abandoned, which delists that segment from the Directory. The collateral is returned to the
+        original creator's address. If you have purchased an NFD segment, you can abandon the
+        existing listing for it and then create your own.
       </p>
       <p>
-        <span>Remove: </span>If the NFD segment underlying a listing has been sold and changed
-        owners, it is considered to be stale and can be removed by any caller. Collateral is
-        returned to the original listing creator, so there is no penalty when this occurs. This
-        feature is not currently available through the web app.
+        <span class="uppercase">Remove: </span>If the NFD segment underlying a listing has been sold
+        and changed owners, it is considered to be stale and can be removed by any caller.
+        Collateral is returned to the original listing creator, so there is no penalty when this
+        occurs. This feature is not currently available through the web app.
       </p>
       <p>
-        <span>Delete: </span>AlgoDirectory has administrators, a role that is granted by holding a
-        special token, who can delete any listing at any time for any reason. If a listing is
-        deleted by an admin, the collateral is yeeted to the fee sink as a penalty. Do not create a
-        listing if you think it might be objectionable, lest it get deleted by an admin.
+        <span class="uppercase">Delete: </span>AlgoDirectory has administrators, a role that is
+        granted by holding a special token, who can delete any listing at any time for any reason.
+        If a listing is deleted by an admin, the collateral is yeeted to the fee sink as a penalty.
+        Do not create a listing if you think it might be objectionable, lest it get deleted by an
+        admin.
       </p>
       <h2>History</h2>
       <p>
@@ -119,6 +131,7 @@ export default function About() {
           <h3>Decentralized, Permissionless, Permanent</h3>
           <p>
             AlgoDirectory leverages Algorand’s powerful on-chain capabilities to provide a directory
+            AlgoDirectory leverages Algorand’s powerful on-chain capabilities to provide a directory
             that applies the values we love about Algorand to the Directory itself. It is
             decentralized across the node network, open to anyone through a permissionless smart
             contract, and permanent for the lifetime of the chain.
@@ -132,6 +145,7 @@ export default function About() {
             of determining if listings are still valid and actively maintained. Listing owners
             effectively vouch for their listings by providing collateral as a guarantee and
             interacting with their listings regularly. This system provides on-chain data about
+            interacting with their listings regularly. This system provides on-chain data about
             whether someone stands behind a listing and how long it has been since someone refreshed
             a listing. This way, listings can be automatically sorted and filtered so that active
             listings people are standing behind get the visibility they deserve while stale ones or
@@ -144,9 +158,10 @@ export default function About() {
             Another key objective of AlgoDirectory is to be sustainable so that it outlasts the
             efforts of its creators and any centralized website hosting. Algorand has had several
             directories over the years, some of which are now gone because their creators are no
-            longer curating them and their Web2 sites. By putting the Directory on-chain and
-            providing open source code for the web app to interact with it, listings on
-            AlgoDirectory will always be accessible.
+            longer curating them and their Web2 sites. By putting the Directory on-chain and longer
+            curating them and their Web2 sites. By putting the Directory on-chain and providing open
+            source code for the web app to interact with it, listings on AlgoDirectory will always
+            be accessible.
           </p>
         </li>
       </ol>
@@ -156,7 +171,10 @@ export default function About() {
         AlgoDirectory extends existing metadata functionality provided by segments of the
         directory.algo NFD and indexes listings on-chain to display them in the web app. This
         enables a robust, on-chain data management process and interoperability with other parts of
-        the Algorand ecosystem that have integrated with NFDomains.
+        the Algorand ecosystem that have integrated with NFDomains. directory.algo NFD and indexes
+        listings on-chain to display them in the web app. This enables a robust, on-chain data
+        management process and interoperability with other parts of the Algorand ecosystem that have
+        integrated with NFDomains.
       </p>
       <p>
         AlgoDirectory does utilize NFD’s API for implementation convenience, so there is some
@@ -164,7 +182,11 @@ export default function About() {
         data management occurs on-chain, the NFD smart contracts are permissionless and can be
         locked for immutability, and the Directory UI could theoretically be enhanced in the future
         to read NFD properties directly from the chain. We think this is a reasonable and practical
-        approach to bootstrapping an on-chain directory.
+        approach to bootstrapping an on-chain directory. data management occurs on-chain, the NFD
+        smart contracts are permissionless and can be locked for immutability, and the Directory UI
+        could theoretically be enhanced in the future to read NFD properties directly from the
+        chain. We think this is a reasonable and practical approach to bootstrapping an on-chain
+        directory.
       </p>
       <h2>Business Model</h2>
       <p>
@@ -174,31 +196,34 @@ export default function About() {
         community and become a valuable resource for it.
       </p>
       <p>
-        The Directory is not intended to generate profit for the AlgoDirectory team, so there is no
-        markup above NFD's minimum cost to mint segments. When minting a segment of directory.algo,
-        100% of minting fees go to NFDomains.
-      </p>
-      <p>
         Creating listings requires collateral to be deposited, but AlgoDirectory does not take any
         fees for any interaction (Algorand transaction fees are required, of course).
       </p>
-      <h2>Disclaimer</h2>
-      <p>
-        Use at your own risk. Always verify in your wallet that each transaction is what you
-        expected before signing. Once collateral is sent to the smart contract to create a listing,
-        the collateral can only be returned to that account when the listing is abandoned. This
-        software is provided under MIT license, and the source code is available through the GitHub
-        link in the page footer.
-      </p>
       <h2>Terms of Use</h2>
       <p>
-        All AlgoDirectory listings are subject to administrator review and may be deleted at the
-        sole discretion of any administrator without notice. If a listing is deleted, the collateral
-        deposited for that listing will be sent to the Algorand Mainnet fee sink address.
-        AlgoDirectory, its creators, any appointed administrators, and Distributed Ledger
-        Technologies, LLC, are not liable for any loss or damages whatsoever resulting from the use
-        of this software or the deletion of any listing. Play nice, keep listings safe for work, and
-        enjoy the Directory.
+        Effective November 1, 2024. Use of this service is entirely at your own risk and we accept
+        no liability whatsoever. The service is provided "as is" with no warranties or guarantees of
+        any kind. This software is provided under MIT license, and the source code is available
+        through the GitHub link in the page footer.
+      </p>
+      <p>
+        Only the account that creates a listing can abandon it to recover the collateral deposited
+        to vouch for that listing. All AlgoDirectory listings are subject to review and may be
+        deleted at the sole discretion of any administrator without notice. If a listing is deleted,
+        the collateral deposited when the listing was created will be sent to the Algorand network
+        fee sink address and not returned to the listing creator.
+      </p>
+      <p>
+        Using the app also means that you agree to the privacy policy. These Terms may change at any
+        time wihtout notice. Play nice, keep listings safe for work, and enjoy the Directory.
+      </p>
+      <h2>Privacy Policy</h2>
+      <p>
+        Effective November 1, 2024. AlgoDirectory runs on the Algorand public blockchain, so all
+        transactions and listing data will be publicly available forever. Do not create a listing or
+        otherwise interact with the app if you don't want that data to be immutably added to the
+        public blockchain. This policy may change at any time without notice. This site does not use
+        cookies, although we think chocolate chip cookies are delicious.
       </p>
       <h2>App Info</h2>
       <p>
@@ -215,11 +240,11 @@ export default function About() {
       <p>
         UI version {version}. Smart contract App ID:{" "}
         <a
-          href={`https://lora.algokit.io/${import.meta.env.VITE_NETWORK}/application/${Number(import.meta.env.VITE_APP_ID)}`}
+          href={`https://lora.algokit.io/${NETWORK}/application/${DIRECTORY_APP_ID}`}
           target="_blank"
           class="text-blue-500"
         >
-          {Number(import.meta.env.VITE_APP_ID)}.
+          {DIRECTORY_APP_ID}.
         </a>
       </p>
       <p></p>

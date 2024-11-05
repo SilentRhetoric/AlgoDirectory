@@ -1,17 +1,19 @@
 /*
-This file contains the logic to call the NFD API for a given name
-that is a segment of directory.algo and get its properties.
+This file contains the logic to call the NFD API in two ways:
+  1. Get the properties for a given segment of directory.algo
+  2. Get the list of directory.algo segments owned by an address
 */
 
 import { cache } from "@solidjs/router"
 import { NfdRecordResponseFull, NfdV2SearchRecords } from "@/lib/nfd-swagger-codegen"
 
 // Configure the site via env vars to use mainnet/testnet and the right app ID
-export const NETWORK = import.meta.env.VITE_NETWORK
-export const APP_ID = Number(import.meta.env.VITE_APP_ID)
-export const NFD_PARENT_APP_ID = Number(import.meta.env.VITE_NFD_PARENT_APP_ID)
+const NETWORK = import.meta.env.VITE_NETWORK
+const NFD_PARENT_APP_ID = Number(import.meta.env.VITE_NFD_PARENT_APP_ID)
 
-const segmentInfoUrlRoot = () => {
+export const nfdSiteUrlRoot = import.meta.env.VITE_NETWORK === "mainnet" ? "" : "testnet."
+
+const nfdApiUrlRoot = () => {
   switch (NETWORK) {
     case "mainnet":
       return "api.nf.domains"
@@ -23,7 +25,7 @@ const segmentInfoUrlRoot = () => {
 }
 
 const segmentInfoUrl = (name: string) =>
-  `https://${segmentInfoUrlRoot()}/nfd/${name}.directory.algo?view=full&poll=false&nocache=false`
+  `https://${nfdApiUrlRoot()}/nfd/${name}.directory.algo?view=full&poll=false&nocache=false`
 
 async function fetchNFDInfo(name: string) {
   const url = segmentInfoUrl(name)
@@ -53,7 +55,7 @@ export const getNFDInfo = cache(async (name: string): Promise<NfdRecordResponseF
 }, "getNfd")
 
 const ownedSegmentsUrl = (address: string) =>
-  `https://${segmentInfoUrlRoot()}/nfd/v2/search?parentAppID=${NFD_PARENT_APP_ID}&owner=${address}&limit=200&offset=0&sort=createdDesc&view=full`
+  `https://${nfdApiUrlRoot()}/nfd/v2/search?parentAppID=${NFD_PARENT_APP_ID}&owner=${address}&limit=200&offset=0&sort=createdDesc&view=full`
 
 async function fetchOwnedSegments(address: string) {
   const url = ownedSegmentsUrl(address)

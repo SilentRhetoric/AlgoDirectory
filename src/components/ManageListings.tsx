@@ -1,11 +1,11 @@
 import { useWallet } from "@txnlab/use-wallet-solid"
-import { createResource, For, Show, Suspense } from "solid-js"
+import { createMemo, createResource, For, Show, Suspense } from "solid-js"
 import { getOwnedSegments } from "@/lib/nfd-api"
 import { ellipseString } from "@/lib/formatting"
 import { ManageSingleListing } from "./ManageSingleListing"
 import { Button } from "@/components/ui/button"
-import LinkIcon from "./icons/LinkIcon"
 import GetASegment from "./GetASegment"
+import { generateTagsList, generateTagsMap, sortedTagsList } from "@/lib/tag-generator"
 
 export default function ManageListings() {
   const { activeAddress, activeWallet, transactionSigner, wallets } = useWallet()
@@ -15,14 +15,21 @@ export default function ManageListings() {
     return response
   })
 
+  // Generate the master list of tags and the map of tags
+  const masterTagList = createMemo(() => generateTagsList())
+  const sortedMasterTagList = createMemo(() => sortedTagsList)
+  const masterTagMap = createMemo(() => generateTagsMap())
+
   return (
     <div>
       <h1 class="flex flex-row items-center py-4 uppercase sm:justify-start">
+        <span>Your segments</span>
         <span>Your segments</span>
       </h1>
       <Show
         when={activeAddress()}
         fallback={
+          <div class="flex flex-col items-center gap-4">
           <div class="flex flex-col items-center gap-4">
             <h2 class="text-center text-2xl">Connect Your Wallet</h2>
             <div class="flex flex-col gap-2 sm:gap-1">
@@ -39,6 +46,7 @@ export default function ManageListings() {
               </For>
             </div>
             <GetASegment />
+            <GetASegment />
           </div>
         }
       >
@@ -48,12 +56,13 @@ export default function ManageListings() {
           <div class="flex flex-col gap-4">
             <div class="flex flex-row items-center">
               <p class="uppercase">Connected Address: {ellipseString(activeAddress())}</p>
+              <p class="uppercase">Connected Address: {ellipseString(activeAddress())}</p>
               <div class="grow"></div>
               <Button
                 onClick={() => activeWallet()!.disconnect()}
                 aria-label="Disconnect"
                 class="uppercase"
-                variant="secondary"
+                variant="outline"
               >
                 Disconnect
               </Button>
@@ -65,10 +74,14 @@ export default function ManageListings() {
                     segment={segment}
                     sender={activeAddress()!}
                     transactionSigner={transactionSigner}
+                    masterTagList={masterTagList()}
+                    sortedMasterTagList={sortedMasterTagList()}
+                    masterTagMap={masterTagMap()}
                   />
                 )}
               </For>
             </div>
+            <GetASegment />
             <GetASegment />
           </div>
         </Suspense>

@@ -1,24 +1,28 @@
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import { TransactionSigner } from "algosdk"
 import { Component, createMemo, createResource, createSignal, Show, Suspense } from "solid-js"
-import { algorand, APP_ID, fetchSingleListing } from "@/lib/algod-api"
+import { algorand, DIRECTORY_APP_ID, fetchSingleListing } from "@/lib/algod-api"
 import { NfdRecord } from "@/lib/nfd-swagger-codegen"
 import { formatTimestamp } from "@/lib/formatting"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "./ui/badge"
 import MultiSelectTags from "./MultiSelectTags"
-import { generateTagsList } from "@/lib/tag-generator"
 import AlgorandLogo from "./icons/AlgorandLogo"
 import LoadingIcon from "./icons/LoadingIcon"
 import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
 import ManageListingSkeleton from "./ManageListingSkeleton"
 import LinkIcon from "./icons/LinkIcon"
+import { nfdSiteUrlRoot } from "@/lib/nfd-api"
+import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 
 type ManageSingleListingProps = {
   segment: NfdRecord
   sender: string
   transactionSigner: TransactionSigner
+  masterTagList: string[]
+  sortedMasterTagList: string[]
+  masterTagMap: Map<string, string>
 }
 
 type TypeSubmitting = "create" | "refresh" | "abandon"
@@ -27,13 +31,14 @@ export const ManageSingleListing: Component<{
   segment: NfdRecord
   sender: string
   transactionSigner: TransactionSigner
+  masterTagList: string[]
+  sortedMasterTagList: string[]
+  masterTagMap: Map<string, string>
 }> = (props: ManageSingleListingProps) => {
   const [isSubmitting, setIsSubmitting] = createSignal(false)
   const [typeSubmitting, setTypeSubmitting] = createSignal<TypeSubmitting>()
   const [vouchAmount, setVouchAmount] = createSignal(0.0722) // Each listing requires min 72_200uA
   const [tags, setTags] = createSignal<string[]>([])
-  const tagMasterlist = createMemo(() => generateTagsList())
-  const [network] = createSignal(import.meta.env.VITE_NETWORK === "mainnet" ? "" : "testnet.")
 
   const expiredOrForSale = (segment: NfdRecord) => {
     if (segment.expired === true) {
@@ -59,7 +64,7 @@ export const ManageSingleListing: Component<{
 
   // Client created here so it is configured to send from the connected account
   const typedAppClient = algorand().client.getTypedAppClientById(AlgoDirectoryClient, {
-    appId: BigInt(APP_ID),
+    appId: BigInt(DIRECTORY_APP_ID),
     defaultSender: props.sender,
   })
 
@@ -70,10 +75,10 @@ export const ManageSingleListing: Component<{
       // Update tags from Uint8Array to string[]
       setTags(
         Array.from(response?.tags || [])
-          .slice(0, 5)
+          .slice(0, NUM_TAGS_ALLOWED)
           .filter((tag: number) => tag !== 0)
           .map((tag: number) => {
-            return tagMasterlist()[(tag - 1).toString() as keyof typeof tagMasterlist]
+            return props.masterTagList[tag - 1]
           }),
       )
 
@@ -93,9 +98,9 @@ export const ManageSingleListing: Component<{
   const getUInt8Tags = () => {
     const newTags = new Uint8Array(13)
 
-    // Convert tags to ints, but making sure to add 1 to each index looked up
-    const uInt8Tags = tags().map((tag: string) => tagMasterlist().indexOf(tag) + 1)
-    newTags.set(uInt8Tags)
+    // Convert tags to ints using the masterTagMap
+    const uInt8Tags2 = tags().map((tag: string) => parseInt(props.masterTagMap.get(tag)!))
+    newTags.set(uInt8Tags2)
     return newTags
   }
 
@@ -119,6 +124,7 @@ export const ManageSingleListing: Component<{
         extraFee: (1000).microAlgo(),
         signer: props.transactionSigner,
         populateAppCallResources: true,
+        note: "I have read and agree to the AlgoDirectory Terms of Use and Privacy Policy at https://algodirectory.app/about.",
       })
       console.debug("createResult: ", createResult)
     } catch (error: any) {
@@ -189,11 +195,11 @@ export const ManageSingleListing: Component<{
             <CardHeader>
               <CardTitle class="flex flex-row gap-2">
                 <a
-                  href={`https://app.${network()}nf.domains/name/${props.segment.name}`}
+                  href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${props.segment.name}`}
                   target="_blank"
-                  class="flex flex-row items-center gap-2"
+                  class="flex flex-row gap-2"
                 >
-                  {props.segment.name.split(".")[0]} <LinkIcon className="size-6" />
+                  {props.segment.name.split(".")[0]} <LinkIcon />
                 </a>
               </CardTitle>
             </CardHeader>
@@ -205,7 +211,7 @@ export const ManageSingleListing: Component<{
                   <div class="flex flex-row items-center gap-1">
                     <input
                       disabled={isSubmitting()}
-                      class="h-8 w-32 rounded-md border bg-secondary p-4"
+                      class="h-8 w-32 rounded-md border bg-transparent p-4"
                       type="number"
                       min={0.0722}
                       value={vouchAmount()}
@@ -225,7 +231,12 @@ export const ManageSingleListing: Component<{
               <div class="flex flex-col justify-end gap-2">
                 <div class="flex flex-wrap justify-start gap-2">
                   {tags().map((tag: string) => (
-                    <Badge variant="secondary">{tag}</Badge>
+                    <Badge
+                      class="hover:bg-transparent"
+                      variant="outline"
+                    >
+                      {tag}
+                    </Badge>
                   ))}
                 </div>
                 <Show
@@ -234,8 +245,9 @@ export const ManageSingleListing: Component<{
                 >
                   <MultiSelectTags
                     tags={tags()}
-                    masterlist={tagMasterlist()}
+                    masterlist={props.sortedMasterTagList}
                     isSubmitting={isSubmitting()}
+                    // isDisabled={expiredOrForSale(props.segment)}
                     // isDisabled={expiredOrForSale(props.segment)}
                     setTags={setTags}
                   />
@@ -249,10 +261,12 @@ export const ManageSingleListing: Component<{
               <Button
                 disabled={expiredOrForSale(props.segment) || isSubmitting()}
                 onClick={createListing}
-                class="flex w-full flex-row items-center justify-center gap-2"
+                variant="outline"
+                class="flex w-full flex-row items-center justify-center gap-2 border-[0.5px] border-[hsl(var(--primary))] uppercase hover:bg-[hsl(var(--primary))] hover:text-black"
               >
                 <Show when={isSubmitting() && typeSubmitting() === "create"}>
                   <span class="animate-spin">
+                    <LoadingIcon className="size-4" />
                     <LoadingIcon className="size-4" />
                   </span>
                 </Show>
@@ -266,11 +280,11 @@ export const ManageSingleListing: Component<{
           <CardHeader>
             <CardTitle class="flex flex-row gap-2">
               <a
-                href={`https://app.${network()}nf.domains/name/${props.segment.name}`}
+                href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${props.segment.name}`}
                 target="_blank"
-                class="flex flex-row items-center gap-2"
+                class="flex flex-row gap-2"
               >
-                {props.segment.name.split(".")[0]} <LinkIcon className="size-6" />
+                {props.segment.name.split(".")[0]} <LinkIcon />
               </a>
             </CardTitle>
           </CardHeader>
@@ -292,12 +306,17 @@ export const ManageSingleListing: Component<{
             <div class="flex flex-col justify-end gap-2">
               <div class="flex flex-wrap justify-start gap-2">
                 {tags().map((tag: string) => (
-                  <Badge variant="secondary">{tag}</Badge>
+                  <Badge
+                    class="hover:bg-transparent"
+                    variant="outline"
+                  >
+                    {tag}
+                  </Badge>
                 ))}
               </div>
               <MultiSelectTags
                 tags={tags()}
-                masterlist={tagMasterlist()}
+                masterlist={props.sortedMasterTagList}
                 isSubmitting={isSubmitting()}
                 setTags={setTags}
               />
@@ -309,26 +328,28 @@ export const ManageSingleListing: Component<{
           <CardFooter>
             <div class="flex w-full flex-col items-center justify-start gap-2">
               <Button
-                variant="secondary"
-                class="flex w-full flex-row items-center justify-center gap-2"
+                variant="outline"
+                class="flex w-full flex-row items-center justify-center gap-2 uppercase"
                 disabled={expiredOrForSale(props.segment) || isSubmitting()}
                 onClick={refreshListing}
               >
                 <Show when={isSubmitting() && typeSubmitting() === "refresh"}>
                   <span class="animate-spin">
                     <LoadingIcon className="size-4" />
+                    <LoadingIcon className="size-4" />
                   </span>
                 </Show>
                 Refresh Listing
               </Button>
               <Button
-                variant="destructive"
-                class="flex w-full flex-row items-center justify-center gap-2"
+                variant="outline"
+                class="flex w-full flex-row items-center justify-center gap-2 border-[hsl(var(--destructive))] uppercase hover:bg-[hsl(var(--destructive))] hover:text-white"
                 disabled={isSubmitting()}
                 onClick={abandonListing}
               >
                 <Show when={isSubmitting() && typeSubmitting() === "abandon"}>
                   <span class="animate-spin">
+                    <LoadingIcon className="size-4" />
                     <LoadingIcon className="size-4" />
                   </span>
                 </Show>

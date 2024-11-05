@@ -13,10 +13,12 @@ import SortingColumnHeader from "./SortingColumnHeader"
 // Custom filter function to find tags
 const findTagsFilter: FilterFn<any> = (row, columnId, filterValue) => {
   const cellValue: string[] = row.getValue(columnId)
+  const filterSet = new Set(filterValue)
 
   if (Array.isArray(cellValue)) {
     // To match a logical AND use some() to match a logical OR use every()
-    const val = filterValue.some((value: string) => cellValue.includes(value))
+    // const val = filterValue.some((value: string) => cellValue.includes(value))
+    const val = cellValue.some((value) => filterSet.has(value))
     return val
   }
   return false
@@ -46,8 +48,8 @@ export const columns: ColumnDef<DisplayedListing>[] = [
         <span class="truncate font-thin">
           {props.row.original.tags.map((tag) => (
             <Badge
-              variant="secondary"
-              class="mr-1"
+              variant="outline"
+              class="mr-1 hover:bg-transparent"
             >
               {tag}
             </Badge>

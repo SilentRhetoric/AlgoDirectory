@@ -17,21 +17,21 @@ import { Listing } from "@/types/types"
 
 // Configure the site via env vars to use mainnet/testnet and the right app ID
 export const NETWORK = import.meta.env.VITE_NETWORK
-export const APP_ID = Number(import.meta.env.VITE_APP_ID)
+export const DIRECTORY_APP_ID = Number(import.meta.env.VITE_DIRECTORY_APP_ID)
 
 export const algorand = () => {
   switch (NETWORK) {
     case "mainnet":
-      return AlgorandClient.mainNet()
+      return AlgorandClient.mainNet().setDefaultValidityWindow(100)
     case "testnet":
-      return AlgorandClient.testNet()
+      return AlgorandClient.testNet().setDefaultValidityWindow(100)
     default:
       throw new Error(`Unsupported network: ${NETWORK}`)
   }
 }
 
 const typedAppClient = algorand().client.getTypedAppClientById(AlgoDirectoryClient, {
-  appId: BigInt(APP_ID),
+  appId: BigInt(DIRECTORY_APP_ID),
 })
 
 const listingKeyCodecString = "(uint64,uint64,uint64,byte[13],string)"
@@ -96,9 +96,3 @@ export async function fetchSingleListing(appID: number): Promise<Listing> {
     throw new Error(error.message)
   }
 }
-
-// // Currently doing this on the client, so commented this out
-// export const getSingleListing = cache(async (appID: number): Promise<Listing> => {
-//   "use server" // NOTE: This runs on the server
-//   return fetchSingleListing(appID)
-// }, "getSingleListing")

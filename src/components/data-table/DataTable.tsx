@@ -4,7 +4,6 @@ import type {
   SortingState,
   VisibilityState,
 } from "@tanstack/solid-table"
-import { Button } from "@/components/ui/button"
 import {
   flexRender,
   createSolidTable,
@@ -35,7 +34,7 @@ type Props<TData, TValue> = {
 export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
   const navigate = useNavigate()
   const [local] = splitProps(props, ["columns", "data"])
-  const [sorting, setSorting] = createSignal<SortingState>([])
+  const [sorting, setSorting] = createSignal<SortingState>([{ id: "amount", desc: true }])
   const [columnFilters, setColumnFilters] = createSignal<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = createSignal<VisibilityState>({})
 
@@ -61,6 +60,7 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
         }
       },
     },
+    enableMultiSort: false,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,

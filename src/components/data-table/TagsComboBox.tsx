@@ -1,8 +1,6 @@
 import { type Table } from "@tanstack/solid-table"
-import { createFilter } from "@kobalte/core"
-import { createMemo, createSignal, For, onMount, Setter, Show } from "solid-js"
-import { generateTagsList } from "@/lib/tag-generator"
-import { Button } from "@/components/ui/button"
+import { createMemo, createSignal, onMount, Show } from "solid-js"
+import { generateTagsList, generateTagsMap, sortedTagsList } from "@/lib/tag-generator"
 import {
   Command,
   CommandGroup,
@@ -12,7 +10,6 @@ import {
 } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import CheckIcon from "@/components/icons/CheckIcon"
-import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import FilterIcon from "@/components/icons/FilterIcon"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "../ui/separator"
@@ -23,11 +20,11 @@ type ComboBoxTagProps<TData> = {
 
 const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
   let scrollPosition = 0
+  const sortedMasterTagList = createMemo(() => sortedTagsList)
   const [open, setOpen] = createSignal(false)
   const [tagsSelected, setTagsSelected] = createSignal<string[]>([])
-  const taglist = createMemo(() => generateTagsList())
   const masterList = () =>
-    taglist().map((e) => ({
+    sortedMasterTagList().map((e) => ({
       title: e,
       value: e,
     }))
@@ -78,19 +75,24 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
     >
       <PopoverTrigger class="flex h-8 w-full gap-2 [&>svg]:hidden">
         <div
+        <div
           role="combobox"
           aria-expanded={open()}
-          class="flex h-8 w-32 items-center justify-center gap-1 rounded-md border border-input bg-background px-4 py-2 text-sm font-thin transition-[color,background-color,box-shadow] hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 sm:w-48"
+          class="flex h-8 w-32 items-center justify-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-thin transition-[color,background-color,box-shadow] hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 sm:w-48"
         >
-          <FilterIcon className="size-4" />
+          <FilterIcon className="size-3.5" />
           TAGS
           <Show when={tagsSelected().length > 0}>
-            <div class="flex flex-row gap-4">
-              <Badge class="flex size-4 items-center justify-center rounded-full p-0 leading-[0.93rem]">
+            <div class="flex flex-row gap-5">
+              <Badge
+                variant="outline"
+                class="flex size-4 items-center justify-center rounded-full p-0 leading-[0.93rem]"
+              >
                 {tagsSelected().length}
               </Badge>
             </div>
           </Show>
+        </div>
         </div>
       </PopoverTrigger>
       <PopoverContent
@@ -103,7 +105,7 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
             onSelect={clearAllTags}
             class="mx-1 mt-2 flex cursor-pointer flex-row gap-2 px-8"
           >
-            <span class="">Clear All Tags</span>
+            <span class="font-thin">Clear All Tags</span>
           </CommandItem>
           <Separator class="my-2 w-full overflow-visible" />
           <CommandList>
@@ -120,7 +122,7 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
                   >
                     <CheckIcon />
                   </Show>
-                  <span class="">{framework.title}</span>
+                  <span class="font-thin">{framework.title}</span>
                 </CommandItem>
               ))}
             </CommandGroup>

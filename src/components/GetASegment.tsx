@@ -1,15 +1,15 @@
-import { Component } from "solid-js"
 import LinkIcon from "./icons/LinkIcon"
+import { nfdSiteUrlRoot } from "@/lib/nfd-api"
 
-const GetASegment: Component = () => {
+const GetASegment = () => {
   return (
     <a
-      href="https://app.testnet.nf.domains/name/directory.algo?view=segments"
+      href={`https://app.${nfdSiteUrlRoot}nf.domains/name/directory.algo?view=segments`}
       target="_blank"
     >
-      <span class="flex flex-row items-center gap-1">
+      <span class="flex flex-row gap-1 text-sm">
         Get a segment of directory.algo
-        <LinkIcon className="size-4" />
+        <LinkIcon />
       </span>{" "}
     </a>
   )

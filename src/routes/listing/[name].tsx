@@ -1,21 +1,25 @@
 import {
   cache,
   createAsync,
+  redirect,
   RouteDefinition,
   RouteSectionProps,
   useSearchParams,
 } from "@solidjs/router"
 import SiteTitle from "@/components/SiteTitle"
-import { getNFDInfo } from "@/lib/nfd-api"
+import { getNFDInfo, nfdSiteUrlRoot } from "@/lib/nfd-api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { For, Match, Suspense, Switch, createSignal } from "solid-js"
+import { For, Match, Show, Suspense, Switch } from "solid-js"
 import { fetchSingleListing } from "@/lib/algod-api"
 import { formatTimestamp } from "@/lib/formatting"
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import AlgorandLogo from "@/components/icons/AlgorandLogo"
 import { Listing } from "@/types/types"
 import { NfdRecordResponseFull } from "@/lib/nfd-swagger-codegen"
+import { NUM_TAGS_ALLOWED } from "@/lib/constants"
+import tagMap from "@/assets/tags.json"
+import LinkIcon from "@/components/icons/LinkIcon"
 import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import tagMap from "@/assets/tags.json"
 import LinkIcon from "@/components/icons/LinkIcon"
@@ -32,21 +36,32 @@ type NFDAndListingInfo = {
 }
 async function FetchAllNameInfo(name: string, appID?: number) {
   let allInfo = {} as NFDAndListingInfo
-  const getListing = async (appID: number) => await fetchSingleListing(appID)
-  const getNFD = async (name: string) => await getNFDInfo(name)
-  if (appID) {
-    // Fire off both requests at the same time because appID is known
-    const [listingInfo, nfdInfo] = await Promise.all([getListing(appID), getNFD(name)])
-    allInfo = { listingInfo, nfdInfo }
-  } else {
-    // Get NFD info first to get the appID, then get the listing info
-    const nfdInfo = await getNFDInfo(name)
-    const listingInfo = await getListing(nfdInfo.appID!)
-    allInfo = { listingInfo, nfdInfo }
-    console.log(allInfo)
+  try {
+    const getListing = async (appID: number) => await fetchSingleListing(appID)
+    const getNFD = async (name: string) => await getNFDInfo(name)
+    if (appID) {
+      // Fire off both requests at the same time bec ause appID is known
+      const [listingInfo, nfdInfo] = await Promise.all([getListing(appID), getNFD(name)])
+      allInfo = { listingInfo, nfdInfo }
+    } else {
+      // Get NFD info first to get the appID, then get the listing info
+      const nfdInfo = await getNFDInfo(name)
+      const listingInfo = await getListing(nfdInfo.appID!)
+      allInfo = { listingInfo, nfdInfo }
+    }
+  } catch (e) {
+    console.error(e)
+    throw redirect("/404")
   }
+
+  if (allInfo.listingInfo.name !== allInfo.nfdInfo.name.split(".")[0]) {
+    // This shouldn't happen, but just in case we got a mismatch
+    throw redirect("/404")
+  }
+
   return allInfo
 }
+
 const getAllNameInfo = cache(async (name: string, appID?: number) => {
   "use server"
   return FetchAllNameInfo(name, appID)
@@ -65,58 +80,87 @@ export default function ListingDetails(props: RouteSectionProps) {
     <main class="flex flex-col gap-2 p-4">
       <SiteTitle>{allNameInfo()?.nfdInfo?.name.split(".")[0].toUpperCase()}</SiteTitle>
       <Suspense fallback={<div>Loading...</div>}>
-        <Card class="mx-auto w-full max-w-6xl">
-          <div class="relative mb-4 flex h-full w-full items-center justify-center">
+        <Card class="mx-auto w-full max-w-6xl overflow-hidden">
+          <div class="relative -mt-1 mb-4 flex h-full w-full items-center justify-center">
             {allNameInfo()?.nfdInfo?.properties?.userDefined?.banner ? (
               <a
-                href={`https://app.${network()}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
+                href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
                 target="_blank"
+                class="aspect-[16/9] w-full"
               >
                 <img
                   src={allNameInfo()?.nfdInfo?.properties?.userDefined?.banner}
                   alt="banner"
-                  class="aspect-[2/1] w-full overflow-hidden rounded-t-xl border-b"
+                  class="aspect-[16/9] w-full border-b object-cover"
                 />
                 <div class="absolute -bottom-6 left-6 sm:-bottom-10 sm:left-10">
-                  <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-32">
-                    <img
-                      src={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
-                      alt="avatar"
-                      class="h-full w-full rounded-full"
-                    />
+                  <div class="h-20 w-20 rounded-full border-[1px] sm:h-32 sm:w-32">
+                    <Show
+                      when={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
+                      fallback={
+                        <div class="flex h-full w-full items-center justify-center rounded-full bg-secondary text-xs">
+                          No avatar
+                        </div>
+                      }
+                    >
+                      <img
+                        src={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
+                        alt="avatar"
+                        class="h-full w-full rounded-full bg-background"
+                      />
+                    </Show>
                   </div>
                 </div>
               </a>
+              </a>
             ) : (
-              <p class="flex aspect-[2/1] w-full items-center justify-center border-b text-xs">
-                No banner
-              </p>
+              <div class="flex aspect-[16/9] h-full w-full items-center justify-center border-b text-xs">
+                <p class="">No banner</p>
+                <div class="absolute -bottom-6 left-6 sm:-bottom-10 sm:left-10">
+                  <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-32">
+                    <Show
+                      when={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
+                      fallback={
+                        <div class="flex h-full w-full items-center justify-center rounded-full bg-secondary">
+                          No avatar
+                        </div>
+                      }
+                    >
+                      <img
+                        src={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar || ""}
+                        alt="avatar"
+                        class="h-full w-full rounded-full"
+                      />
+                    </Show>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
           <CardHeader class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <CardTitle class="text-2xl uppercase sm:pt-4 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
               <a
-                href={`https://app.${network()}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
+                href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
                 target="_blank"
-                class="flex flex-row items-center gap-2"
+                class="flex flex-row items-start gap-2"
               >
                 {allNameInfo()?.nfdInfo?.name.split(".")[0]}
-                <LinkIcon className="size-6" />
+                <LinkIcon />
               </a>
             </CardTitle>
             <Switch>
               <Match when={allNameInfo()?.nfdInfo?.state === ("forSale" as any)}>
                 <Badge
-                  variant={"destructive"}
-                  class="capitalize"
+                  variant={"outline"}
+                  class="border-[hsl(var(--destructive))] capitalize text-red-500"
                 >
                   <span>For Sale</span>
                 </Badge>
               </Match>
               <Match when={allNameInfo()?.nfdInfo?.state === ("expired" as any)}>
                 <Badge
-                  variant={"destructive"}
-                  class="capitalize"
+                  variant={"outline"}
+                  class="border-[hsl(var(--destructive))] capitalize text-red-500"
                 >
                   <span>Expired</span>
                 </Badge>
@@ -139,8 +183,8 @@ export default function ListingDetails(props: RouteSectionProps) {
                     >
                       {(tag) => (
                         <Badge
-                          variant="secondary"
-                          class="capitalize"
+                          variant="outline"
+                          class="bg-transparent capitalize"
                         >
                           <span class="flex flex-row items-center">{tag}</span>
                         </Badge>
@@ -149,6 +193,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   </div>
                 </div>
               </div>
+
 
               <div id="listingSecondColumn flex flex-col gap-2">
                 <div class="grid grid-cols-[96px_1fr]">
@@ -184,7 +229,8 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">Website</p>
                   <a
                     href={allNameInfo()?.nfdInfo?.properties?.userDefined?.website}
-                    class="overflow-hidden text-wrap break-words"
+                    target="_blank"
+                    class="overflow-hidden text-wrap break-words text-blue-500"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.website}
                   </a>
@@ -193,7 +239,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">Email</p>
                   <a
                     href={`mailto:${allNameInfo()?.nfdInfo?.properties?.userDefined?.email}`}
-                    class="overflow-hidden text-wrap break-words"
+                    class="overflow-hidden text-wrap break-words text-blue-500"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.email}
                   </a>
@@ -227,7 +273,8 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">LinkedIn</p>
                   <a
                     href={allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin}
-                    class="overflow-hidden text-wrap break-words"
+                    target="_blank"
+                    class="overflow-hidden text-wrap break-words text-blue-500"
                   >
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin}
                   </a>

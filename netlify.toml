@@ -5,14 +5,14 @@
 # values to keep them out of your source repository.
 [context.production.environment]
   VITE_NETWORK = "mainnet"
-  VITE_APP_ID = "722603330"
-  VITE_NFD_PARENT_APP_ID="576232821"
+  VITE_DIRECTORY_APP_ID = "2443896070"
+  VITE_NFD_PARENT_APP_ID="766401564"
 
 # Testnet context: all deploys from the "testnet" branch
 # will inherit these environment variables.
 [context.testnet.environment]
   VITE_NETWORK = "testnet"
-  VITE_APP_ID = "722603330"
+  VITE_DIRECTORY_APP_ID = "722603330"
   VITE_NFD_PARENT_APP_ID="576232821"
 
 # Dev context: environment variables set here
@@ -22,5 +22,5 @@
 # branch context configured.
 [context.dev.environment]
   VITE_NETWORK = "testnet"
-  VITE_APP_ID = "722603330"
+  VITE_DIRECTORY_APP_ID = "722603330"
   VITE_NFD_PARENT_APP_ID="576232821"
