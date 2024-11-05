@@ -1,6 +1,6 @@
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import { TransactionSigner } from "algosdk"
-import { Component, createMemo, createResource, createSignal, Show, Suspense } from "solid-js"
+import { Component, createResource, createSignal, Show, Suspense } from "solid-js"
 import { algorand, DIRECTORY_APP_ID, fetchSingleListing } from "@/lib/algod-api"
 import { NfdRecord } from "@/lib/nfd-swagger-codegen"
 import { formatTimestamp } from "@/lib/formatting"

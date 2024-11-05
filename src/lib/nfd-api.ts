@@ -25,7 +25,7 @@ const nfdApiUrlRoot = () => {
 }
 
 const segmentInfoUrl = (name: string) =>
-  `https://${nfdApiUrlRoot()}/nfd/${name}.directory.algo?view=full&poll=false&nocache=false`
+  `https://${nfdApiUrlRoot()}/nfd/${name}.directory.algo?view=full&poll=false&nocache=true`
 
 async function fetchNFDInfo(name: string) {
   const url = segmentInfoUrl(name)

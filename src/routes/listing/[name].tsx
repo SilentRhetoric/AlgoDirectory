@@ -10,7 +10,7 @@ import SiteTitle from "@/components/SiteTitle"
 import { getNFDInfo, nfdSiteUrlRoot } from "@/lib/nfd-api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { createSignal, For, Match, Show, Suspense, Switch } from "solid-js"
+import { For, Match, Show, Suspense, Switch } from "solid-js"
 import { fetchSingleListing } from "@/lib/algod-api"
 import { formatTimestamp } from "@/lib/formatting"
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
@@ -65,7 +65,6 @@ const getAllNameInfo = cache(async (name: string, appID?: number) => {
 }, "getAllNameInfo")
 
 export default function ListingDetails(props: RouteSectionProps) {
-  const [network] = createSignal(import.meta.env.VITE_NETWORK === "mainnet" ? "" : "testnet.")
   const [searchParams, setSearchParams] = useSearchParams()
   const appIDFromQueryParams = Number(searchParams.appid)
   // Defering stream here so that the page doesn't navigate until the data loads
@@ -109,10 +108,10 @@ export default function ListingDetails(props: RouteSectionProps) {
                 </div>
               </a>
             ) : (
-              <div class="flex aspect-[16/9] h-full w-full items-center justify-center border-b text-xs">
+              <div class="flex aspect-[3/1] h-full w-full items-center justify-center border-b text-xs">
                 <p class="">No banner</p>
-                <div class="absolute -bottom-6 left-6 sm:-bottom-10 sm:left-10">
-                  <div class="h-20 w-20 rounded-full border-4 border-background sm:h-32 sm:w-32">
+                <div class="absolute -bottom-4 left-4 sm:-bottom-8 sm:left-4">
+                  <div class="h-20 w-20 rounded-full border-[1px] border-secondary sm:h-32 sm:w-32">
                     <Show
                       when={allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar}
                       fallback={
