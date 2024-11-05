@@ -1,6 +1,6 @@
 import { type Table } from "@tanstack/solid-table"
 import { createMemo, createSignal, onMount, Show } from "solid-js"
-import { generateTagsList } from "@/lib/tag-generator"
+import { generateTagsList, generateTagsMap, sortedTagsList } from "@/lib/tag-generator"
 import {
   Command,
   CommandGroup,
@@ -20,11 +20,11 @@ type ComboBoxTagProps<TData> = {
 
 const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
   let scrollPosition = 0
+  const sortedMasterTagList = createMemo(() => sortedTagsList)
   const [open, setOpen] = createSignal(false)
   const [tagsSelected, setTagsSelected] = createSignal<string[]>([])
-  const taglist = createMemo(() => generateTagsList())
   const masterList = () =>
-    taglist().map((e) => ({
+    sortedMasterTagList().map((e) => ({
       title: e,
       value: e,
     }))

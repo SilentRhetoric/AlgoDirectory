@@ -8,18 +8,21 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "./ui/badge"
 import MultiSelectTags from "./MultiSelectTags"
-import { generateTagsList } from "@/lib/tag-generator"
 import AlgorandLogo from "./icons/AlgorandLogo"
 import LoadingIcon from "./icons/LoadingIcon"
 import { AlgoDirectoryClient } from "@/lib/AlgoDirectoryClient"
 import ManageListingSkeleton from "./ManageListingSkeleton"
 import LinkIcon from "./icons/LinkIcon"
 import { nfdSiteUrlRoot } from "@/lib/nfd-api"
+import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 
 type ManageSingleListingProps = {
   segment: NfdRecord
   sender: string
   transactionSigner: TransactionSigner
+  masterTagList: string[]
+  sortedMasterTagList: string[]
+  masterTagMap: Map<string, string>
 }
 
 type TypeSubmitting = "create" | "refresh" | "abandon"
@@ -28,12 +31,14 @@ export const ManageSingleListing: Component<{
   segment: NfdRecord
   sender: string
   transactionSigner: TransactionSigner
+  masterTagList: string[]
+  sortedMasterTagList: string[]
+  masterTagMap: Map<string, string>
 }> = (props: ManageSingleListingProps) => {
   const [isSubmitting, setIsSubmitting] = createSignal(false)
   const [typeSubmitting, setTypeSubmitting] = createSignal<TypeSubmitting>()
   const [vouchAmount, setVouchAmount] = createSignal(0.0722) // Each listing requires min 72_200uA
   const [tags, setTags] = createSignal<string[]>([])
-  const tagMasterlist = createMemo(() => generateTagsList())
 
   const expiredOrForSale = (segment: NfdRecord) => {
     if (segment.expired === true) {
@@ -70,10 +75,10 @@ export const ManageSingleListing: Component<{
       // Update tags from Uint8Array to string[]
       setTags(
         Array.from(response?.tags || [])
-          .slice(0, 5)
+          .slice(0, NUM_TAGS_ALLOWED)
           .filter((tag: number) => tag !== 0)
           .map((tag: number) => {
-            return tagMasterlist()[(tag - 1).toString() as keyof typeof tagMasterlist]
+            return props.masterTagList[tag - 1]
           }),
       )
 
@@ -93,9 +98,9 @@ export const ManageSingleListing: Component<{
   const getUInt8Tags = () => {
     const newTags = new Uint8Array(13)
 
-    // Convert tags to ints, but making sure to add 1 to each index looked up
-    const uInt8Tags = tags().map((tag: string) => tagMasterlist().indexOf(tag) + 1)
-    newTags.set(uInt8Tags)
+    // Convert tags to ints using the masterTagMap
+    const uInt8Tags2 = tags().map((tag: string) => parseInt(props.masterTagMap.get(tag)!))
+    newTags.set(uInt8Tags2)
     return newTags
   }
 
@@ -240,7 +245,7 @@ export const ManageSingleListing: Component<{
                 >
                   <MultiSelectTags
                     tags={tags()}
-                    masterlist={tagMasterlist()}
+                    masterlist={props.sortedMasterTagList}
                     isSubmitting={isSubmitting()}
                     // isDisabled={expiredOrForSale(props.segment)}
                     setTags={setTags}
@@ -309,7 +314,7 @@ export const ManageSingleListing: Component<{
               </div>
               <MultiSelectTags
                 tags={tags()}
-                masterlist={tagMasterlist()}
+                masterlist={props.sortedMasterTagList}
                 isSubmitting={isSubmitting()}
                 setTags={setTags}
               />
