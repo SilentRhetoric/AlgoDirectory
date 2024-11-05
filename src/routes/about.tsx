@@ -10,6 +10,7 @@ export default function About() {
       <h2>Overview</h2>
       <p>
         AlgoDirectory is an on-chain directory of the Algorand ecosystem. It uses a decentralized,
+        AlgoDirectory is an on-chain directory of the Algorand ecosystem. It uses a decentralized,
         permissionless smart contract protocol to manage listings and create incentives for listing
         owners to maintain their own data rather than relying on the efforts of a central curator.
       </p>
@@ -130,6 +131,7 @@ export default function About() {
           <h3>Decentralized, Permissionless, Permanent</h3>
           <p>
             AlgoDirectory leverages Algorand’s powerful on-chain capabilities to provide a directory
+            AlgoDirectory leverages Algorand’s powerful on-chain capabilities to provide a directory
             that applies the values we love about Algorand to the Directory itself. It is
             decentralized across the node network, open to anyone through a permissionless smart
             contract, and permanent for the lifetime of the chain.
@@ -143,6 +145,7 @@ export default function About() {
             of determining if listings are still valid and actively maintained. Listing owners
             effectively vouch for their listings by providing collateral as a guarantee and
             interacting with their listings regularly. This system provides on-chain data about
+            interacting with their listings regularly. This system provides on-chain data about
             whether someone stands behind a listing and how long it has been since someone refreshed
             a listing. This way, listings can be automatically sorted and filtered so that active
             listings people are standing behind get the visibility they deserve while stale ones or
@@ -155,9 +158,10 @@ export default function About() {
             Another key objective of AlgoDirectory is to be sustainable so that it outlasts the
             efforts of its creators and any centralized website hosting. Algorand has had several
             directories over the years, some of which are now gone because their creators are no
-            longer curating them and their Web2 sites. By putting the Directory on-chain and
-            providing open source code for the web app to interact with it, listings on
-            AlgoDirectory will always be accessible.
+            longer curating them and their Web2 sites. By putting the Directory on-chain and longer
+            curating them and their Web2 sites. By putting the Directory on-chain and providing open
+            source code for the web app to interact with it, listings on AlgoDirectory will always
+            be accessible.
           </p>
         </li>
       </ol>
@@ -167,7 +171,10 @@ export default function About() {
         AlgoDirectory extends existing metadata functionality provided by segments of the
         directory.algo NFD and indexes listings on-chain to display them in the web app. This
         enables a robust, on-chain data management process and interoperability with other parts of
-        the Algorand ecosystem that have integrated with NFDomains.
+        the Algorand ecosystem that have integrated with NFDomains. directory.algo NFD and indexes
+        listings on-chain to display them in the web app. This enables a robust, on-chain data
+        management process and interoperability with other parts of the Algorand ecosystem that have
+        integrated with NFDomains.
       </p>
       <p>
         AlgoDirectory does utilize NFD’s API for implementation convenience, so there is some
@@ -175,7 +182,11 @@ export default function About() {
         data management occurs on-chain, the NFD smart contracts are permissionless and can be
         locked for immutability, and the Directory UI could theoretically be enhanced in the future
         to read NFD properties directly from the chain. We think this is a reasonable and practical
-        approach to bootstrapping an on-chain directory.
+        approach to bootstrapping an on-chain directory. data management occurs on-chain, the NFD
+        smart contracts are permissionless and can be locked for immutability, and the Directory UI
+        could theoretically be enhanced in the future to read NFD properties directly from the
+        chain. We think this is a reasonable and practical approach to bootstrapping an on-chain
+        directory.
       </p>
       <h2>Business Model</h2>
       <p>
@@ -220,6 +231,7 @@ export default function About() {
         <a
           href="https://github.com/TxnLab/use-wallet"
           target="_blank"
+          class="text-blue-500"
           class="text-blue-500"
         >
           use-wallet

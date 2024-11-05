@@ -20,6 +20,9 @@ import { NfdRecordResponseFull } from "@/lib/nfd-swagger-codegen"
 import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import tagMap from "@/assets/tags.json"
 import LinkIcon from "@/components/icons/LinkIcon"
+import { NUM_TAGS_ALLOWED } from "@/lib/constants"
+import tagMap from "@/assets/tags.json"
+import LinkIcon from "@/components/icons/LinkIcon"
 
 export const route = {
   preload({ params }) {
@@ -65,6 +68,7 @@ const getAllNameInfo = cache(async (name: string, appID?: number) => {
 }, "getAllNameInfo")
 
 export default function ListingDetails(props: RouteSectionProps) {
+  const [network] = createSignal(import.meta.env.VITE_NETWORK === "mainnet" ? "" : "testnet.")
   const [searchParams, setSearchParams] = useSearchParams()
   const appIDFromQueryParams = Number(searchParams.appid)
   // Defering stream here so that the page doesn't navigate until the data loads
@@ -107,6 +111,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                     </Show>
                   </div>
                 </div>
+              </a>
               </a>
             ) : (
               <div class="flex aspect-[16/9] h-full w-full items-center justify-center border-b text-xs">
@@ -188,6 +193,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   </div>
                 </div>
               </div>
+
 
               <div id="listingSecondColumn flex flex-col gap-2">
                 <div class="grid grid-cols-[96px_1fr]">

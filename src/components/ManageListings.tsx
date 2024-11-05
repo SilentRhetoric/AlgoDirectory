@@ -24,10 +24,12 @@ export default function ManageListings() {
     <div>
       <h1 class="flex flex-row items-center py-4 uppercase sm:justify-start">
         <span>Your segments</span>
+        <span>Your segments</span>
       </h1>
       <Show
         when={activeAddress()}
         fallback={
+          <div class="flex flex-col items-center gap-4">
           <div class="flex flex-col items-center gap-4">
             <h2 class="text-center text-2xl">Connect Your Wallet</h2>
             <div class="flex flex-col gap-2 sm:gap-1">
@@ -44,6 +46,7 @@ export default function ManageListings() {
               </For>
             </div>
             <GetASegment />
+            <GetASegment />
           </div>
         }
       >
@@ -52,6 +55,7 @@ export default function ManageListings() {
         >
           <div class="flex flex-col gap-4">
             <div class="flex flex-row items-center">
+              <p class="uppercase">Connected Address: {ellipseString(activeAddress())}</p>
               <p class="uppercase">Connected Address: {ellipseString(activeAddress())}</p>
               <div class="grow"></div>
               <Button
@@ -77,6 +81,7 @@ export default function ManageListings() {
                 )}
               </For>
             </div>
+            <GetASegment />
             <GetASegment />
           </div>
         </Suspense>
