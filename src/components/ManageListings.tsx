@@ -30,7 +30,6 @@ export default function ManageListings() {
         when={activeAddress()}
         fallback={
           <div class="flex flex-col items-center gap-4">
-          <div class="flex flex-col items-center gap-4">
             <h2 class="text-center text-2xl">Connect Your Wallet</h2>
             <div class="flex flex-col gap-2 sm:gap-1">
               <For each={wallets}>
@@ -46,7 +45,6 @@ export default function ManageListings() {
               </For>
             </div>
             <GetASegment />
-            <GetASegment />
           </div>
         }
       >
@@ -55,7 +53,6 @@ export default function ManageListings() {
         >
           <div class="flex flex-col gap-4">
             <div class="flex flex-row items-center">
-              <p class="uppercase">Connected Address: {ellipseString(activeAddress())}</p>
               <p class="uppercase">Connected Address: {ellipseString(activeAddress())}</p>
               <div class="grow"></div>
               <Button
@@ -81,7 +78,6 @@ export default function ManageListings() {
                 )}
               </For>
             </div>
-            <GetASegment />
             <GetASegment />
           </div>
         </Suspense>

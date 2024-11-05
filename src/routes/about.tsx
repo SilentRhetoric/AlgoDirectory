@@ -10,7 +10,6 @@ export default function About() {
       <h2>Overview</h2>
       <p>
         AlgoDirectory is an on-chain directory of the Algorand ecosystem. It uses a decentralized,
-        AlgoDirectory is an on-chain directory of the Algorand ecosystem. It uses a decentralized,
         permissionless smart contract protocol to manage listings and create incentives for listing
         owners to maintain their own data rather than relying on the efforts of a central curator.
       </p>
@@ -26,22 +25,19 @@ export default function About() {
           >
             directory.algo
           </a>{" "}
-          and fill out its metadata, images, etc. These properties become directory listing details.
+          and fill out its metadata, images, etc.
         </li>
         <li>
-          2. Come back to{" "}
+          2. Visit{" "}
           <a
             href="https://algodirectory.app/manage"
             class="text-blue-500"
           >
             algodirectory.app/manage
           </a>{" "}
-          and connect the wallet account that owns the segment.
+          and connect the account that owns the segment.
         </li>
-        <li>
-          3. Select relevant tags, decide how much Algo you will to deposit to vouch for the
-          listing, and create your listing!
-        </li>
+        <li>3. Select tags, deposit some Algo to vouch for the listing, and create a listing!</li>
       </ol>
       <p>
         The Directory extends the functionality of segments of the Non-Fungible Domain
