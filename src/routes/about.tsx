@@ -21,6 +21,7 @@ export default function About() {
           <a
             href="https://app.nf.domains/name/directory.algo?view=segments"
             target="_blank"
+            rel="noopener noreferrer"
             class="text-blue-500"
           >
             directory.algo
@@ -227,6 +228,7 @@ export default function About() {
         <a
           href="https://github.com/TxnLab/use-wallet"
           target="_blank"
+          rel="noopener noreferrer"
           class="text-blue-500"
         >
           use-wallet
@@ -238,6 +240,7 @@ export default function About() {
         <a
           href={`https://lora.algokit.io/${NETWORK}/application/${DIRECTORY_APP_ID}`}
           target="_blank"
+          rel="noopener noreferrer"
           class="text-blue-500"
         >
           {DIRECTORY_APP_ID}.

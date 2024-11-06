@@ -6,6 +6,7 @@ export default function Footer() {
       <a
         href="https://x.com/algodirectory"
         target="_blank"
+        rel="noopener noreferrer"
         class="flex flex-row items-center"
       >
         <svg
@@ -23,6 +24,7 @@ export default function Footer() {
         href="https://github.com/SilentRhetoric/AlgoDirectory"
         aria-label="Contribute to this open source project"
         target="_blank"
+        rel="noopener noreferrer"
         class="flex flex-row items-center"
       >
         <svg
@@ -41,6 +43,7 @@ export default function Footer() {
       <a
         href="https://nodely.io/"
         target="_blank"
+        rel="noopener noreferrer"
         class="flex flex-row items-center"
       >
         <img

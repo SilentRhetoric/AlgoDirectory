@@ -197,6 +197,7 @@ export const ManageSingleListing: Component<{
                 <a
                   href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${props.segment.name}`}
                   target="_blank"
+                  rel="noopener noreferrer"
                   class="flex flex-row gap-2"
                 >
                   {props.segment.name.split(".")[0]} <LinkIcon />
@@ -280,6 +281,7 @@ export const ManageSingleListing: Component<{
               <a
                 href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${props.segment.name}`}
                 target="_blank"
+                rel="noopener noreferrer"
                 class="flex flex-row gap-2"
               >
                 {props.segment.name.split(".")[0]} <LinkIcon />

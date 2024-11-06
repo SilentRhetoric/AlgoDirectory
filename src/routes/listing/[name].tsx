@@ -20,6 +20,7 @@ import { NfdRecordResponseFull } from "@/lib/nfd-swagger-codegen"
 import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import tagMap from "@/assets/tags.json"
 import LinkIcon from "@/components/icons/LinkIcon"
+import MaybeLink from "@/components/MaybeLink"
 
 export const route = {
   preload({ params }) {
@@ -31,6 +32,7 @@ type NFDAndListingInfo = {
   nfdInfo: NfdRecordResponseFull
   listingInfo: Listing
 }
+
 async function FetchAllNameInfo(name: string, appID?: number) {
   let allInfo = {} as NFDAndListingInfo
   try {
@@ -82,6 +84,7 @@ export default function ListingDetails(props: RouteSectionProps) {
               <a
                 href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <img
                   src={allNameInfo()?.nfdInfo?.properties?.userDefined?.banner}
@@ -136,6 +139,7 @@ export default function ListingDetails(props: RouteSectionProps) {
               <a
                 href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
                 target="_blank"
+                rel="noopener noreferrer"
                 class="flex flex-row items-start gap-2"
               >
                 {allNameInfo()?.nfdInfo?.name.split(".")[0]}
@@ -219,14 +223,9 @@ export default function ListingDetails(props: RouteSectionProps) {
                   </p>
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
-                  <p class="uppercase">Website</p>
-                  <a
-                    href={allNameInfo()?.nfdInfo?.properties?.userDefined?.website}
-                    target="_blank"
-                    class="overflow-hidden text-wrap break-words text-blue-500"
-                  >
-                    {allNameInfo()?.nfdInfo?.properties?.userDefined?.website}
-                  </a>
+                  <div class="uppercase">Website</div>
+                  <MaybeLink content={allNameInfo()?.nfdInfo?.properties?.userDefined?.website} />
+                  <p class="overflow-hidden text-wrap break-words"></p>
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Email</p>
@@ -248,7 +247,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                 {/* TODO: Twitter/Discord/Telegram/GitHub can be verified on NFD */}
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">GitHub</p>
-                  <p>{allNameInfo()?.nfdInfo?.properties?.userDefined?.github}</p>
+                  <MaybeLink content={allNameInfo()?.nfdInfo?.properties?.userDefined?.github} />
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Twitter</p>
@@ -256,7 +255,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Discord</p>
-                  <p>{allNameInfo()?.nfdInfo?.properties?.userDefined?.discord}</p>
+                  <MaybeLink content={allNameInfo()?.nfdInfo?.properties?.userDefined?.discord} />
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Telegram</p>
@@ -264,13 +263,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">LinkedIn</p>
-                  <a
-                    href={allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin}
-                    target="_blank"
-                    class="overflow-hidden text-wrap break-words text-blue-500"
-                  >
-                    {allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin}
-                  </a>
+                  <MaybeLink content={allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin} />
                 </div>
               </div>
             </div>
