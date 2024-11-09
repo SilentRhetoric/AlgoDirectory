@@ -1,7 +1,14 @@
-import LinkifyIt from "linkify-it"
+import LinkifyIt, { Match } from "linkify-it"
+import { M } from "node_modules/@kobalte/core/dist/index-bd0cb952"
 import { Component, createMemo } from "solid-js"
 
 type MaybeLinkProps = { content: string | undefined }
+
+type Link = {
+  text: string
+  url?: string
+  isLink: boolean
+}
 
 const linkify = new LinkifyIt()
 linkify.tlds("domains", true)
@@ -13,10 +20,12 @@ const MaybeLink: Component<{ content: string | undefined }> = (props: MaybeLinkP
     const matches = linkify.match(props.content)
     if (!matches) return [{ text: props.content, isLink: false }]
 
-    const result = []
+    const result = [] as Link[]
     let lastIndex = 0
 
     matches.forEach((match) => {
+      // normalizeUrl(match)
+      console.debug(JSON.stringify(match))
       // Add text before the link if there is any
       if (match.index > lastIndex) {
         result.push({
@@ -51,7 +60,7 @@ const MaybeLink: Component<{ content: string | undefined }> = (props: MaybeLinkP
       {processedContent().map((segment, index) =>
         segment.isLink ? (
           <a
-            href={segment.text}
+            href={segment.url}
             target="_blank"
             rel="noopener noreferrer"
             class="text-blue-500 no-underline"
