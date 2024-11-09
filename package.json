@@ -2,7 +2,7 @@
   "name": "algodirectory",
   "description": "A decentralized, on-chain directory for the Algorand ecosystem",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "scripts": {
     "dev": "vinxi dev",

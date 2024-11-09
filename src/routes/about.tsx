@@ -198,7 +198,7 @@ export default function About() {
       </p>
       <h2>Terms of Use</h2>
       <p>
-        Effective November 1, 2024. Use of this service is entirely at your own risk and we accept
+        Effective November 9, 2024. Use of this service is entirely at your own risk and we accept
         no liability whatsoever. The service is provided "as is" with no warranties or guarantees of
         any kind. This software is provided under MIT license, and the source code is available
         through the GitHub link in the page footer.
@@ -206,17 +206,19 @@ export default function About() {
       <p>
         Only the account that creates a listing can abandon it to recover the collateral deposited
         to vouch for that listing. All AlgoDirectory listings are subject to review and may be
-        deleted at the sole discretion of any administrator without notice. If a listing is deleted,
-        the collateral deposited when the listing was created will be sent to the Algorand network
-        fee sink address and not returned to the listing creator.
+        deleted at the sole discretion of any administrator without notice. Reasons a listing may be
+        deleted include, but are not limited to, being unrelated to Algorand, political in nature,
+        not safe for work, or impersonating a person or entity. If a listing is deleted, the
+        collateral deposited when the listing was created will be sent to the Algorand network fee
+        sink address and not returned to the listing creator.
       </p>
       <p>
         Using the app also means that you agree to the privacy policy. These Terms may change at any
-        time wihtout notice. Play nice, keep listings safe for work, and enjoy the Directory.
+        time wihtout notice. Play nice and enjoy the Directory.
       </p>
       <h2>Privacy Policy</h2>
       <p>
-        Effective November 1, 2024. AlgoDirectory runs on the Algorand public blockchain, so all
+        Effective November 9, 2024. AlgoDirectory runs on the Algorand public blockchain, so all
         transactions and listing data will be publicly available forever. Do not create a listing or
         otherwise interact with the app if you don't want that data to be immutably added to the
         public blockchain. This policy may change at any time without notice. This site does not use
