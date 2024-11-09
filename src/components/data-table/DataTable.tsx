@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/table"
 import SearchInputField from "./SearchInputField"
 import TagsComboBox from "./TagsComboBox"
-import { useNavigate } from "@solidjs/router"
+import { useNavigate, usePreloadRoute } from "@solidjs/router"
 import { Listing } from "@/types/types"
 
 type Props<TData, TValue> = {
@@ -33,6 +33,7 @@ type Props<TData, TValue> = {
 
 export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
   const navigate = useNavigate()
+  const preload = usePreloadRoute()
   const [local] = splitProps(props, ["columns", "data"])
   const [sorting, setSorting] = createSignal<SortingState>([{ id: "amount", desc: true }])
   const [columnFilters, setColumnFilters] = createSignal<ColumnFiltersState>([])
@@ -118,6 +119,12 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
               <For each={table.getRowModel().rows}>
                 {(row) => (
                   <TableRow
+                    onMouseEnter={() =>
+                      preload(
+                        `/listing/${(row.original as Listing)?.name}?appid=${(row.original as Listing)?.nfdAppID}`,
+                        { preloadData: true },
+                      )
+                    }
                     onClick={() =>
                       navigate(
                         `/listing/${(row.original as Listing)?.name}?appid=${(row.original as Listing)?.nfdAppID}`,
