@@ -1,5 +1,4 @@
-import LinkifyIt, { Match } from "linkify-it"
-import { M } from "node_modules/@kobalte/core/dist/index-bd0cb952"
+import LinkifyIt from "linkify-it"
 import { Component, createMemo } from "solid-js"
 
 type MaybeLinkProps = { content: string | undefined }

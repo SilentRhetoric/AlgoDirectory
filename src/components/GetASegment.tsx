@@ -8,7 +8,7 @@ const GetASegment = () => {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <span class="flex flex-row gap-1 text-sm">
+      <span class="flex flex-row items-center gap-1 text-sm">
         Get a segment of directory.algo
         <LinkIcon />
       </span>{" "}

@@ -37,7 +37,7 @@ async function fetchNFDInfo(name: string) {
         return { error: "Not found" }
       }
       const nfdInfo = JSON.parse(text)
-      // console.debug("nfdInfo:", nfdInfo)
+      console.debug("nfdInfo:", nfdInfo)
       return nfdInfo
     } catch (e) {
       console.error(`Errorr ${e} received from API: ${text}`)
@@ -67,7 +67,7 @@ async function fetchOwnedSegments(address: string) {
         return { error: "Not found" }
       }
       const ownedSegmentsInfo = JSON.parse(text)
-      // console.debug("ownedSegmentsInfo:", ownedSegmentsInfo)
+      console.debug("ownedSegmentsInfo:", ownedSegmentsInfo)
       return ownedSegmentsInfo
     } catch (e) {
       console.error(`Error ${e} received from API: ${text}`)
