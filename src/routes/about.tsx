@@ -214,7 +214,7 @@ export default function About() {
       </p>
       <p>
         Using the app also means that you agree to the privacy policy. These Terms may change at any
-        time wihtout notice. Play nice and enjoy the Directory.
+        time without notice. Play nice and enjoy the Directory.
       </p>
       <h2>Privacy Policy</h2>
       <p>
