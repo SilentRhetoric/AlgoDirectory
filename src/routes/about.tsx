@@ -128,7 +128,6 @@ export default function About() {
           <h3>Decentralized, Permissionless, Permanent</h3>
           <p>
             AlgoDirectory leverages Algorand’s powerful on-chain capabilities to provide a directory
-            AlgoDirectory leverages Algorand’s powerful on-chain capabilities to provide a directory
             that applies the values we love about Algorand to the Directory itself. It is
             decentralized across the node network, open to anyone through a permissionless smart
             contract, and permanent for the lifetime of the chain.
