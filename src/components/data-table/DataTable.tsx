@@ -38,6 +38,7 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
   const [sorting, setSorting] = createSignal<SortingState>([{ id: "amount", desc: true }])
   const [columnFilters, setColumnFilters] = createSignal<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = createSignal<VisibilityState>({})
+  const [hoverTimeout, setHoverTimeout] = createSignal<NodeJS.Timeout | null>(null)
 
   const table = createSolidTable({
     get data() {
@@ -119,12 +120,22 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
               <For each={table.getRowModel().rows}>
                 {(row) => (
                   <TableRow
-                    onMouseEnter={() =>
-                      preload(
-                        `/listing/${(row.original as Listing)?.name}?appid=${(row.original as Listing)?.nfdAppID}`,
-                        { preloadData: true },
-                      )
-                    }
+                    onMouseEnter={() => {
+                      const timeout = setTimeout(() => {
+                        preload(
+                          `/listing/${(row.original as Listing)?.name}?appid=${(row.original as Listing)?.nfdAppID}`,
+                          { preloadData: true },
+                        )
+                      }, 2000)
+                      setHoverTimeout(timeout)
+                    }}
+                    onMouseLeave={() => {
+                      const timeout = hoverTimeout()
+                      if (timeout) {
+                        clearTimeout(timeout)
+                        setHoverTimeout(null)
+                      }
+                    }}
                     onClick={() =>
                       navigate(
                         `/listing/${(row.original as Listing)?.name}?appid=${(row.original as Listing)?.nfdAppID}`,
