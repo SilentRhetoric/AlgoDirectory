@@ -5,17 +5,40 @@ import { Button } from "@/components/ui/button"
 import SortIcon from "../icons/SortIcon"
 import AscendingSortIcon from "../icons/AscendingSortIcon"
 import DescendingSortIcon from "../icons/DescendingSortIcon"
+import { useSearchParams, useNavigate } from "@solidjs/router"
 
 const SortingColumnHeader = <TData, TValue>(
   props: VoidProps<{ column: Column<TData, TValue>; title: string | any }>,
 ) => {
   const [local] = splitProps(props, ["column", "title"])
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
   const toggleSorting = () => {
-    if (local.column.getIsSorted() === "desc") {
+    // generate search params for previous search
+    const params = new URLSearchParams()
+    const name = searchParams.name as string
+    const tags = searchParams.tags as string
+
+    if (name) params.set("name", name)
+    if (tags) params.set("tags", tags)
+
+    const column = local.column.id
+    const nextSortingOrder = local.column.getNextSortingOrder()
+
+    if (nextSortingOrder) {
+      // The following is to take into account the timestamp column and how it sorts in reverse
+      const sortOrder = nextSortingOrder === "asc" ? "asc" : "desc"
+      console.log(sortOrder + " " + column)
+      params.set("column_id", column)
+      params.set("sort", sortOrder)
+    }
+    navigate(`?${params.toString()}`, { replace: true })
+
+    if (local.column.getNextSortingOrder() === false) {
       local.column.clearSorting()
     } else {
-      local.column.toggleSorting(local.column.getIsSorted() === "asc", true)
+      local.column.toggleSorting(nextSortingOrder === "desc", false)
     }
   }
 
