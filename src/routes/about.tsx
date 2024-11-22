@@ -14,7 +14,7 @@ export default function About() {
         owners to maintain their own data rather than relying on the efforts of a central curator.
       </p>
       <h2>How It Works</h2>
-      <p>Creating an AlgoDirecory listing is as easy as 1, 2, 3:</p>
+      <p>Creating an AlgoDirectory listing is as easy as 1, 2, 3:</p>
       <ol>
         <li>
           1. Mint an NFD segment of{" "}

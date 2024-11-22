@@ -80,7 +80,7 @@ export default function ManageListings() {
         </Suspense>
       </Show>
       <h2>How It Works</h2>
-      <p>Creating an AlgoDirecory listing is as easy as 1, 2, 3:</p>
+      <p>Creating an AlgoDirectory listing is as easy as 1, 2, 3:</p>
       <ol>
         <li>
           1. Mint an NFD segment of{" "}
