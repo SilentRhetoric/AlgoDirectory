@@ -22,13 +22,13 @@ export default function ManageListings() {
 
   return (
     <div>
-      <h1 class="flex flex-row items-center py-4 uppercase sm:justify-start">
+      <h1 class="flex flex-row items-center uppercase sm:justify-start">
         <span>Your segments</span>
       </h1>
       <Show
         when={activeAddress()}
         fallback={
-          <div class="flex flex-col items-center gap-4">
+          <div class="flex flex-col items-center gap-4 p-4">
             <h2 class="text-center text-2xl">Connect Your Wallet</h2>
             <div class="flex flex-col gap-2 sm:gap-1">
               <For each={wallets}>
@@ -43,7 +43,6 @@ export default function ManageListings() {
                 )}
               </For>
             </div>
-            <GetASegment />
           </div>
         }
       >
@@ -77,10 +76,27 @@ export default function ManageListings() {
                 )}
               </For>
             </div>
-            <GetASegment />
           </div>
         </Suspense>
       </Show>
+      <h2>How It Works</h2>
+      <p>Creating an AlgoDirecory listing is as easy as 1, 2, 3:</p>
+      <ol>
+        <li>
+          1. Mint an NFD segment of{" "}
+          <a
+            href="https://app.nf.domains/name/directory.algo?view=segments"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-500"
+          >
+            directory.algo
+          </a>{" "}
+          and fill out its metadata, images, etc.
+        </li>
+        <li>2. Return here and connect the account that owns the segment.</li>
+        <li>3. Select tags, deposit some Algo to vouch for the listing, and create it!</li>
+      </ol>
     </div>
   )
 }
