@@ -1,6 +1,7 @@
 import { type Table } from "@tanstack/solid-table"
+import { useSearchParams, useNavigate } from "@solidjs/router"
 import { createMemo, createSignal, onMount, Show } from "solid-js"
-import { generateTagsList, generateTagsMap, sortedTagsList } from "@/lib/tag-generator"
+import { sortedTagsList } from "@/lib/tag-generator"
 import {
   Command,
   CommandGroup,
@@ -16,18 +17,40 @@ import { Separator } from "../ui/separator"
 
 type ComboBoxTagProps<TData> = {
   table: Table<TData>
+  tags: string[]
 }
 
 const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
   let scrollPosition = 0
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const sortedMasterTagList = createMemo(() => sortedTagsList)
   const [open, setOpen] = createSignal(false)
-  const [tagsSelected, setTagsSelected] = createSignal<string[]>([])
+  const [tagsSelected, setTagsSelected] = createSignal<string[]>(props.tags)
   const masterList = () =>
     sortedMasterTagList().map((e) => ({
       title: e,
       value: e,
     }))
+
+  const getSearchParams = () => {
+    // get previous search params if they exist
+    const params = new URLSearchParams()
+    const name = searchParams.name as string
+    const sort = searchParams.sort as string
+    const columnId = searchParams.column_id as string
+
+    if (name) params.set("name", name)
+    if (sort && columnId) {
+      params.set("column_id", columnId)
+      params.set("sort", sort)
+    }
+
+    // generate search params for tags
+    const tags = tagsSelected().join(",")
+    params.set("tags", tags)
+    return params
+  }
 
   const handleSelect = (tagSelected: string) => {
     setTagsSelected((prev) =>
@@ -37,6 +60,10 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
     )
     props.table.getColumn("tags")?.setFilterValue(tagsSelected())
 
+    // generate search params for tags
+    const params = getSearchParams()
+    navigate(`?${params.toString()}`, { replace: true })
+
     // if it's the last tag removed, clear the filter
     if (tagsSelected().length === 0) {
       props.table.resetColumnFilters()
@@ -44,6 +71,12 @@ const TagsComboBox = <TData,>(props: ComboBoxTagProps<TData>) => {
   }
 
   const clearAllTags = () => {
+    // clear all tags params
+    const params = getSearchParams()
+    params.delete("tags")
+    navigate(`?${params.toString()}`, { replace: true })
+
+    // clear the tags selected
     setTagsSelected([])
     props.table.resetColumnFilters()
   }

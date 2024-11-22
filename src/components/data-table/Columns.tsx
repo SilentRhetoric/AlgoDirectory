@@ -17,7 +17,6 @@ const findTagsFilter: FilterFn<any> = (row, columnId, filterValue) => {
 
   if (Array.isArray(cellValue)) {
     // To match a logical AND use some() to match a logical OR use every()
-    // const val = filterValue.some((value: string) => cellValue.includes(value))
     const val = cellValue.some((value) => filterSet.has(value))
     return val
   }
@@ -102,6 +101,7 @@ export const columns: ColumnDef<DisplayedListing>[] = [
   },
   {
     accessorKey: "timestamp",
+    invertSorting: true,
     header: (props) => (
       <SortingColumnHeader
         column={props.column}

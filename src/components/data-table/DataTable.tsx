@@ -25,6 +25,7 @@ import SearchInputField from "./SearchInputField"
 import TagsComboBox from "./TagsComboBox"
 import { useNavigate, usePreloadRoute } from "@solidjs/router"
 import { Listing } from "@/types/types"
+import { useSearchParams } from "@solidjs/router"
 
 type Props<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
@@ -32,11 +33,53 @@ type Props<TData, TValue> = {
 }
 
 export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
+  // Get the search parameters
+  const [searchParams] = useSearchParams()
+
+  // Sort params
+  const sort = searchParams.sort
+  const columnId = searchParams.column_id
+
+  // Filter params
+  const listingName = searchParams.name
+  const tags = searchParams.tags as string
+
+  // Determine if sorting is required else set the default sorting
+  const defaultSorting = [{ id: "amount", asc: false, desc: true }]
+  if (sort && columnId) {
+    defaultSorting[0].id = columnId as string
+
+    // Set the sorting of each column, if its' timestamp reverse the sorting
+    // because it sorts on unix timestamps
+    if (sort === "asc") {
+      defaultSorting[0].asc = true
+      defaultSorting[0].desc = false
+    } else {
+      defaultSorting[0].asc = false
+      defaultSorting[0].desc = true
+    }
+  }
+
+  // Determine the search filter for name and tags
+  const filters = []
+
+  if (listingName) {
+    filters.push({ id: "name", value: listingName })
+  }
+
+  const tagsArr = tags?.split(",") || []
+
+  if (tags) {
+    filters.push({ id: "tags", value: tagsArr })
+  }
+
   const navigate = useNavigate()
   const preload = usePreloadRoute()
   const [local] = splitProps(props, ["columns", "data"])
-  const [sorting, setSorting] = createSignal<SortingState>([{ id: "amount", desc: true }])
-  const [columnFilters, setColumnFilters] = createSignal<ColumnFiltersState>([])
+
+  // Create the table state
+  const [sorting, setSorting] = createSignal<SortingState>(defaultSorting)
+  const [columnFilters, setColumnFilters] = createSignal<ColumnFiltersState>(filters)
   const [columnVisibility, setColumnVisibility] = createSignal<VisibilityState>({})
   const [hoverTimeout, setHoverTimeout] = createSignal<NodeJS.Timeout | null>(null)
 
@@ -79,7 +122,10 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
           <SearchInputField table={table} />
         </div>
         <div class="w-ful flex items-center sm:w-56">
-          <TagsComboBox table={table} />
+          <TagsComboBox
+            table={table}
+            tags={tagsArr}
+          />
         </div>
       </div>
       <div class="rounded-md border">
