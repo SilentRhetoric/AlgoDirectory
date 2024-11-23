@@ -118,7 +118,7 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
   return (
     <div class="flex w-full flex-col space-y-2.5">
       <div class="flex w-full flex-row items-center justify-between gap-2">
-        <div class="flex--row flex w-full items-center justify-start">
+        <div class="flex w-full flex-row items-center justify-start">
           <SearchInputField table={table} />
         </div>
         <div class="w-ful flex items-center sm:w-56">

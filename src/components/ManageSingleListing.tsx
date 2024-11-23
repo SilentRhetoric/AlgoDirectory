@@ -262,7 +262,7 @@ export const ManageSingleListing: Component<{
                 disabled={expiredOrForSale(props.segment) || isSubmitting()}
                 onClick={createListing}
                 variant="outline"
-                class="flex w-full flex-row items-center justify-center gap-2 border-[0.5px] border-[hsl(var(--primary))] uppercase hover:bg-[hsl(var(--primary))] hover:text-white"
+                class="flex w-full flex-row items-center justify-center gap-2 border-[0.5px] border-[hsl(var(--primary))] uppercase hover:bg-[hsl(var(--primary))] hover:text-[hsl(var(--secondary))]"
               >
                 <Show when={isSubmitting() && typeSubmitting() === "create"}>
                   <span class="animate-spin">
