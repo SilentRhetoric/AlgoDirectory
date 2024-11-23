@@ -204,8 +204,8 @@ export const ManageSingleListing: Component<{
                 </a>
               </CardTitle>
             </CardHeader>
-            <CardContent class="flex h-48 w-full flex-col justify-between">
-              <div class="flex w-full flex-col">
+            <CardContent class="flex h-48 w-full flex-col gap-2">
+              <div class="flex w-full flex-col gap-2">
                 <label class="uppercase text-red-500">{expiredOrForSaleText(props.segment)}</label>
                 <div class="flex w-full flex-row justify-between">
                   <label class="uppercase">Vouch Amount</label>
@@ -230,16 +230,18 @@ export const ManageSingleListing: Component<{
                 </div>
               </div>
               <div class="flex flex-col justify-end gap-2">
-                <div class="flex flex-wrap justify-start gap-2">
-                  {tags().map((tag: string) => (
-                    <Badge
-                      class="hover:bg-transparent"
-                      variant="outline"
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
+                <Show when={tags().length}>
+                  <div class="flex flex-wrap justify-start gap-2">
+                    {tags().map((tag: string) => (
+                      <Badge
+                        class="hover:bg-transparent"
+                        variant="outline"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </Show>
                 <Show
                   when={!expiredOrForSale(props.segment)}
                   fallback={null}
@@ -255,9 +257,9 @@ export const ManageSingleListing: Component<{
               </div>
             </CardContent>
             <div class="px-6">
-              <div class="-mx-6 mb-4 h-px bg-border" />
+              <div class="-mx-6 h-px bg-border" />
             </div>
-            <CardFooter class="flex flex-col items-center justify-center">
+            <CardFooter class="flex flex-col items-center justify-end gap-2">
               <Button
                 disabled={expiredOrForSale(props.segment) || isSubmitting()}
                 onClick={createListing}
@@ -288,8 +290,8 @@ export const ManageSingleListing: Component<{
               </a>
             </CardTitle>
           </CardHeader>
-          <CardContent class="flex h-48 w-full flex-col justify-between">
-            <div class="flex w-full flex-col">
+          <CardContent class="flex h-48 w-full flex-col gap-2">
+            <div class="flex w-full flex-col gap-2">
               <label class="uppercase text-red-500">{expiredOrForSaleText(props.segment)}</label>
               <div class="flex flex-row items-center justify-between">
                 <label class="uppercase">Vouch Amount</label>
@@ -304,16 +306,18 @@ export const ManageSingleListing: Component<{
               </div>
             </div>
             <div class="flex flex-col justify-end gap-2">
-              <div class="flex flex-wrap justify-start gap-2">
-                {tags().map((tag: string) => (
-                  <Badge
-                    class="hover:bg-transparent"
-                    variant="outline"
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+              <Show when={tags().length}>
+                <div class="flex flex-wrap justify-start gap-2">
+                  {tags().map((tag: string) => (
+                    <Badge
+                      class="hover:bg-transparent"
+                      variant="outline"
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </Show>
               <MultiSelectTags
                 tags={tags()}
                 masterlist={props.sortedMasterTagList}
@@ -323,10 +327,10 @@ export const ManageSingleListing: Component<{
             </div>
           </CardContent>
           <div class="px-6">
-            <div class="-mx-6 mb-4 h-px bg-border" />
+            <div class="-mx-6 h-px bg-border" />
           </div>
           <CardFooter>
-            <div class="flex w-full flex-col items-center justify-start gap-2">
+            <div class="flex w-full flex-col items-center justify-end gap-2">
               <Button
                 variant="outline"
                 class="flex w-full flex-row items-center justify-center gap-2 uppercase"

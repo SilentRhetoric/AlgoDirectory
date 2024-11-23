@@ -79,24 +79,26 @@ export default function ManageListings() {
           </div>
         </Suspense>
       </Show>
-      <h2>How It Works</h2>
-      <p>Creating an AlgoDirectory listing is as easy as 1, 2, 3:</p>
-      <ol>
-        <li>
-          1. Mint an NFD segment of{" "}
-          <a
-            href="https://app.nf.domains/name/directory.algo?view=segments"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-blue-500"
-          >
-            directory.algo
-          </a>{" "}
-          and fill out its metadata, images, etc.
-        </li>
-        <li>2. Return here and connect the account that owns the segment.</li>
-        <li>3. Select tags, deposit some Algo to vouch for the listing, and create it!</li>
-      </ol>
+      <div class="p-4">
+        <h2>How It Works</h2>
+        <p>Creating an AlgoDirectory listing is as easy as 1, 2, 3:</p>
+        <ol>
+          <li>
+            1. Mint an NFD segment of{" "}
+            <a
+              href="https://app.nf.domains/name/directory.algo?view=segments"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-blue-500"
+            >
+              directory.algo
+            </a>{" "}
+            and fill out its metadata, images, etc.
+          </li>
+          <li>2. Return here and connect the account that owns the segment.</li>
+          <li>3. Select tags, deposit some Algo to vouch for the listing, and create it!</li>
+        </ol>
+      </div>
     </div>
   )
 }

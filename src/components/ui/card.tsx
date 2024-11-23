@@ -29,7 +29,7 @@ export const CardTitle: ParentComponent<ComponentProps<"h1">> = (props) => {
 
   return (
     <h2
-      class={cn("pt-0 uppercase leading-none", local.class)}
+      class={cn("uppercase leading-none", local.class)}
       {...rest}
     />
   )
@@ -51,7 +51,7 @@ export const CardContent = (props: ComponentProps<"div">) => {
 
   return (
     <div
-      class={cn("p-4 pt-0", local.class)}
+      class={cn("p-4", local.class)}
       {...rest}
     />
   )
@@ -62,7 +62,7 @@ export const CardFooter = (props: ComponentProps<"div">) => {
 
   return (
     <div
-      class={cn("flex items-center p-4 pt-0", local.class)}
+      class={cn("flex items-center p-4", local.class)}
       {...rest}
     />
   )
