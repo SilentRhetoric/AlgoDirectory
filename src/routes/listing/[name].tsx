@@ -238,7 +238,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                         {allNameInfo()?.preparedNfdInfo?.twitter}
                       </a>
                     ) : (
-                      <MaybeLink content={allNameInfo()?.preparedNfdInfo?.github} />
+                      <MaybeLink content={allNameInfo()?.preparedNfdInfo?.twitter} />
                     )}{" "}
                   </div>
                 </div>
@@ -256,7 +256,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                         <MaybeLink content={allNameInfo()?.preparedNfdInfo?.bluesky} />
                       </a>
                     ) : (
-                      <MaybeLink content={allNameInfo()?.preparedNfdInfo?.discord} />
+                      <MaybeLink content={allNameInfo()?.preparedNfdInfo?.bluesky} />
                     )}
                   </div>
                 </div>
