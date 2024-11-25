@@ -1,6 +1,7 @@
 const DISCORD_TOKEN = import.meta.env.VITE_DISCORD_TOKEN
 
 export async function fetchDiscordUser(snowflakeId: string): Promise<string> {
+  "use server" // NOTE: This runs on the server
   console.debug("fetchDiscordUser:", snowflakeId)
   try {
     const response = await fetch(`https://discord.com/api/users/${snowflakeId}`, {
