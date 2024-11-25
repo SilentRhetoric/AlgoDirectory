@@ -7,7 +7,7 @@ import {
   useSearchParams,
 } from "@solidjs/router"
 import SiteTitle from "@/components/SiteTitle"
-import { getNFDInfo, nfdSiteUrlRoot } from "@/lib/nfd-api"
+import { getNFDInfo, NFDDisplayFields, nfdSiteUrlRoot, getPreparedNFDInfo } from "@/lib/nfd-api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { For, Match, Suspense, Switch } from "solid-js"
@@ -16,12 +16,13 @@ import { formatTimestamp } from "@/lib/formatting"
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount"
 import AlgorandLogo from "@/components/icons/AlgorandLogo"
 import { Listing } from "@/types/types"
-import { NfdRecordResponseFull } from "@/lib/nfd-swagger-codegen"
 import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import tagMap from "@/assets/tags.json"
 import LinkIcon from "@/components/icons/LinkIcon"
 import MaybeLink from "@/components/MaybeLink"
 import { Image, ImageFallback, ImageRoot } from "@/components/ui/image"
+import VerifiedIcon from "@/components/icons/VerifiedIcon"
+import { getFullUser } from "@/lib/telegram-api"
 
 export const route = {
   preload({ params }) {
@@ -30,7 +31,7 @@ export const route = {
 } satisfies RouteDefinition
 
 type NFDAndListingInfo = {
-  nfdInfo: NfdRecordResponseFull
+  preparedNfdInfo: NFDDisplayFields
   listingInfo: Listing
 }
 
@@ -42,19 +43,21 @@ async function FetchAllNameInfo(name: string, appID?: number) {
     if (appID) {
       // Fire off both requests at the same time bec ause appID is known
       const [listingInfo, nfdInfo] = await Promise.all([getListing(appID), getNFD(name)])
-      allInfo = { listingInfo, nfdInfo }
+      const preparedNfdInfo = await getPreparedNFDInfo(nfdInfo)
+      allInfo = { listingInfo, preparedNfdInfo }
     } else {
       // Get NFD info first to get the appID, then get the listing info
       const nfdInfo = await getNFDInfo(name)
+      const preparedNfdInfo = await getPreparedNFDInfo(nfdInfo)
       const listingInfo = await getListing(nfdInfo.appID!)
-      allInfo = { listingInfo, nfdInfo }
+      allInfo = { listingInfo, preparedNfdInfo }
     }
   } catch (e) {
     console.error(e)
     throw redirect("/404")
   }
 
-  if (allInfo.listingInfo.name !== allInfo.nfdInfo.name.split(".")[0]) {
+  if (allInfo.listingInfo.name !== allInfo.preparedNfdInfo.segmentName) {
     // This shouldn't happen, but just in case we got a mismatch
     throw redirect("/404")
   }
@@ -70,36 +73,22 @@ const getAllNameInfo = cache(async (name: string, appID?: number) => {
 export default function ListingDetails(props: RouteSectionProps) {
   const [searchParams, setSearchParams] = useSearchParams()
   const appIDFromQueryParams = Number(searchParams.appid)
-  // Defering stream here so that the page doesn't navigate until the data loads
   const allNameInfo = createAsync(() => getAllNameInfo(props.params.name, appIDFromQueryParams), {
+    // Defer stream so that the page doesn't navigate until the data loads
     deferStream: true,
   })
 
   return (
     <main class="flex flex-col gap-2 p-4">
-      <SiteTitle>{allNameInfo()?.nfdInfo?.name.split(".")[0].toUpperCase()}</SiteTitle>
+      <SiteTitle>{allNameInfo()?.preparedNfdInfo?.segmentName}</SiteTitle>
       <Suspense fallback={<div>Loading...</div>}>
         <Card class="mx-auto w-full max-w-6xl overflow-hidden">
           <div class="aspect-[3/1] w-full border-b-[1px] object-cover">
             <ImageRoot>
-              <Image
-                src={
-                  allNameInfo()?.nfdInfo?.properties?.verified?.banner?.replace(
-                    "ipfs://",
-                    "https://images.nf.domains/ipfs/",
-                  ) ?? allNameInfo()?.nfdInfo?.properties?.userDefined?.banner
-                }
-              />
+              <Image src={allNameInfo()?.preparedNfdInfo?.banner} />
               <ImageFallback>No banner</ImageFallback>
               <ImageRoot class="absolute -bottom-4 left-4 h-20 w-20 overflow-hidden rounded-full border-[1px] bg-background sm:h-32 sm:w-32">
-                <Image
-                  src={
-                    allNameInfo()?.nfdInfo?.properties?.verified?.avatar?.replace(
-                      "ipfs://",
-                      "https://images.nf.domains/ipfs/",
-                    ) ?? allNameInfo()?.nfdInfo?.properties?.userDefined?.avatar
-                  }
-                />
+                <Image src={allNameInfo()?.preparedNfdInfo?.avatar} />
                 <ImageFallback>No avatar</ImageFallback>
               </ImageRoot>
             </ImageRoot>
@@ -107,17 +96,17 @@ export default function ListingDetails(props: RouteSectionProps) {
           <CardHeader class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <CardTitle class="text-2xl uppercase sm:pt-4 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
               <a
-                href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${allNameInfo()?.nfdInfo?.name}`}
+                href={`https://app.${nfdSiteUrlRoot}nf.domains/name/${allNameInfo()?.preparedNfdInfo?.segmentFullName}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="flex flex-row items-center gap-2"
               >
-                {allNameInfo()?.nfdInfo?.name.split(".")[0]}
+                {allNameInfo()?.preparedNfdInfo?.segmentName}
                 <LinkIcon />
               </a>
             </CardTitle>
             <Switch>
-              <Match when={allNameInfo()?.nfdInfo?.state === ("forSale" as any)}>
+              <Match when={allNameInfo()?.preparedNfdInfo?.state === ("forSale" as any)}>
                 <Badge
                   variant={"outline"}
                   class="border-[hsl(var(--destructive))] capitalize text-red-500"
@@ -125,7 +114,7 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <span>For Sale</span>
                 </Badge>
               </Match>
-              <Match when={allNameInfo()?.nfdInfo?.state === ("expired" as any)}>
+              <Match when={allNameInfo()?.preparedNfdInfo?.state === ("expired" as any)}>
                 <Badge
                   variant={"outline"}
                   class="border-[hsl(var(--destructive))] capitalize text-red-500"
@@ -183,57 +172,122 @@ export default function ListingDetails(props: RouteSectionProps) {
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Name</p>
                   <p class="overflow-hidden text-wrap break-words">
-                    {allNameInfo()?.nfdInfo?.properties?.userDefined?.name}
+                    {allNameInfo()?.preparedNfdInfo?.name}
                   </p>
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Bio</p>
                   <p class="overflow-hidden text-wrap break-words">
-                    {allNameInfo()?.nfdInfo?.properties?.userDefined?.bio}
+                    {allNameInfo()?.preparedNfdInfo?.bio}
                   </p>
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <div class="uppercase">Website</div>
-                  <MaybeLink content={allNameInfo()?.nfdInfo?.properties?.userDefined?.website} />
+                  <MaybeLink content={allNameInfo()?.preparedNfdInfo?.website} />
                   <p class="overflow-hidden text-wrap break-words"></p>
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Email</p>
-                  <a
-                    href={`mailto:${allNameInfo()?.nfdInfo?.properties?.userDefined?.email}`}
-                    class="overflow-hidden text-wrap break-words text-blue-500"
-                  >
-                    {allNameInfo()?.nfdInfo?.properties?.userDefined?.email}
-                  </a>
+                  <div class="flex flex-row gap-1">
+                    {allNameInfo()?.preparedNfdInfo?.email ? <VerifiedIcon /> : null}
+                    <a
+                      href={`mailto:${allNameInfo()?.preparedNfdInfo?.email}`}
+                      class="overflow-hidden text-wrap break-words text-blue-500"
+                    >
+                      {allNameInfo()?.preparedNfdInfo?.email}
+                    </a>
+                  </div>
                 </div>
-                <div class="grid grid-cols-[96px_1fr]">
+                {/* <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Address</p>
                   <p class="overflow-hidden text-wrap break-words">
                     {allNameInfo()?.nfdInfo?.properties?.userDefined?.address}
                   </p>
-                </div>
+                </div> */}
               </div>
               <div id="NFDSecondColumn">
-                {/* TODO: Twitter/Discord/Telegram/GitHub can be verified on NFD */}
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">GitHub</p>
-                  <MaybeLink content={allNameInfo()?.nfdInfo?.properties?.userDefined?.github} />
+                  <div class="flex flex-row gap-1">
+                    {allNameInfo()?.preparedNfdInfo.githubVerified ? <VerifiedIcon /> : null}
+                    {allNameInfo()?.preparedNfdInfo.githubVerified ? (
+                      <a
+                        href={`https://github.com/${allNameInfo()?.preparedNfdInfo?.github}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-blue-500"
+                      >
+                        {allNameInfo()?.preparedNfdInfo?.github}
+                      </a>
+                    ) : (
+                      <MaybeLink content={allNameInfo()?.preparedNfdInfo?.github} />
+                    )}
+                  </div>
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Twitter</p>
-                  <p>{allNameInfo()?.nfdInfo?.properties?.userDefined?.twitter}</p>
+                  <div class="flex flex-row gap-1">
+                    {allNameInfo()?.preparedNfdInfo.twitterVerified ? <VerifiedIcon /> : null}
+                    {allNameInfo()?.preparedNfdInfo.twitterVerified ? (
+                      <a
+                        href={`https://x.com/${allNameInfo()?.preparedNfdInfo?.twitter}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-blue-500"
+                      >
+                        {allNameInfo()?.preparedNfdInfo?.twitter}
+                      </a>
+                    ) : (
+                      <MaybeLink content={allNameInfo()?.preparedNfdInfo?.github} />
+                    )}{" "}
+                  </div>
+                </div>
+                <div class="grid grid-cols-[96px_1fr]">
+                  <p class="uppercase">Bluesky</p>
+                  <div class="flex flex-row gap-1">
+                    {allNameInfo()?.preparedNfdInfo.blueskyVerified ? <VerifiedIcon /> : null}
+                    {allNameInfo()?.preparedNfdInfo.blueskyVerified ? (
+                      <a
+                        href={`https://bsky.app/profile/${allNameInfo()?.preparedNfdInfo?.bluesky}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-blue-500"
+                      >
+                        <MaybeLink content={allNameInfo()?.preparedNfdInfo?.bluesky} />
+                      </a>
+                    ) : (
+                      <MaybeLink content={allNameInfo()?.preparedNfdInfo?.discord} />
+                    )}
+                  </div>
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Discord</p>
-                  <MaybeLink content={allNameInfo()?.nfdInfo?.properties?.userDefined?.discord} />
+                  <div class="flex flex-row gap-1">
+                    {allNameInfo()?.preparedNfdInfo.discordVerified ? <VerifiedIcon /> : null}
+                    {allNameInfo()?.preparedNfdInfo.discordVerified ? (
+                      <a
+                        href={`https://discordapp.com/users/${allNameInfo()?.preparedNfdInfo?.discord}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-blue-500"
+                      >
+                        {allNameInfo()?.preparedNfdInfo?.discord}
+                      </a>
+                    ) : (
+                      <MaybeLink content={allNameInfo()?.preparedNfdInfo?.discord} />
+                    )}
+                  </div>
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">Telegram</p>
-                  <p>{allNameInfo()?.nfdInfo?.properties?.userDefined?.telegram}</p>
+                  <div class="flex flex-row gap-1">
+                    {allNameInfo()?.preparedNfdInfo?.telegramVerified ? <VerifiedIcon /> : null}
+                    <p>{allNameInfo()?.preparedNfdInfo?.telegram}</p>
+                  </div>
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">
                   <p class="uppercase">LinkedIn</p>
-                  <MaybeLink content={allNameInfo()?.nfdInfo?.properties?.userDefined?.linkedin} />
+                  <MaybeLink content={allNameInfo()?.preparedNfdInfo?.linkedin} />
                 </div>
               </div>
             </div>

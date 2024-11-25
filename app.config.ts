@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
+// const __mode = import.meta.env.MODE
+// const __prod = __mode === "production"
 
 export default defineConfig({
   ssr: true,
@@ -28,6 +30,6 @@ export default defineConfig({
         "algosdk",
       ],
     },
-    esbuild: { drop: ["console"] },
+    // esbuild: { drop: ["console"] },
   },
 })
