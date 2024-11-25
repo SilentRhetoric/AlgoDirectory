@@ -1,8 +1,8 @@
 //https://gram.js.org/getting-started/authorization#getting-api-id-and-api-hash
 
-const API_ID = Number(import.meta.env.VITE_TELEGRAM_API_ID)
-const API_HASH = import.meta.env.VITE_TELEGRAM_API_HASH
-const BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN
+const API_ID = Number(process.env.TELEGRAM_API_ID)
+const API_HASH = process.env.TELEGRAM_API_HASH!
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!
 
 import { Api, TelegramClient } from "telegram"
 import { StringSession } from "telegram/sessions"

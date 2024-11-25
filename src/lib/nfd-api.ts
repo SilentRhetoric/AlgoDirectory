@@ -117,6 +117,7 @@ export type NFDDisplayFields = {
 }
 
 async function prepareNFDInfo(nfdInfo: NfdRecordResponseFull) {
+  "use server" // NOTE: This runs on the server
   let preparedInfo = {} as NFDDisplayFields
   preparedInfo.segmentFullName = nfdInfo.name
   preparedInfo.segmentName = nfdInfo.name.split(".")[0]

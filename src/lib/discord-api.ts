@@ -1,4 +1,4 @@
-const DISCORD_TOKEN = import.meta.env.VITE_DISCORD_TOKEN
+const DISCORD_TOKEN = process.env.DISCORD_TOKEN
 
 export async function fetchDiscordUser(snowflakeId: string): Promise<string> {
   "use server" // NOTE: This runs on the server
