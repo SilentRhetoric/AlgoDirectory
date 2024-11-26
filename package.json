@@ -36,7 +36,6 @@
     "tailwind-merge": "^2.5.5",
     "tailwindcss": "^3.4.15",
     "tailwindcss-animate": "^1.0.7",
-    "telegram": "^2.26.8",
     "vinxi": "^0.4.3"
   },
   "devDependencies": {

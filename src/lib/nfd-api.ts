@@ -8,7 +8,7 @@ import { cache } from "@solidjs/router"
 import { NfdRecordResponseFull, NfdV2SearchRecords } from "@/lib/nfd-swagger-codegen"
 import { fetchBlueskyHandle } from "./bsky-api"
 import { fetchDiscordUser } from "./discord-api"
-import { getFullUser } from "./telegram-api"
+import { getUserHandleFromID } from "./telegram-api"
 
 // Configure the site via env vars to use mainnet/testnet and the right app ID
 const NETWORK = import.meta.env.VITE_NETWORK
@@ -155,7 +155,7 @@ async function prepareNFDInfo(nfdInfo: NfdRecordResponseFull) {
   }
   // Only attempt to resolve the Telegram ID via their API if present
   if (nfdInfo.properties?.verified?.telegram) {
-    preparedInfo.telegram = nfdInfo.properties.verified.telegram
+    preparedInfo.telegram = await getUserHandleFromID(nfdInfo.properties.verified.telegram)
     preparedInfo.telegramVerified = true
   } else if (nfdInfo.properties?.userDefined?.telegram) {
     preparedInfo.telegram = nfdInfo.properties.userDefined?.telegram

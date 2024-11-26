@@ -22,7 +22,6 @@ import LinkIcon from "@/components/icons/LinkIcon"
 import MaybeLink from "@/components/MaybeLink"
 import { Image, ImageFallback, ImageRoot } from "@/components/ui/image"
 import VerifiedIcon from "@/components/icons/VerifiedIcon"
-import { getFullUser } from "@/lib/telegram-api"
 
 export const route = {
   preload({ params }) {
@@ -282,7 +281,18 @@ export default function ListingDetails(props: RouteSectionProps) {
                   <p class="uppercase">Telegram</p>
                   <div class="flex flex-row gap-1">
                     {allNameInfo()?.preparedNfdInfo?.telegramVerified ? <VerifiedIcon /> : null}
-                    <p>{allNameInfo()?.preparedNfdInfo?.telegram}</p>
+                    {allNameInfo()?.preparedNfdInfo.telegramVerified ? (
+                      <a
+                        href={`https://t.me/${allNameInfo()?.preparedNfdInfo?.telegram}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-blue-500"
+                      >
+                        {allNameInfo()?.preparedNfdInfo?.telegram}
+                      </a>
+                    ) : (
+                      <MaybeLink content={allNameInfo()?.preparedNfdInfo?.telegram} />
+                    )}
                   </div>
                 </div>
                 <div class="grid grid-cols-[96px_1fr]">

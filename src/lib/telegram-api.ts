@@ -1,47 +1,42 @@
-//https://gram.js.org/getting-started/authorization#getting-api-id-and-api-hash
-
-const API_ID = Number(process.env.TELEGRAM_API_ID)
-const API_HASH = process.env.TELEGRAM_API_HASH!
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!
 
-import { Api, TelegramClient } from "telegram"
-import { StringSession } from "telegram/sessions"
-
-const session = new StringSession("") // You should put your string session here
-const client = new TelegramClient(session, API_ID, API_HASH, {})
-
-export async function getFullUser(id: string) {
-  console.debug("getFullUser (TG): ", id)
-  await client.start({
-    botAuthToken: BOT_TOKEN,
-  })
-  await client.connect() // This assumes you have already authenticated with .start()
-  const result = await client.invoke(
-    new Api.users.GetFullUser({
-      id,
-    }),
-  )
-  console.log(result)
-  return "test"
+export type TelegramData = {
+  ok: boolean
+  result: {
+    id: number
+    first_name: string
+    last_name: string
+    username: string
+    type: string
+    bio: string
+    has_private_forwards: boolean
+    photo: {
+      small_file_id: string
+      small_file_unique_id: string
+      big_file_id: string
+      big_file_unique_id: string
+    }
+  }
 }
 
-/*
-import { TelegramClient } from "telegram";
-import { StringSession } from "telegram/sessions";
-
-const stringSession = ""; // leave this empty for now
-const BOT_TOKEN = ""; // put your bot token here
-
-(async () => {
-  const client = new TelegramClient(
-    new StringSession(stringSession),
-    apiId,
-    apiHash,
-    { connectionRetries: 5 }
-  );
-  await client.start({
-    botAuthToken: BOT_TOKEN,
-  });
-  console.log(client.session.save());
-})();
-*/
+export async function getUserHandleFromID(id: string): Promise<string> {
+  "use server" // NOTE: This runs on the server
+  console.debug("getUserHandleFromID (TG): ", id)
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getChat?chat_id=${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: id,
+      }),
+    })
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`)
+    }
+    const userData = (await response.json()) as TelegramData
+    return userData.result.username as string
+  } catch (error) {
+    console.error("Error fetching Telegram username:", error)
+    throw error
+  }
+}
