@@ -37,7 +37,7 @@ const SearchInputField = <TData,>(props: Props<TData>) => {
         as="input"
         type="text"
         placeholder="Search names..."
-        class="flex h-8 w-full sm:w-64"
+        class="flex h-8 max-w-64"
         value={(props.table.getColumn("name")?.getFilterValue() as string) ?? ""}
         onInput={(e) => setSearchParams(e.currentTarget.value)}
       />
