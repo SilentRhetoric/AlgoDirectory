@@ -8,7 +8,7 @@ const baseUrl = import.meta.env.DEV ? "http://localhost:3000" : "https://algodir
 // Load the font from the public directory
 const inter = async () => {
   const url = new URL(`/Inter_18pt-Thin.ttf`, baseUrl) // TODO: Env-based
-  return await fetch(url,{}).then((res) => res.arrayBuffer())
+  return await fetch(url, {}).then((res) => res.arrayBuffer())
 }
 
 const options: SatoriOptions = {
@@ -28,11 +28,12 @@ const options: SatoriOptions = {
 export async function GET(event: APIEvent) {
   const markup = `
     <html>
-      <body style="margin: 0; padding: 0; background-color: black">
+      <body style="margin: 0; padding: 0; background-color: black;">
         <div
-          style="display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; overflow: hidden; position: relative; font-family: "Inter"; font-size: 120; font-weight: 100; color: white"
+          style="padding: 5%; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; height: 100vh; width: 100vw; overflow: hidden; position: relative; font-family: "Inter"; font-weight: 100; color: white;"
         >
-          <div>${event.params.name} | AlgoDirectory</div>
+          <div style="font-size: 72;">${event.params.name}</div>
+          <div style="font-size: 36;">AlgoDirectory</div>
         </div>
       </body>
     </html>
