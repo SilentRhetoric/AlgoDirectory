@@ -28,6 +28,6 @@ export default defineConfig({
         "algosdk",
       ],
     },
-    // esbuild: { drop: ["console"] },
+    esbuild: { drop: ["console"] },
   },
 })

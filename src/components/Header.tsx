@@ -25,7 +25,7 @@ export default function Header() {
           xmlns:xlink="http://www.w3.org/1999/xlink"
           class="h-8"
         >
-          <title>AlgoDirectory Logo</title>
+          <title>AlgoDirectory</title>
           <g
             id="Page-1"
             stroke="none"
