@@ -91,11 +91,11 @@ export default function ListingDetails(props: RouteSectionProps) {
       />
       <Meta
         property="og:title"
-        content={props.params.name}
+        content="AlgoDirectory"
       />
       <Meta
         property="og:description"
-        content={allNameInfo()?.preparedNfdInfo?.bio ?? ""}
+        content="A decentralized, on-chain directory for the Algorand ecosystem"
       />
       <Meta
         property="og:image"
@@ -115,11 +115,11 @@ export default function ListingDetails(props: RouteSectionProps) {
       />
       <Meta
         name="twitter:title"
-        content={props.params.name}
+        content="AlgoDirectory"
       />
       <Meta
         name="twitter:description"
-        content={allNameInfo()?.preparedNfdInfo?.bio ?? ""}
+        content="A decentralized, on-chain directory for the Algorand ecosystem"
       />
       <Meta
         name="twitter:image"
