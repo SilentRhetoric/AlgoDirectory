@@ -12,7 +12,7 @@ export default function Manage() {
       <SiteTitle>Manage</SiteTitle>
       <Meta
         property="og:url"
-        content="https://algodirectory.app"
+        content="https://algodirectory.app/manage"
       />
       <Meta
         property="og:type"
@@ -20,7 +20,7 @@ export default function Manage() {
       />
       <Meta
         property="og:title"
-        content="AlgoDirectory"
+        content="Manage | AlgoDirectory"
       />
       <Meta
         property="og:description"
@@ -28,7 +28,7 @@ export default function Manage() {
       />
       <Meta
         property="og:image"
-        content="https://opengraph.b-cdn.net/production/images/9b10ce19-396e-483f-a1c1-643401552eb6.png?token=Itz-ScX30tGgcEFr9hddqhrAzRy9tDH2vvxf9x-hTOI&height=630&width=1199&expires=33266059103"
+        content={`/og/Manage`}
       />
       <Meta
         name="twitter:card"
@@ -40,11 +40,11 @@ export default function Manage() {
       />
       <Meta
         property="twitter:url"
-        content="https://algodirectory.app"
+        content="https://algodirectory.app/manage"
       />
       <Meta
         name="twitter:title"
-        content="AlgoDirectory"
+        content="Manage | AlgoDirectory"
       />
       <Meta
         name="twitter:description"
@@ -52,7 +52,7 @@ export default function Manage() {
       />
       <Meta
         name="twitter:image"
-        content="https://opengraph.b-cdn.net/production/images/9b10ce19-396e-483f-a1c1-643401552eb6.png?token=Itz-ScX30tGgcEFr9hddqhrAzRy9tDH2vvxf9x-hTOI&height=630&width=1199&expires=33266059103"
+        content={`/og/Manage`}
       />
       <ClientOnlyWalletWrapper />
     </main>

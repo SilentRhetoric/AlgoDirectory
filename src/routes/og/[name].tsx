@@ -5,10 +5,9 @@ import { APIEvent } from "node_modules/@solidjs/start/dist/server"
 
 const baseUrl = import.meta.env.DEV ? "http://localhost:3000" : "https://algodirectory.app"
 
-// Load the font from the public directory
 const inter = async () => {
-  const url = new URL(`/Inter_18pt-Thin.ttf`, baseUrl) // TODO: Env-based
-  return await fetch(url, {}).then((res) => res.arrayBuffer())
+  const url = new URL(`/Inter_18pt-Thin.ttf`, baseUrl)
+  return await fetch(url).then((res) => res.arrayBuffer())
 }
 
 const options: SatoriOptions = {
