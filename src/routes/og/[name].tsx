@@ -32,8 +32,8 @@ export async function GET(event: APIEvent) {
         <div
           style="padding: 5%; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; height: 100vh; width: 100vw; overflow: hidden; position: relative; font-family: "Inter"; font-weight: 100; color: white;"
         >
-          <div style="font-size: 72;">${event.params.name}</div>
-          <div style="font-size: 36;">AlgoDirectory</div>
+          <div style="font-size: 96;">${event.params.name}</div>
+          <div style="font-size: 48;">AlgoDirectory</div>
         </div>
       </body>
     </html>
