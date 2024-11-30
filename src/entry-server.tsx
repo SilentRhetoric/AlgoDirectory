@@ -25,7 +25,7 @@ export default createHandler(() => (
             name="description"
             content="A decentralized, on-chain directory for the Algorand ecosystem"
           />
-          <meta
+          {/* <meta
             property="og:url"
             content="https://algodirectory.app"
           />
@@ -68,7 +68,7 @@ export default createHandler(() => (
           <meta
             name="twitter:image"
             content="https://opengraph.b-cdn.net/production/images/9b10ce19-396e-483f-a1c1-643401552eb6.png?token=Itz-ScX30tGgcEFr9hddqhrAzRy9tDH2vvxf9x-hTOI&height=630&width=1199&expires=33266059103"
-          />
+          /> */}
           <link
             rel="icon"
             type="image/png"

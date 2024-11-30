@@ -8,6 +8,7 @@ import { NUM_TAGS_ALLOWED } from "@/lib/constants"
 import tagMap from "@/assets/tags.json" // Adjust the path as necessary
 import SiteTitle from "@/components/SiteTitle"
 import GetASegment from "@/components/GetASegment"
+import { Meta } from "@solidjs/meta"
 
 const Home = () => {
   const listings = createAsyncStore(async () => {
@@ -41,6 +42,50 @@ const Home = () => {
   return (
     <div class="flex w-full flex-col gap-4 p-4">
       <SiteTitle>Home</SiteTitle>
+      <Meta
+        property="og:url"
+        content="https://algodirectory.app"
+      />
+      <Meta
+        property="og:type"
+        content="website"
+      />
+      <Meta
+        property="og:title"
+        content="AlgoDirectory"
+      />
+      <Meta
+        property="og:description"
+        content="A decentralized, on-chain directory for the Algorand ecosystem"
+      />
+      <Meta
+        property="og:image"
+        content="https://opengraph.b-cdn.net/production/images/9b10ce19-396e-483f-a1c1-643401552eb6.png?token=Itz-ScX30tGgcEFr9hddqhrAzRy9tDH2vvxf9x-hTOI&height=630&width=1199&expires=33266059103"
+      />
+      <Meta
+        name="twitter:card"
+        content="summary_large_image"
+      />
+      <Meta
+        property="twitter:domain"
+        content="algodirectory.app"
+      />
+      <Meta
+        property="twitter:url"
+        content="https://algodirectory.app"
+      />
+      <Meta
+        name="twitter:title"
+        content="AlgoDirectory"
+      />
+      <Meta
+        name="twitter:description"
+        content="A decentralized, on-chain directory for the Algorand ecosystem"
+      />
+      <Meta
+        name="twitter:image"
+        content="https://opengraph.b-cdn.net/production/images/9b10ce19-396e-483f-a1c1-643401552eb6.png?token=Itz-ScX30tGgcEFr9hddqhrAzRy9tDH2vvxf9x-hTOI&height=630&width=1199&expires=33266059103"
+      />
       <Suspense
         fallback={
           <div class="mx-auto flex min-h-screen items-center justify-center">

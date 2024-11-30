@@ -22,6 +22,7 @@ import LinkIcon from "@/components/icons/LinkIcon"
 import MaybeLink from "@/components/MaybeLink"
 import { Image, ImageFallback, ImageRoot } from "@/components/ui/image"
 import VerifiedIcon from "@/components/icons/VerifiedIcon"
+import { Meta } from "@solidjs/meta"
 
 export const route = {
   preload({ params }) {
@@ -80,6 +81,50 @@ export default function ListingDetails(props: RouteSectionProps) {
   return (
     <main class="flex flex-col gap-2 p-4">
       <SiteTitle>{allNameInfo()?.preparedNfdInfo?.segmentName}</SiteTitle>
+      <Meta
+        property="og:url"
+        content={props.location.pathname}
+      />
+      <Meta
+        property="og:type"
+        content="website"
+      />
+      <Meta
+        property="og:title"
+        content={props.params.name}
+      />
+      <Meta
+        property="og:description"
+        content={allNameInfo()?.preparedNfdInfo?.bio}
+      />
+      <Meta
+        property="og:image"
+        content={`/og/${props.params.name}`}
+      />
+      <Meta
+        name="twitter:card"
+        content="summary_large_image"
+      />
+      <Meta
+        property="twitter:domain"
+        content="algodirectory.app"
+      />
+      <Meta
+        property="twitter:url"
+        content={props.location.pathname}
+      />
+      <Meta
+        name="twitter:title"
+        content={props.params.name}
+      />
+      <Meta
+        name="twitter:description"
+        content={allNameInfo()?.preparedNfdInfo?.bio}
+      />
+      <Meta
+        name="twitter:image"
+        content={`/og/${props.params.name}`}
+      />
       <Suspense fallback={<div>Loading...</div>}>
         <Card class="mx-auto w-full max-w-6xl overflow-hidden">
           <div class="aspect-[3/1] w-full border-b-[1px] object-cover">

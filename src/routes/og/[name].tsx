@@ -1,0 +1,46 @@
+import satori, { SatoriOptions } from "satori"
+import { html } from "satori-html"
+import { Resvg } from "@resvg/resvg-js"
+import { APIEvent } from "node_modules/@solidjs/start/dist/server"
+
+const baseUrl = import.meta.env.DEV ? "http://localhost:3000" : "https://algodirectory.app"
+
+// Load the font from the public directory
+const inter = async () => {
+  const url = new URL(`/Inter_18pt-Thin.ttf`, baseUrl) // TODO: Env-based
+  return await fetch(url,{}).then((res) => res.arrayBuffer())
+}
+
+const options: SatoriOptions = {
+  width: 1200,
+  height: 630,
+  embedFont: true,
+  fonts: [
+    {
+      name: "Inter",
+      data: await inter(),
+      weight: 100,
+      style: "normal",
+    },
+  ],
+}
+
+export async function GET(event: APIEvent) {
+  const markup = `
+    <html>
+      <body style="margin: 0; padding: 0; background-color: black">
+        <div
+          style="display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; overflow: hidden; position: relative; font-family: "Inter"; font-size: 120; font-weight: 100; color: white"
+        >
+          <div>${event.params.name} | AlgoDirectory</div>
+        </div>
+      </body>
+    </html>
+  `
+
+  const svg = await satori(html(markup), options)
+
+  const png = new Resvg(svg, { font: { sansSerifFamily: "Inter" } }).render().asPng()
+
+  return new Response(png, { headers: { "Content-Type": "image/png" } })
+}
