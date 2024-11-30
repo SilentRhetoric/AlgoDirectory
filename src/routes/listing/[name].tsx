@@ -83,7 +83,7 @@ export default function ListingDetails(props: RouteSectionProps) {
       <SiteTitle>{allNameInfo()?.preparedNfdInfo?.segmentName}</SiteTitle>
       <Meta
         property="og:url"
-        content={props.location.pathname}
+        content={`https://algodirectory.app${props.location.pathname}`}
       />
       <Meta
         property="og:type"
@@ -99,7 +99,7 @@ export default function ListingDetails(props: RouteSectionProps) {
       />
       <Meta
         property="og:image"
-        content={`/og/${props.params.name}`}
+        content={`https://algodirectory.app/og/${props.params.name}`}
       />
       <Meta
         name="twitter:card"
@@ -111,7 +111,7 @@ export default function ListingDetails(props: RouteSectionProps) {
       />
       <Meta
         property="twitter:url"
-        content={props.location.pathname}
+        content={`https://algodirectory.app${props.location.pathname}`}
       />
       <Meta
         name="twitter:title"
@@ -123,7 +123,7 @@ export default function ListingDetails(props: RouteSectionProps) {
       />
       <Meta
         name="twitter:image"
-        content={`/og/${props.params.name}`}
+        content={`https://algodirectory.app/og/${props.params.name}`}
       />
       <Suspense fallback={<div>Loading...</div>}>
         <Card class="mx-auto w-full max-w-6xl overflow-hidden">
