@@ -95,7 +95,7 @@ export default function ListingDetails(props: RouteSectionProps) {
       />
       <Meta
         property="og:description"
-        content={allNameInfo()?.preparedNfdInfo?.bio}
+        content={allNameInfo()?.preparedNfdInfo?.bio ?? ""}
       />
       <Meta
         property="og:image"
@@ -119,7 +119,7 @@ export default function ListingDetails(props: RouteSectionProps) {
       />
       <Meta
         name="twitter:description"
-        content={allNameInfo()?.preparedNfdInfo?.bio}
+        content={allNameInfo()?.preparedNfdInfo?.bio ?? ""}
       />
       <Meta
         name="twitter:image"
