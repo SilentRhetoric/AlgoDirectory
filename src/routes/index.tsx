@@ -60,7 +60,7 @@ const Home = () => {
       />
       <Meta
         property="og:image"
-        content={`/og/Explore`}
+        content="https://algodirectory.app/og/Explore"
       />
       <Meta
         name="twitter:card"
@@ -84,7 +84,7 @@ const Home = () => {
       />
       <Meta
         name="twitter:image"
-        content={`/og/Explore`}
+        content="https://algodirectory.app/og/Explore"
       />
       <Suspense
         fallback={

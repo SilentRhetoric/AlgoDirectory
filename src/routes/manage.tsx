@@ -28,7 +28,7 @@ export default function Manage() {
       />
       <Meta
         property="og:image"
-        content={`/og/Manage`}
+        content="https://algodirectory.app/og/Manage"
       />
       <Meta
         name="twitter:card"
@@ -52,7 +52,7 @@ export default function Manage() {
       />
       <Meta
         name="twitter:image"
-        content={`/og/Manage`}
+        content="https://algodirectory.app/og/Manage"
       />
       <ClientOnlyWalletWrapper />
     </main>

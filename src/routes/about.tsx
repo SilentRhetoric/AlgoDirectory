@@ -25,7 +25,7 @@ export default function About() {
       />
       <Meta
         property="og:image"
-        content={`/og/About`}
+        content="https://algodirectory.app/og/About"
       />
       <Meta
         name="twitter:card"
@@ -49,7 +49,7 @@ export default function About() {
       />
       <Meta
         name="twitter:image"
-        content={`/og/About`}
+        content="https://algodirectory.app/og/About"
       />
       <h1>About AlgoDirectory</h1>
       <h2>Overview</h2>
