@@ -29,18 +29,17 @@ export async function GET(event: APIEvent) {
     <html>
       <body style="margin: 0; padding: 0; background-color: black;">
         <div
-          style="padding: 48px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; height: 100vh; width: 100vw; overflow: hidden; position: relative; font-family: "Inter"; font-weight: 100; color: white;"
+          style="padding: 96px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; height: 100vh; width: 100vw; overflow: hidden; position: relative; font-family: "Inter"; font-weight: 100; color: white;"
         >
-          <div style="font-size: 96;">${event.params.name}</div>
-          <div style="font-size: 48;">AlgoDirectory</div>
+          <div style="font-size: 120;">${event.params.name}</div>
+          <div style="font-size: 60; position: absolute; bottom: 96px; left: 96px;">AlgoDirectory</div>
           <svg
           viewBox="0 0 86 48"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
-          style="position: absolute; top: 48px; left: 48px"
+          style="position: absolute; top: 96px; left: 96px;"
           >
-            <title>AlgoDirectory</title>
             <g
               id="Page-1"
               stroke="none"
@@ -75,5 +74,10 @@ export async function GET(event: APIEvent) {
 
   const png = new Resvg(svg, { font: { sansSerifFamily: "Inter" } }).render().asPng()
 
-  return new Response(png, { headers: { "Content-Type": "image/png" } })
+  return new Response(png, {
+    headers: {
+      "Content-Type": "image/png",
+      "Cache-Control": "no-cache",
+    },
+  })
 }
