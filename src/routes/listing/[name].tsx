@@ -127,9 +127,12 @@ export default function ListingDetails(props: RouteSectionProps) {
       />
       <Suspense fallback={<div>Loading...</div>}>
         <Card class="mx-auto w-full max-w-6xl overflow-hidden">
-          <div class="aspect-[3/1] w-full border-b-[1px] object-cover">
+          <div class="aspect-[3/1] w-full border-b-[1px]">
             <ImageRoot>
-              <Image src={allNameInfo()?.preparedNfdInfo?.banner} />
+              <Image
+                src={allNameInfo()?.preparedNfdInfo?.banner}
+                class="object-cover"
+              />
               <ImageFallback>No banner</ImageFallback>
               <ImageRoot class="absolute -bottom-4 left-4 h-20 w-20 overflow-hidden rounded-full border-[1px] bg-background sm:h-32 sm:w-32">
                 <Image src={allNameInfo()?.preparedNfdInfo?.avatar} />
