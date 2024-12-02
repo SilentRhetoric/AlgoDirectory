@@ -124,9 +124,9 @@ export default function About() {
         is not for sale or expired at NFD.
       </p>
       <p>
-        <span class="uppercase">Abandon: </span>To recover the collateral for a listing, it can be
-        abandoned, which delists that segment from the Directory. The collateral is returned to the
-        original creator's address. If you have purchased an NFD segment, you can abandon the
+        <span class="uppercase">Delist: </span>To recover the collateral for a listing, it can be
+        delisted, which delists that segment from the Directory. The collateral is returned to the
+        original creator's address. If you have purchased an NFD segment, you can delist the
         existing listing for it and then create your own.
       </p>
       <p>
@@ -190,7 +190,7 @@ export default function About() {
             whether someone stands behind a listing and how long it has been since someone refreshed
             a listing. This way, listings can be automatically sorted and filtered so that active
             listings people are standing behind get the visibility they deserve while stale ones or
-            ones that have been abandoned are discoverable but de-emphasized.
+            ones with minimal collateral are still discoverable but de-emphasized.
           </p>
         </li>
         <li>
@@ -248,13 +248,13 @@ export default function About() {
         through the GitHub link in the page footer.
       </p>
       <p>
-        Only the account that creates a listing can abandon it to recover the collateral deposited
-        to vouch for that listing. All AlgoDirectory listings are subject to review and may be
-        deleted at the sole discretion of any administrator without notice. Reasons a listing may be
-        deleted include, but are not limited to, being unrelated to Algorand, political in nature,
-        not safe for work, or impersonating a person or entity. If a listing is deleted, the
-        collateral deposited when the listing was created will be sent to the Algorand network fee
-        sink address and not returned to the listing creator.
+        Only the account that creates a listing can delist it to recover the collateral deposited to
+        vouch for that listing. All AlgoDirectory listings are subject to review and may be deleted
+        at the sole discretion of any administrator without notice. Reasons a listing may be deleted
+        include, but are not limited to, being unrelated to Algorand, political in nature, not safe
+        for work, or impersonating a person or entity. If a listing is deleted, the collateral
+        deposited when the listing was created will be sent to the Algorand network fee sink address
+        and not returned to the listing creator.
       </p>
       <p>
         Using the app also means that you agree to the privacy policy. These Terms may change at any

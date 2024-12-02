@@ -25,7 +25,7 @@ type ManageSingleListingProps = {
   masterTagMap: Map<string, string>
 }
 
-type TypeSubmitting = "create" | "refresh" | "abandon"
+type TypeSubmitting = "create" | "refresh" | "delist"
 
 export const ManageSingleListing: Component<{
   segment: NfdRecord
@@ -157,11 +157,11 @@ export const ManageSingleListing: Component<{
     }
   }
 
-  async function abandonListing() {
+  async function delistListing() {
     setIsSubmitting(true)
-    setTypeSubmitting("abandon")
+    setTypeSubmitting("delist")
     try {
-      const abandonResult = await typedAppClient.send.abandonListing({
+      const delistResult = await typedAppClient.send.abandonListing({
         args: {
           nfdAppId: props.segment.appID!,
         },
@@ -169,9 +169,9 @@ export const ManageSingleListing: Component<{
         signer: props.transactionSigner,
         populateAppCallResources: true,
       })
-      console.debug("abandonResult: ", abandonResult)
+      console.debug("delistResult: ", delistResult)
     } catch (error: any) {
-      console.error("Error abandoning listing: ", error)
+      console.error("Error delisting listing: ", error)
     } finally {
       setTags([])
       setVouchAmount(0.0722)
@@ -348,14 +348,14 @@ export const ManageSingleListing: Component<{
                 variant="outline"
                 class="flex w-full flex-row items-center justify-center gap-2 border-[hsl(var(--destructive))] uppercase hover:bg-[hsl(var(--destructive))] hover:text-white"
                 disabled={isSubmitting()}
-                onClick={abandonListing}
+                onClick={delistListing}
               >
-                <Show when={isSubmitting() && typeSubmitting() === "abandon"}>
+                <Show when={isSubmitting() && typeSubmitting() === "delist"}>
                   <span class="animate-spin">
                     <LoadingIcon className="size-4" />
                   </span>
                 </Show>
-                Abandon Listing
+                Delist Listing
               </Button>
             </div>
           </CardFooter>
